@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface UserReturn {
 
     User getUserFromID(int id);
-    User getUserFromFullname(String name);
+    User getUserFromLastName(String name);
 
     ArrayList<User> getListOfUsers();
 

@@ -1,2 +1,4 @@
 id;firstName;lastName;isActiveMember;isCompetitive;age;isArrears;yearlyMembershipFee;
 1;Noah;Van Wagenen;true;false;20;false;1600;
+2;Tobias;Van Wagenen;false;false;20;false;1600;
+3;Casper;Van Wagenen;false;false;20;false;1600;

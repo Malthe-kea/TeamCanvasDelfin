@@ -46,4 +46,16 @@ public abstract class Database {
         return sc.nextLine().split(";");
     }
 
+    public int getIndexOfRowName(String rowName) {
+        String[] rowNames = getRowNames();
+        int indexToSearchBy = -1;
+        for (int i = 0; i < rowNames.length; i++) {
+            if(rowName.equalsIgnoreCase(rowNames[i])) {
+                indexToSearchBy = i;
+                break;
+            }
+        }
+        return indexToSearchBy;
+    }
+
 }
