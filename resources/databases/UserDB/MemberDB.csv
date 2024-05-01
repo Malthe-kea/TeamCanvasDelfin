@@ -1,10 +1,2 @@
-id;firstName;lastName;
-
-
-
-    private boolean isActiveMember;
-    private boolean isCompetitive;
-    private int age;
-    private boolean isArrears;
-    private boolean isSenior;
-    private double yearlyMembershipFee;
+id;firstName;lastName;isActiveMember;isCompetitive;age;isArrears;yearlyMembershipFee;
+1;Noah;Van Wagenen;true;false;20;false;1600;

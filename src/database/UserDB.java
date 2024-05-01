@@ -19,17 +19,23 @@ public class UserDB extends Database implements UserReturn {
         for (String[] singleRow : rows) {
             try {
                 int idOfPulledRow = Integer.parseInt(singleRow[0]);
-                int permissionLevelOfPulledRow = Integer.parseInt(singleRow[1]);
                 if(idOfPulledRow == id) {
+                    int permissionLevelOfPulledRow = Integer.parseInt(singleRow[1]);
+                    String firstName = singleRow[3];
+                    String lastName = singleRow[4];
+
                     switch (permissionLevelOfPulledRow) {
                         case 1 -> {
-                            return new SuperUser(idOfPulledRow, singleRow[3], singleRow[4]);
+                            return new SuperUser(idOfPulledRow, firstName, lastName);
                         }
                         case 2 -> {
-                            //Method for retreiving from MemberDB
+                            //Method for retre
+                            // iving from TrainerDB
                         }
                         case 3 -> {
-                            //Method for retreiving from SportMemberDB
+                            //Method for retreiving from Member and SportMemberDB
+                            MemberDB memberDB = new MemberDB();
+                            return memberDB.getUserFromID(idOfPulledRow);
                         }
                     }
                 }
