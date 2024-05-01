@@ -8,7 +8,8 @@ public class Member extends User {
     private boolean isSenior;
     private double yearlyMembershipFee;
 
-    public Member(boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears) {
+    public Member(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears) {
+        super(userID, firstName, lastName);
         this.isActiveMember = isActiveMember;
         this.isCompetitive = isCompetitive;
         this.age = age;
@@ -16,6 +17,7 @@ public class Member extends User {
         this.isSenior = (age >= 18);
         this.yearlyMembershipFee = calculateFee();
     }
+
     private double calculateFee() {
         if (!isActiveMember) {
             return 500;

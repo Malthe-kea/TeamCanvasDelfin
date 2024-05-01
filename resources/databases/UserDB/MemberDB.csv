@@ -1,0 +1,10 @@
+id;firstName;lastName;
+
+
+
+    private boolean isActiveMember;
+    private boolean isCompetitive;
+    private int age;
+    private boolean isArrears;
+    private boolean isSenior;
+    private double yearlyMembershipFee;

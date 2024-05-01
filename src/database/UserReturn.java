@@ -2,6 +2,7 @@ package database;
 
 import user_domain.User;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public interface UserReturn {
@@ -10,4 +11,8 @@ public interface UserReturn {
     User getUserFromFullname(String name);
 
     ArrayList<User> getListOfUsers();
+
+    static String getFolderPath() {
+        return "UserDB"+ File.separator;
+    }
 }

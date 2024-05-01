@@ -16,18 +16,18 @@ public abstract class Database {
 
 
     public Database(String filepath) {
-        fileDB = new File(filepath);
+        String filePathRoot = "resources" + File.separator + "databases" + File.separator;
+        fileDB = new File(filePathRoot + filepath);
     }
 
     public ArrayList<String[]> getRows() {
-        //DETTE FOREGÅR I ABSTRACT DATABASE
         try {
-            sc = new Scanner(fileDB,StandardCharsets.ISO_8859_1);
-        } catch(Exception e) {
+            sc = new Scanner(fileDB, StandardCharsets.ISO_8859_1);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         ArrayList<String[]> listOfRows = new ArrayList<>();
-        while(sc.hasNextLine()) {
+        while (sc.hasNextLine()) {
             String[] singleRow = sc.nextLine().split(";");
             listOfRows.add(singleRow);
         }
@@ -38,8 +38,8 @@ public abstract class Database {
 
     public String[] getRowNames() {
         try {
-            sc = new Scanner(fileDB,StandardCharsets.ISO_8859_1);
-        } catch(Exception e) {
+            sc = new Scanner(fileDB, StandardCharsets.ISO_8859_1);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
