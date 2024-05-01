@@ -8,8 +8,9 @@ public class UserDB extends Database {
         super("resources"+File.separator+"databases"+File.separator+"userDB.csv");
     }
 
-    @Override
-    public void arrangeData() {
+    
+
+    /*public void arrangeData() {
         ArrayList<String[]> rows = getRows();
         String[] rowNames = getRowNames();
 
@@ -18,5 +19,5 @@ public class UserDB extends Database {
                 System.out.println(rowNames[i] + ": " + row[i]);
             }
         }
-    }
+    }*/
 }
