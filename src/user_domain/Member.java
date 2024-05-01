@@ -26,4 +26,19 @@ public class Member extends User {
         }
         return 1600;
     }
+
+    public boolean isActiveMember() {
+        return isActiveMember;
+    }
+
+    public boolean isCompetitive() {
+        return isCompetitive;
+    }
+
+    public boolean isArrears() {
+        return isArrears;
+    }
+    public double getYearlyMembershipFee() {
+        return yearlyMembershipFee;
+    }
 }
