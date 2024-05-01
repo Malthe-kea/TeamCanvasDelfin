@@ -1,7 +1,11 @@
 package database;
 
+import user_domain.User;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,45 +22,28 @@ public abstract class Database {
     public ArrayList<String[]> getRows() {
         //DETTE FOREGÅR I ABSTRACT DATABASE
         try {
-            sc = new Scanner(fileDB);
-        } catch(FileNotFoundException fnfe) {
-            throw new RuntimeException(fnfe);
+            sc = new Scanner(fileDB,StandardCharsets.ISO_8859_1);
+        } catch(Exception e) {
+            throw new RuntimeException(e);
         }
         ArrayList<String[]> listOfRows = new ArrayList<>();
-        boolean firstIteration = true;
         while(sc.hasNextLine()) {
-            if(firstIteration) {
-                firstIteration = false;
-            } else {
-                String[] singleRow = sc.nextLine().split(";");
-                listOfRows.add(singleRow);
-            }
+            String[] singleRow = sc.nextLine().split(";");
+            listOfRows.add(singleRow);
         }
-
+        listOfRows.remove(0);
         return listOfRows;
 
     }
 
     public String[] getRowNames() {
         try {
-            sc = new Scanner(fileDB);
-        } catch(FileNotFoundException fnfe) {
-            throw new RuntimeException(fnfe);
+            sc = new Scanner(fileDB,StandardCharsets.ISO_8859_1);
+        } catch(Exception e) {
+            throw new RuntimeException(e);
         }
 
         return sc.nextLine().split(";");
     }
-
-        /*//TODO
-        // 1. find bedre variabelnavne.
-        //DETTE FOREG?R I UserDB
-        for (String[] row : rows) {
-            for (int i = 0; i < row.length; i++) {
-                System.out.println(rowNames[i] + ": " + row[i]);
-            }
-        }*/
-
-
-    abstract void arrangeData();
 
 }
