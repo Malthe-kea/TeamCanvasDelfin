@@ -5,8 +5,5 @@ public class BankDB extends Database {
         super(filepath);
     }
 
-    @Override
-    void arrangeData() {
 
-    }
 }

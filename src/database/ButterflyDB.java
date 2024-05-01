@@ -6,8 +6,4 @@ public class ButterflyDB extends Database {
         super(filepath);
     }
 
-    @Override
-    void arrangeData() {
-
-    }
 }

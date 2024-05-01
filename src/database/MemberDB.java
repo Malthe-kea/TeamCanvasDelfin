@@ -5,8 +5,4 @@ public class MemberDB extends Database {
         super(filepath);
     }
 
-    @Override
-    void arrangeData() {
-
-    }
 }

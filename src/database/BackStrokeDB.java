@@ -7,8 +7,5 @@ public class BackStrokeDB extends Database {
         super(filepath);
     }
 
-    @Override
-    void arrangeData() {
 
-    }
 }

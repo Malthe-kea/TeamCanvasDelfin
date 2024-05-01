@@ -6,8 +6,5 @@ public class BreastStrokeDB extends Database {
         super(filepath);
     }
 
-    @Override
-    void arrangeData() {
 
-    }
 }

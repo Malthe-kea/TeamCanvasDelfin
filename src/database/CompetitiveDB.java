@@ -5,8 +5,4 @@ public class CompetitiveDB extends Database {
         super(filepath);
     }
 
-    @Override
-    void arrangeData() {
-
-    }
 }
