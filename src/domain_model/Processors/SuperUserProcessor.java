@@ -1,5 +1,6 @@
 package domain_model.Processors;
 
+import database.Database;
 import database.UserDB;
 import user_domain.*;
 
@@ -11,12 +12,13 @@ import java.time.Period;
 import java.util.Scanner;
 
 public class SuperUserProcessor implements Processor {
-    private Scanner userInput = new Scanner(System.in);
+    private Scanner userInput;
     private ArrayList testDB = new ArrayList<>();
     private ArrayList<User> userListArr;
+    boolean programRunning = true;
 
     public SuperUserProcessor() {
-
+        userInput = new Scanner(System.in);
     }
 
     public ArrayList createSuperUser() {
@@ -27,17 +29,17 @@ public class SuperUserProcessor implements Processor {
 
     public ArrayList CreateandAddMembertoDB() {
 
-        System.out.println("Indtast fornavne");
+        print("Indtast fornavne");
         String firstNames = userInput.nextLine();
 
-        System.out.println("indtast efternavne");
+        print("indtast efternavne");
         String lastNames = userInput.nextLine();
 
-        System.out.println("Aktiv/passiv");
+        print("Aktiv/passiv");
         String activePassiveInput = userInput.nextLine();
         Boolean isActiveMember = Boolean.parseBoolean(activePassiveInput);
 
-        System.out.println("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -49,15 +51,15 @@ public class SuperUserProcessor implements Processor {
 
     public ArrayList CreateandAddTrainertoDB() {
 
-        System.out.println("Indtast fornavne");
+        print("Indtast fornavne");
         String firstNames = userInput.nextLine();
 
-        System.out.println("indtast efternavne");
+        print("indtast efternavne");
         String lastNames = userInput.nextLine();
 
-        System.out.println("Aktiv/passiv");
+        print("Aktiv/passiv");
 
-        System.out.println("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -69,15 +71,15 @@ public class SuperUserProcessor implements Processor {
 
     public ArrayList CreateandAddCompetitiveMembertoDB() {
 
-        System.out.println("Indtast fornavne");
+        print("Indtast fornavne");
         String firstNames = userInput.nextLine();
 
-        System.out.println("indtast efternavne");
+        print("indtast efternavne");
         String lastNames = userInput.nextLine();
 
-        System.out.println("Aktiv/passiv");
+        print("Aktiv/passiv");
 
-        System.out.println("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -89,15 +91,15 @@ public class SuperUserProcessor implements Processor {
 
     public ArrayList CreateandAddTreasurertoDB() {
 
-        System.out.println("Indtast fornavne");
+        print("Indtast fornavne");
         String firstNames = userInput.nextLine();
 
-        System.out.println("indtast efternavne");
+        print("indtast efternavne");
         String lastNames = userInput.nextLine();
 
-        System.out.println("Aktiv/passiv");
+        print("Aktiv/passiv");
 
-        System.out.println("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -107,45 +109,96 @@ public class SuperUserProcessor implements Processor {
         return testDB;
     }
 
-
     public void editUserFromDB(int idToEdit, String firstName) {
         User userToEdit = null;
+        String command = userInput.nextLine().toLowerCase();
+
 
         for (User u : userListArr) {
             if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
-                String command = new Scanner(System.in);
                 print("""
-                         Hvilket parameter vil du ændre?
-                         1. Fornavn(e)
-                         2. Efternavn
-                         3. Aktivitetsstatus
-                         4.???
-                         """);
-                switch (command){
-                    case "1" -> {
+                        Hvilket parameter vil du ændre?
+                        1. Fornavn(e)
+                        2. Efternavn
+                        3. Aktivitetsstatus
+                        4.???
+                        """);
 
+                while (programRunning)
+                    switch (command) {
+                        case "1" -> {
+                        }
+                        case "2" -> {
+                        }
+                        case "3" -> {
+                        }
+                        case "4" -> {
+                        }
+                        default -> {
+                            print("invalid input");
+                        }
                     }
-                }
 
 
                 u.setFirstName("Test");
                 break;
             }
         }
+    }
+
+    public void deleteUserFromDB(int idToEdit, String firstName) {
+        User userToDelete = null;
+        String command = userInput.nextLine().toLowerCase();
+
+        for (User u : userListArr) {
+            if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
+                //TODO slet fra DB
+            }
+        }
+    }
+
+
+    public Database getUserFromDB(int idToEdit) {
+        //TODO send DB return
+        String command = userInput.nextLine().toLowerCase();
+        print("""
+                Hvilket brugeroversigt vil du gerne se?
+                1. Crawl
+                2. Rygcrawl
+                3. Brystsvømning
+                4. Butterfly
+                5. Aktive/Passive medlemmer
+                6. Juniorer/Seniorer
+                """);
+        while (programRunning)
+            switch (command) {
+                case "1" -> {
+                    print("Get XYZ-database");
+                }
+                case "2" -> {
+                    print("Get XYZ-database");
+                }
+                case "3" -> {
+                    print("Get XYZ-database");
+                }
+                case "4" -> {
+                    print("Get XYZ-database");
+                }
+                case "5" -> {
+                    print("Get XYZ-database");
+                }
+                case "6" -> {
+                    print("Get XYZ-database");
+                }
+                default -> {
+                    print("invalid input");
+                }
+            }
         return null;
     }
 
 
-    public void getUserFromDB() {
-
-    }
-
-    public void deleteUserFromDB() {
-
-    }
-
     public static int calculateAge(LocalDate dob) {
-
         LocalDate curDate = LocalDate.now();
 
         if ((dob != null) && (curDate != null)) {
@@ -154,7 +207,8 @@ public class SuperUserProcessor implements Processor {
             return 0;
         }
     }
+
     private void print(String s) {
-        System.out.println(s);
+        print(s);
     }
 }
