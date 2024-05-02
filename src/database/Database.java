@@ -47,10 +47,10 @@ public abstract class Database {
     }
 
     public int getIndexOfRowName(String rowName) {
-        String[] rowNames = getRowNames();
+        String[] rowNamesFromDB = getRowNames();
         int indexToSearchBy = -1;
-        for (int i = 0; i < rowNames.length; i++) {
-            if(rowName.equalsIgnoreCase(rowNames[i])) {
+        for (int i = 0; i < rowNamesFromDB.length; i++) {
+            if(rowName.equalsIgnoreCase(rowNamesFromDB[i])) {
                 indexToSearchBy = i;
                 break;
             }
