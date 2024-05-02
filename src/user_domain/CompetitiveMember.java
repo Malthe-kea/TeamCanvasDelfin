@@ -11,8 +11,8 @@ public class CompetitiveMember extends Member {
     private Style butterflyPR;
     private ArrayList<Competition> competitionList;
 
-    public CompetitiveMember(boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears) {
-        super(isActiveMember, isCompetitive, age, isArrears);
+    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears) {
+        super(userID, firstName, lastName, isActiveMember, isCompetitive, age, isArrears);
     }
 
     public ArrayList<Competition> getCompetitionList() {
