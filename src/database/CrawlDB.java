@@ -8,7 +8,7 @@ public class CrawlDB extends Database {
     }
 
     @Override
-    ArrayList<String> createRowNamesInDB() {
+    ArrayList<String> getRowNamesFromEnumConfig() {
         return null;
     }
 }

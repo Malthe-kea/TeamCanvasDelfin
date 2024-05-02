@@ -28,4 +28,28 @@ public class Member extends User {
         }
         return 1600;
     }
+
+    public boolean isActiveMember() {
+        return isActiveMember;
+    }
+
+    public boolean isCompetitive() {
+        return isCompetitive;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isArrears() {
+        return isArrears;
+    }
+
+    public boolean isSenior() {
+        return isSenior;
+    }
+
+    public double getYearlyMembershipFee() {
+        return yearlyMembershipFee;
+    }
 }

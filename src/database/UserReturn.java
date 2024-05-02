@@ -1,6 +1,5 @@
 package database;
 
-import database.rowNameEnum.DBRowNames;
 import user_domain.User;
 
 import java.io.File;
@@ -20,7 +19,7 @@ public interface UserReturn {
         return userList;
     }
 
-    default User searchAndCreateUser(DBRowNames catToFindBy, String searchValue, int indexToSearchBy, ArrayList<String[]> rows) {
+    default User searchAndCreateUser(String searchValue, int indexToSearchBy, ArrayList<String[]> rows) {
         if (indexToSearchBy == -1) {
             return null;
         }
@@ -38,6 +37,8 @@ public interface UserReturn {
     }
 
     User createUserFromSingleRow(String[] singleRow);
+
+    boolean editUserInDB(User user);
 
     static String getFolderPath() {
         return "UserDB" + File.separator;

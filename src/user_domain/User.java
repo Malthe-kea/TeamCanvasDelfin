@@ -1,6 +1,6 @@
 package user_domain;
 
-public abstract class User {
+public abstract class User{
 
     private int userID;
     private String firstName;

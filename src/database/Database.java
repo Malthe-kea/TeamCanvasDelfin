@@ -1,11 +1,11 @@
 package database;
 
+import database.rowNameEnum.DBRowNames;
+import user_domain.Member;
+import user_domain.Trainer;
 import user_domain.User;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 public abstract class Database {
 
     private Scanner sc;
-    private File fileDB;
+    private final File fileDB;
 
 
     public Database(String filepath) {
@@ -38,11 +38,11 @@ public abstract class Database {
         return sc.nextLine().split(";");
     }
 
-    public int getIndexOfRowName(String rowName) {
+    public int getIndexOfRowName(DBRowNames dbrowNameEnum) {
         String[] rowNamesFromDB = getRowNames();
         int indexToSearchBy = -1;
         for (int i = 0; i < rowNamesFromDB.length; i++) {
-            if(rowName.equalsIgnoreCase(rowNamesFromDB[i])) {
+            if(dbrowNameEnum.getStringVariant().equalsIgnoreCase(rowNamesFromDB[i])) {
                 indexToSearchBy = i;
                 break;
             }
@@ -53,8 +53,8 @@ public abstract class Database {
     private Scanner getScannerFromFile(File filedb) {
         try {
             if(filedb.createNewFile()) {
-                ArrayList<String> rowNamesToInsert = createRowNamesInDB();
-                String formattedRowNames = String.join(";",rowNamesToInsert);
+                ArrayList<String> rowNamesToInsert = getRowNamesFromEnumConfig();
+                String formattedRowNames = String.join(";",rowNamesToInsert)+";";
                 PrintStream out = new PrintStream(filedb);
                 out.println(formattedRowNames);
                 return getScannerFromFile(filedb);
@@ -66,6 +66,34 @@ public abstract class Database {
         }
     }
 
-    abstract ArrayList<String> createRowNamesInDB();
+    abstract ArrayList<String> getRowNamesFromEnumConfig();
+
+    public UserInstance checkUserInstance(User user) {
+        if(user instanceof Member) {
+            return UserInstance.MEMBER_OR_COMPETITIVE;
+        }
+        if(user instanceof Trainer) {
+            return UserInstance.TRAINER;
+        }
+        return UserInstance.SUPER_OR_TREASURER;
+
+    }
+
+    public boolean insertListToDB(ArrayList<String[]> allRowsToInsert) {
+        allRowsToInsert.sort(new sortRowByIDComparator());
+        try {
+            PrintStream out = new PrintStream(fileDB);
+            out.flush();
+            String rowNameAsDBFormat = String.join(";",getRowNamesFromEnumConfig())+";";
+            out.println(rowNameAsDBFormat);
+            for (String[] singleRow : allRowsToInsert) {
+                String rowAsDBFormat = String.join(";",singleRow)+";";
+                out.println(rowAsDBFormat);
+            }
+        } catch(IOException IOE) {
+            return false;
+        }
+        return true;
+    }
 
 }

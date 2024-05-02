@@ -10,7 +10,7 @@ public enum MemberDBRowNames implements DBRowNames {
     IS_ARREARS("isArrears"),
     YEARLY_MEMBERSHIP_FEE("yearlyMembershipFee");
 
-    private String stringVariant;
+    final String stringVariant;
     MemberDBRowNames(String stringVariant) {
         this.stringVariant = stringVariant;
     }

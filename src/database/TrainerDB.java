@@ -3,6 +3,7 @@ package database;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.MemberDBRowNames;
 import database.rowNameEnum.TrainerDBRowNames;
+import user_domain.Member;
 import user_domain.Trainer;
 import user_domain.User;
 
@@ -31,8 +32,8 @@ public class TrainerDB extends Database implements UserReturn {
     }
 
     public User searchAndCreateUser(DBRowNames catToFindBy, String searchValue) {
-        int indexToSearchBy = getIndexOfRowName(catToFindBy.getStringVariant());
-        return searchAndCreateUser(catToFindBy, searchValue, indexToSearchBy, getRows());
+        int indexToSearchBy = getIndexOfRowName(catToFindBy);
+        return searchAndCreateUser(searchValue, indexToSearchBy, getRows());
     }
 
     @Override
@@ -45,7 +46,7 @@ public class TrainerDB extends Database implements UserReturn {
     }
 
     @Override
-    public ArrayList<String> createRowNamesInDB() {
+    public ArrayList<String> getRowNamesFromEnumConfig() {
         ArrayList<String> rowNamesToCreate = new ArrayList<>();
         for(TrainerDBRowNames trainerDBRowNames: TrainerDBRowNames.values()) {
             rowNamesToCreate.add(trainerDBRowNames.getStringVariant());
@@ -53,5 +54,26 @@ public class TrainerDB extends Database implements UserReturn {
         return rowNamesToCreate;
     }
 
+    @Override
+    public boolean editUserInDB(User user) {
+        if(user instanceof Trainer trainer) {
+            ArrayList<User> allUsers = getListOfUsers();
+            ArrayList<String[]> allRows = getRows();
+            String[] newRow = new String[4];
+            newRow[0] = String.valueOf(trainer.getUserID());
+            newRow[1] = trainer.getFirstName();
+            newRow[2] = trainer.getLastName();
+            newRow[3] = String.valueOf(trainer.isSeniorTrainer());
 
+            for (int i = 0; i < allUsers.size(); i++) {
+                if(allUsers.get(i).getUserID() == trainer.getUserID()) {
+                    allRows.set(i,newRow);
+                    break;
+                }
+            }
+            return insertListToDB(allRows);
+
+        }
+        return false;
+    }
 }
