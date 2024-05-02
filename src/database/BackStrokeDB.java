@@ -7,5 +7,8 @@ public class BackStrokeDB extends Database {
         super(filepath);
     }
 
-
+    @Override
+    ArrayList<String> createRowNamesInDB() {
+        return null;
+    }
 }

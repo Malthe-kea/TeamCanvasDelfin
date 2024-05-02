@@ -1,5 +1,7 @@
 package database;
 
+import java.util.ArrayList;
+
 public class BreastStrokeDB extends Database {
 
     public BreastStrokeDB(String filepath) {
@@ -7,4 +9,8 @@ public class BreastStrokeDB extends Database {
     }
 
 
+    @Override
+    ArrayList<String> createRowNamesInDB() {
+        return null;
+    }
 }

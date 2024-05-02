@@ -1,4 +1,7 @@
 package database;
+
+import java.util.ArrayList;
+
 public class BankDB extends Database {
 
     public BankDB(String filepath) {
@@ -6,4 +9,8 @@ public class BankDB extends Database {
     }
 
 
+    @Override
+    ArrayList<String> createRowNamesInDB() {
+        return null;
+    }
 }

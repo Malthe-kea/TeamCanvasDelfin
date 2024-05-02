@@ -1,14 +1,13 @@
 package database.rowNameEnum;
 
-public enum UserDBRowNames implements DBRowNames {
+public enum TrainerDBRowNames implements DBRowNames {
     USER_ID("id"),
-    PERMISSION_LEVEL("permissionLevel"),
-    PASSWORD("password"),
     FIRST_NAME("firstName"),
-    LAST_NAME("lastName");
+    LAST_NAME("lastName"),
+    IS_SENIOR_TRAINER("isSeniorTrainer");
 
     private String stringVariant;
-    UserDBRowNames(String stringVariant) {
+    TrainerDBRowNames(String stringVariant) {
         this.stringVariant = stringVariant;
     }
 
