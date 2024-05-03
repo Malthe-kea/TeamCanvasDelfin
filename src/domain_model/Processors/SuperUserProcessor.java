@@ -39,7 +39,7 @@ public class SuperUserProcessor implements Processor {
         String activePassiveInput = userInput.nextLine();
         Boolean isActiveMember = Boolean.parseBoolean(activePassiveInput);
 
-        print("Indtast fÃ¸dselsdato i Ã…Ã…Ã…Ã…-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -59,7 +59,7 @@ public class SuperUserProcessor implements Processor {
 
         print("Aktiv/passiv");
 
-        print("Indtast fÃ¸dselsdato i Ã…Ã…Ã…Ã…-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -79,7 +79,7 @@ public class SuperUserProcessor implements Processor {
 
         print("Aktiv/passiv");
 
-        print("Indtast fÃ¸dselsdato i Ã…Ã…Ã…Ã…-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -99,7 +99,7 @@ public class SuperUserProcessor implements Processor {
 
         print("Aktiv/passiv");
 
-        print("Indtast fÃ¸dselsdato i Ã…Ã…Ã…Ã…-MM-DD");
+        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
@@ -115,7 +115,7 @@ public class SuperUserProcessor implements Processor {
 
         if(userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
             print("""
-                    Hvilket parameter vil du Ã¦ndre?
+                    Hvilket parameter vil du ændre?
                     1. Fornavn(e)
                     2. Efternavn
                     3. Aktivitetsstatus
@@ -126,8 +126,8 @@ public class SuperUserProcessor implements Processor {
                 switch (command) {
                     case "1" -> {
                         //TODO
-                        //  Ny scanner variabel som tager input fra bruger til det navn man gerne vil Ã¦ndre til.
-                        userToEdit.setFirstName("Test");
+                        //  Ny scanner variabel som tager input fra bruger til det navn man gerne vil ændre til.
+                        userToEdit.setFirstName("Test igen");
                     }
                     case "2" -> {
                     }
@@ -180,7 +180,7 @@ public class SuperUserProcessor implements Processor {
                 Hvilket brugeroversigt vil du gerne se?
                 1. Crawl
                 2. Rygcrawl
-                3. BrystsvÃ¸mning
+                3. Brystsvømning
                 4. Butterfly
                 5. Aktive/Passive medlemmer
                 6. Juniorer/Seniorer

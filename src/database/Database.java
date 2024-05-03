@@ -85,20 +85,6 @@ public abstract class Database {
 
     abstract ArrayList<String> getRowNamesFromEnumConfig();
 
-    public UserInstance checkUserInstance(User user) {
-        if(user instanceof Member) {
-            return UserInstance.MEMBER_OR_COMPETITIVE;
-        }
-        if(user instanceof Trainer) {
-            return UserInstance.TRAINER;
-        }
-        if(user instanceof Treasurer) {
-            return UserInstance.TREASURER;
-        }
-        return UserInstance.SUPER;
-
-    }
-
     public boolean insertListToDB(ArrayList<String[]> allRowsToInsert) {
         allRowsToInsert.sort(new SortRowByIDComparator());
         try {

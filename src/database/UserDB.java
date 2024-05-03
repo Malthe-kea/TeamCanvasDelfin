@@ -2,6 +2,7 @@ package database;
 
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.UserDBRowNames;
+import domain_model.DelfinUtil;
 import user_domain.SuperUser;
 import user_domain.Treasurer;
 import user_domain.User;
@@ -80,7 +81,9 @@ public class UserDB extends Database implements UserReturn {
         newRow[3] = user.getFirstName();
         newRow[4] = user.getLastName();
 
-        switch(checkUserInstance(user)) {
+
+
+        switch(DelfinUtil.checkUserInstance(user)) {
             case SUPER -> {
                 newRow[1] = "1";
             }
@@ -112,7 +115,7 @@ public class UserDB extends Database implements UserReturn {
             return false;
         }
 
-        switch(checkUserInstance(user)) {
+        switch(DelfinUtil.checkUserInstance(user)) {
             case MEMBER_OR_COMPETITIVE -> {
                 MemberDB memberDB = new MemberDB();
                 if(memberDB.editUserInDB(user)) {
