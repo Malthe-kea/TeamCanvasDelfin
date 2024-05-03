@@ -113,7 +113,7 @@ public class SuperUserProcessor implements Processor {
         UserDB db = new UserDB();
         User userToEdit = db.getUserFromID(idToEdit);
 
-        if(userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
+        if (userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
             print("""
                     Hvilket parameter vil du ændre?
                     1. Fornavn(e)
@@ -122,41 +122,34 @@ public class SuperUserProcessor implements Processor {
                     4.???
                     """);
             String command = userInput.nextLine().toLowerCase();
-            //while (programRunning) {
-                switch (command) {
-                    case "1" -> {
-                        //TODO
-                        //  Ny scanner variabel som tager input fra bruger til det navn man gerne vil ændre til.
-                        userToEdit.setFirstName("Test");
-                    }
-                    case "2" -> {
-                    }
-                    case "3" -> {
-                    }
-                    case "4" -> {
-                    }
-                    default -> {
-                        print("invalid input");
-                    }
+            String commandPrompt = userInput.nextLine().toLowerCase();
+            switch (command) {
 
+                case "1" -> {
+                    commandPrompt = userInput.nextLine().toLowerCase();
+                    userToEdit.setFirstName(commandPrompt);
+                }
+                case "2" -> {
+                    commandPrompt = userInput.nextLine().toLowerCase();
+                    userToEdit.setLastName(commandPrompt);
+                }
+                case "3" -> {
+                    commandPrompt = userInput.nextLine().toLowerCase();
+                    userToEdit.
+                }
+                case "4" -> {
+                    commandPrompt = userInput.nextLine().toLowerCase();
+                    userToEdit.setLastName(commandPrompt);
+                }
+                default -> {
+                    print("invalid input");
                 }
 
-                return db.editUserInDB(userToEdit);
+            }
 
-            //}
+            return db.editUserInDB(userToEdit);
         }
 
-
-        //User userToEdit = null;
-
-
-
-        /*for (User u : userListArr) {
-            if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
-
-                break;
-            }
-        }*/
 
         return false;
     }

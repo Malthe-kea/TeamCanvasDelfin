@@ -16,7 +16,7 @@ public class UserInterface {
         programIsRunning = true;
         loginSucces = true;
         userInput = new Scanner(System.in);
-        Member member = new Member(true, true, 30, false); // Eksempel på medlem
+        Member member = new Member(1, "true", "30", false, true,30,false); // Eksempel på medlem
         memberProcessor = new MemberProcessor(member);
     }
 
