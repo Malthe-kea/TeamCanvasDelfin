@@ -2,7 +2,7 @@ package database;
 
 import java.util.Comparator;
 
-public class sortRowByIDComparator implements Comparator<String[]> {
+public class SortRowByIDComparator implements Comparator<String[]> {
     @Override
     public int compare(String[] o1, String[] o2) {
         int id1 = Integer.parseInt(o1[0]);

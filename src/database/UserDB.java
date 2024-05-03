@@ -81,14 +81,17 @@ public class UserDB extends Database implements UserReturn {
         newRow[4] = user.getLastName();
 
         switch(checkUserInstance(user)) {
-            case SUPER_OR_TREASURER -> {
+            case SUPER -> {
                 newRow[1] = "1";
             }
-            case TRAINER -> {
+            case TREASURER -> {
                 newRow[1] = "2";
             }
-            default -> {
+            case TRAINER -> {
                 newRow[1] = "3";
+            }
+            default -> {
+                newRow[1] = "4";
             }
         }
 
@@ -109,8 +112,6 @@ public class UserDB extends Database implements UserReturn {
             return false;
         }
 
-
-
         switch(checkUserInstance(user)) {
             case MEMBER_OR_COMPETITIVE -> {
                 MemberDB memberDB = new MemberDB();
@@ -125,7 +126,7 @@ public class UserDB extends Database implements UserReturn {
                     return true;
                 }
             }
-            case SUPER_OR_TREASURER -> {
+            case SUPER, TREASURER -> {
                 return true;
             }
         }
