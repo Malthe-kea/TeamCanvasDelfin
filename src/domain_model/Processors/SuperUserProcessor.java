@@ -2,6 +2,9 @@ package domain_model.Processors;
 
 import database.Database;
 import database.UserDB;
+import domain_model.DelfinUtil;
+import domain_model.UserInstance;
+import domain_model.UserInterface;
 import user_domain.*;
 
 import java.io.File;
@@ -114,37 +117,56 @@ public class SuperUserProcessor implements Processor {
         User userToEdit = db.getUserFromID(idToEdit);
 
         if (userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
-            print("""
-                    Hvilket parameter vil du ændre?
-                    1. Fornavn(e)
-                    2. Efternavn
-                    """);
+
             String command = userInput.nextLine().toLowerCase();
             String commandPrompt = userInput.nextLine().toLowerCase();
-            switch (command) {
+            switch (DelfinUtil.checkUserInstance(userToEdit)) {
 
-                case "1" -> {
+                case SUPER, TREASURER -> {
+                    print("""
+                            1. Rediger fornavn
+                            2. Rediger efternavn
+                            """);
                     commandPrompt = userInput.nextLine().toLowerCase();
                     userToEdit.setFirstName(commandPrompt);
                 }
-                case "2" -> {
+                case MEMBER, COMPETITIVE -> {
+                    print("""
+                            1. Rediger fornavn
+                            2. Rediger efternavn
+                            3. Rediger aktivitetsstatus
+                            4. Konkurrence/Motionist
+                            5. Restancestatus.
+                            """);
+                    if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE){
+                        //TODO når Style.class er oprettet kan vi tilføje discipliner herunder.
+                        print("""
+                                6. 
+                                """);
+                    }
                     commandPrompt = userInput.nextLine().toLowerCase();
                     userToEdit.setLastName(commandPrompt);
                 }
-                case "3" -> {
+                case TRAINER -> {
                     commandPrompt = userInput.nextLine().toLowerCase();
+                    Trainer trainer = (Trainer) userToEdit;
 
-                }
-                case "4" -> {
-                    commandPrompt = userInput.nextLine().toLowerCase();
-                    userToEdit.setLastName(commandPrompt);
+                    print("""
+                            1. Rediger fornavn
+                            2. Rediger efternavn
+                            3. Senior/Junior
+                            """);
+                    //TODO lav switchcase, der passer til menuen.
+
+                    boolean seniorOrNot = (commandPrompt.equalsIgnoreCase("senior")) ? true : false;
+                    trainer.setSeniorTrainer(seniorOrNot);
+
                 }
                 default -> {
                     print("invalid input");
                 }
 
             }
-
             return db.editUserInDB(userToEdit);
         }
 
@@ -215,6 +237,6 @@ public class SuperUserProcessor implements Processor {
     }
 
     private void print(String s) {
-        System.out.println(s);
+        UserInterface.print(s);
     }
 }

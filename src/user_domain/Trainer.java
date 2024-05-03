@@ -18,6 +18,10 @@ public class Trainer extends User {
         return isSeniorTrainer;
     }
 
+    public void setSeniorTrainer(boolean seniorTrainer) {
+        isSeniorTrainer = seniorTrainer;
+    }
+
     public void generateSampleData() {
         sortingExample = new ArrayList<>();
         sortingExample.add(new SortExampleTest("Event 1", "Location A", 10.5));

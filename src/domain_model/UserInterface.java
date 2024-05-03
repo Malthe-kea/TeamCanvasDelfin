@@ -101,9 +101,10 @@ public class UserInterface {
         memberProcessor.displayMemberOverview();
     }
 
-    private void print(String s) {
+    public static void print(String s) {
         System.out.println(s);
     }
+
 
 }
 
