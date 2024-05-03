@@ -1,4 +1,5 @@
-import database.UserDB;
+import domain_model.Processors.SuperUserProcessor;
+import domain_model.UserInterface;
 
 public class Main {
     public static void main(String[] args) {
