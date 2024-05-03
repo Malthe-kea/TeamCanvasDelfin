@@ -118,8 +118,6 @@ public class SuperUserProcessor implements Processor {
                     Hvilket parameter vil du ændre?
                     1. Fornavn(e)
                     2. Efternavn
-                    3. Aktivitetsstatus
-                    4.???
                     """);
             String command = userInput.nextLine().toLowerCase();
             String commandPrompt = userInput.nextLine().toLowerCase();
@@ -135,7 +133,7 @@ public class SuperUserProcessor implements Processor {
                 }
                 case "3" -> {
                     commandPrompt = userInput.nextLine().toLowerCase();
-                    userToEdit.
+
                 }
                 case "4" -> {
                     commandPrompt = userInput.nextLine().toLowerCase();
