@@ -116,7 +116,7 @@ public class UserDB extends Database implements UserReturn {
         }
 
         switch(DelfinUtil.checkUserInstance(user)) {
-            case MEMBER_OR_COMPETITIVE -> {
+            case MEMBER, COMPETITIVE -> {
                 MemberDB memberDB = new MemberDB();
                 if(memberDB.editUserInDB(user)) {
                     return true;
@@ -131,6 +131,9 @@ public class UserDB extends Database implements UserReturn {
             }
             case SUPER, TREASURER -> {
                 return true;
+            }
+            case NOTFOUND -> {
+                return false;
             }
         }
         return false;

@@ -1,15 +1,15 @@
 package domain_model;
 
-import user_domain.Member;
-import user_domain.Trainer;
-import user_domain.Treasurer;
-import user_domain.User;
+import user_domain.*;
 
 public class DelfinUtil {
 
     public static UserInstance checkUserInstance(User user) {
+        if(user instanceof CompetitiveMember) {
+            return UserInstance.COMPETITIVE;
+        }
         if(user instanceof Member) {
-            return UserInstance.MEMBER_OR_COMPETITIVE;
+            return UserInstance.MEMBER;
         }
         if(user instanceof Trainer) {
             return UserInstance.TRAINER;
@@ -17,7 +17,10 @@ public class DelfinUtil {
         if(user instanceof Treasurer) {
             return UserInstance.TREASURER;
         }
-        return UserInstance.SUPER;
+        if(user instanceof SuperUser) {
+            return UserInstance.SUPER;
+        }
+        return UserInstance.NOTFOUND;
 
     }
 

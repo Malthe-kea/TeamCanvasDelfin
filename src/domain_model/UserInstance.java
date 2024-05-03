@@ -1,8 +1,10 @@
 package domain_model;
 
 public enum UserInstance {
-    MEMBER_OR_COMPETITIVE,
+    MEMBER,
+    COMPETITIVE,
     TRAINER,
     SUPER,
-    TREASURER;
+    TREASURER,
+    NOTFOUND;
 }
