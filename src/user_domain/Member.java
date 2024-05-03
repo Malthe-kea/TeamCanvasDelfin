@@ -17,7 +17,6 @@ public class Member extends User {
         this.isSenior = (age >= 18);
         this.yearlyMembershipFee = calculateFee();
     }
-
     private double calculateFee() {
         if (!isActiveMember) {
             return 500;

@@ -3,11 +3,13 @@ package user_domain.competition;
 import java.text.SimpleDateFormat;
 
 public class Style {
-private String styleName;
-private int placement;
-private SimpleDateFormat time;
+    private int id;
+    private String styleName;
+    private int placement;
+    private SimpleDateFormat time;
 
-    public Style(String styleName, int placement, SimpleDateFormat time) {
+    public Style(int id, String styleName, int placement, SimpleDateFormat time) {
+        this.id = id;
         this.styleName = styleName;
         this.placement = placement;
         this.time = time;
