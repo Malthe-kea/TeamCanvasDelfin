@@ -1,15 +1,14 @@
 import database.UserDB;
 import user_domain.CompetitiveMember;
+import user_domain.Trainer;
 
 public class Main {
     public static void main(String[] args) {
         UserDB db = new UserDB();
 
+        Trainer trainer = new Trainer(true); // Pass true or false depending on whether it's a senior trainer or not
 
-        //Laver en instans for at teste om den printer dataen korrekt
-        CompetitiveMember member = new CompetitiveMember(true, true, 25, false);
-        //Kaller calculatePR metoden
-        member.calculatePR();
+        trainer.printFastestTimes();
 
     }
 }
