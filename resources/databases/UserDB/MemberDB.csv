@@ -1,4 +1,4 @@
 id;firstName;lastName;isActiveMember;isCompetitive;age;isArrears;yearlyMembershipFee;
-1;Test;Hej;true;true;12;false;1000.0;
+1;Test igen;Hej;true;true;12;false;1000.0;
 2;My 143;YOLO;true;true;12;false;1000.0;
 3;My 143;YOLO;true;true;12;false;1000.0;
