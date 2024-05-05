@@ -1,5 +1,6 @@
-package database;
+package database.userDB;
 
+import database.Database;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.UserDBRowNames;
 import domain_model.DelfinUtil;
@@ -8,7 +9,6 @@ import user_domain.Treasurer;
 import user_domain.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UserDB extends Database implements UserReturn {
     public UserDB() {

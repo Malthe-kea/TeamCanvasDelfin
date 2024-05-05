@@ -98,7 +98,7 @@ public abstract class Database {
     }
 
     //Abstract method that retrieves the columnRowNames from each config.
-    abstract ArrayList<String> getRowNamesFromEnumConfig();
+    protected abstract ArrayList<String> getRowNamesFromEnumConfig();
 
     //Method that inserts list of rows into database
     public boolean insertListToDB(ArrayList<String[]> allRowsToInsert) {

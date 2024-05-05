@@ -1,5 +1,7 @@
 package database;
 
+import database.Database;
+
 import java.util.ArrayList;
 
 public class BankDB extends Database {

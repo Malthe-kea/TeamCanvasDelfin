@@ -1,4 +1,4 @@
-package database;
+package database.userDB;
 
 import user_domain.User;
 

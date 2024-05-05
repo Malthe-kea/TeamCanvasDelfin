@@ -1,9 +1,8 @@
-package database;
+package database.userDB;
 
+import database.Database;
 import database.rowNameEnum.DBRowNames;
-import database.rowNameEnum.MemberDBRowNames;
 import database.rowNameEnum.TrainerDBRowNames;
-import user_domain.Member;
 import user_domain.Trainer;
 import user_domain.User;
 

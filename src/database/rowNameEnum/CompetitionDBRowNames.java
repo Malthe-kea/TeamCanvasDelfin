@@ -1,14 +1,14 @@
 package database.rowNameEnum;
 
 //Enum class containing column of CompetitiveDB csv file.
-public enum CompetitiveDBRowNames implements DBRowNames {
+public enum CompetitionDBRowNames implements DBRowNames {
     COMPETITIVE_ID("id"),
     LOCATION("location"),
-    USERS_WHO_HAS_COMPETED("userParticipation");
+    STYLES_ENTRIES("styleEntries");
 
     //String variant contains the displayed name inside the csv file for each column.
     final String stringVariant;
-    CompetitiveDBRowNames(String stringVariant) {
+    CompetitionDBRowNames(String stringVariant) {
         this.stringVariant = stringVariant;
     }
 

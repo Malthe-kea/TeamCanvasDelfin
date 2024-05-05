@@ -2,7 +2,6 @@ package user_domain;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import database.CompetitiveDB;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
 

@@ -1,8 +1,6 @@
 package domain_model.Processors;
 
 import user_domain.Member;
-import user_domain.CompetitiveMember;
-import database.UserDB;
 
 public class MemberProcessor implements Processor {
     private Member member;

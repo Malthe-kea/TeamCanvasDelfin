@@ -1,29 +1,27 @@
-package database;
+package database.competition_style_DB;
 
-import database.rowNameEnum.CompetitiveDBRowNames;
-import database.rowNameEnum.TrainerDBRowNames;
-import user_domain.User;
+import database.Database;
+import database.rowNameEnum.CompetitionDBRowNames;
 import user_domain.competition.Competition;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class CompetitiveDB extends Database {
-    public CompetitiveDB() {
+public class CompetitionDB extends Database {
+    public CompetitionDB() {
         super("Competitive.csv");
     }
 
     @Override
     public ArrayList<String> getRowNamesFromEnumConfig() {
         ArrayList<String> rowNamesToCreate = new ArrayList<>();
-        for(CompetitiveDBRowNames competitiveDBRowName : CompetitiveDBRowNames.values()) {
+        for(CompetitionDBRowNames competitiveDBRowName : CompetitionDBRowNames.values()) {
             rowNamesToCreate.add(competitiveDBRowName.getStringVariant());
         }
         return rowNamesToCreate;
     }
 
     public Competition getCompetitionFromID(int id) {
-        int indexToSearchBy = getIndexOfRowName(CompetitiveDBRowNames.COMPETITIVE_ID);
+        int indexToSearchBy = getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID);
         ArrayList<String[]> allRowsFromDB = getRows();
 
         for(String[] singleRow : allRowsFromDB) {
@@ -38,7 +36,7 @@ public class CompetitiveDB extends Database {
     }
 
     public Competition getCompetitionFromLocation(String locationToSearch) {
-        int indexToSearchBy = getIndexOfRowName(CompetitiveDBRowNames.COMPETITIVE_ID);
+        int indexToSearchBy = getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID);
         ArrayList<String[]> allRowsFromDB = getRows();
 
         for(String[] singleRow : allRowsFromDB) {
@@ -53,23 +51,23 @@ public class CompetitiveDB extends Database {
         return null;
     }
 
-    public int[] getParticipantsIDFromID(int id) {
-        int indexToSearchBy = getIndexOfRowName(CompetitiveDBRowNames.COMPETITIVE_ID);
+    public int[] getStyleEntriesFromID(int id) {
+        int indexToSearchBy = getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID);
         ArrayList<String[]> allRowsFromDB = getRows();
 
         for(String[] singleRow : allRowsFromDB) {
             int competitionID = Integer.parseInt(singleRow[indexToSearchBy]);
             if(competitionID == id) {
-                String userArrayAsString = singleRow[2];
-                String userArrayWithoutBrackets = userArrayAsString.substring(1,userArrayAsString.length()-1);
-                String[] userIdArrayAsString = userArrayWithoutBrackets.split(",");
-                int[] participantsIDList = new int[userIdArrayAsString.length];
+                String styleArrayAsString = singleRow[2];
+                String styleArrayWithoutBrackets = styleArrayAsString.substring(1,styleArrayAsString.length()-1);
+                String[] styleIdArrayAsString = styleArrayWithoutBrackets.split(",");
+                int[] styleEntriesIDList = new int[styleIdArrayAsString.length];
 
-                for (int i = 0; i < userIdArrayAsString.length; i++) {
-                    participantsIDList[i] = Integer.parseInt(userIdArrayAsString[i]);
+                for (int i = 0; i < styleIdArrayAsString.length; i++) {
+                    styleEntriesIDList[i] = Integer.parseInt(styleIdArrayAsString[i]);
                 }
 
-                return participantsIDList;
+                return styleEntriesIDList;
             }
         }
 

@@ -1,5 +1,6 @@
-package database;
+package database.userDB;
 
+import database.Database;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.MemberDBRowNames;
 import user_domain.CompetitiveMember;

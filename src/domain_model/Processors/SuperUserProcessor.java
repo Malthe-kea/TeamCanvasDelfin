@@ -1,15 +1,13 @@
 package domain_model.Processors;
 
 import database.Database;
-import database.UserDB;
+import database.userDB.UserDB;
 import user_domain.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Scanner;
 
 public class SuperUserProcessor implements Processor {
     private Scanner userInput;
