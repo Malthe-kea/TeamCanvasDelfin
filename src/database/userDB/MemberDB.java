@@ -19,7 +19,7 @@ public class MemberDB extends Database implements UserReturn {
     //Member retrieved needs to match the inserted id of the member.
     @Override
     public User getUserFromID(int id) {
-        return searchAndCreateUser(MemberDBRowNames.USER_ID, id + "");
+        return searchAndCreateUser(MemberDBRowNames.USER_ID, String.valueOf(id));
     }
 
     //Method for retreiving a Member instance based on data from Member, where the search criteria is that the
@@ -32,39 +32,41 @@ public class MemberDB extends Database implements UserReturn {
     //Retrieves list of member instances from all users based on database.
     public ArrayList<User> getListOfUsers() {
         //Gets list of rows from the database class getRows method.
-        ArrayList<String[]> allRows = getRows();
         //Inserts the rows from this specific database class into the UserReturn default method for getting users.
-        return getListOfUsers(allRows);
+        return UserReturn.super.getListOfUsers(super.getRows());
     }
 
     //Calls the default method in User Return, inserting the rows and index of column to be searched through.
     public User searchAndCreateUser(DBRowNames catToFindBy, String searchValue) {
         //Gets the index number of the column that was wished to be searched for.
-        int indexToSearchBy = getIndexOfRowName(catToFindBy);
+        int indexToSearchBy = super.getIndexOfRowName(catToFindBy);
         //Calls the default method in User Return, inserting the rows and index of column to be searched through.
-        return searchAndCreateUser(searchValue, indexToSearchBy, getRows());
+        return UserReturn.super.searchAndCreateUser(searchValue, indexToSearchBy, super.getRows());
     }
 
     //Method for creating a member Instance from a single row. A Single row represents one members data.
     public User createUserFromSingleRow(String[] singleRow) {
         //Gets the member id from the row.
-        int userid = Integer.parseInt(singleRow[0]);
+        int userid = Integer.parseInt(singleRow[getIndexOfRowName(MemberDBRowNames.USER_ID)]);
         //Gets first and last name from the member.
-        String firstName = singleRow[1];
-        String lastName = singleRow[2];
+        String firstName = singleRow[getIndexOfRowName(MemberDBRowNames.FIRST_NAME)];
+        String lastName = singleRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)];
         //Gets and converts the competitive status of the member (if normal member or competittive member) to boolean.
-        boolean isCompetitive = Boolean.parseBoolean(singleRow[4]);
+        boolean isCompetitive = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)]);
         //Gets and converts the activity status (passive/active) to boolean.
-        boolean isActiveMember = Boolean.parseBoolean(singleRow[3]);
+        boolean isActiveMember = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)]);
         //Gets and converts the age of the member.
-        int age = Integer.parseInt(singleRow[5]);
+        int age = Integer.parseInt(singleRow[getIndexOfRowName(MemberDBRowNames.AGE)]);
         //Gets and converts the arrears status (is not in debt/is in debt) to boolean.
-        boolean isArrears = Boolean.parseBoolean(singleRow[6]);
+        boolean isArrears = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)]);
         //Checks if the user is a Competitive member.
         //Both Member and competitiveMember are created in MemberDB, as their constructor parameters are identical.
         if (isCompetitive) {
             //Returns a new Competitive Member instance.
-            return new CompetitiveMember(userid, firstName, lastName, isActiveMember, true, age, isArrears);
+            CompetitiveMemberDB competitiveMemberDB = new CompetitiveMemberDB();
+            //Passes the already known Member values to the CompetitiveMemberDB for instancing a CompetitiveMember.
+            competitiveMemberDB.setMemberAttributes(userid, firstName,lastName, isActiveMember, age, isArrears);
+            return competitiveMemberDB.getUserFromID(userid);
         } else {
             //Returns a new Member instance.
             return new Member(userid, firstName, lastName, isActiveMember, false, age, isArrears);
@@ -74,16 +76,8 @@ public class MemberDB extends Database implements UserReturn {
     //Method for getting the string formats of the column names, which is stores inside the enum class of each
     //database row name enums. See package rowNameEnum.
     @Override
-    public ArrayList<String> getRowNamesFromEnumConfig() {
-        //Creates new arraylist for row Name String to be inserted into.
-        ArrayList<String> rowNamesToCreate = new ArrayList<>();
-        //Loops through each Enum value in the MemberDB Row Name Enum class.
-        for (MemberDBRowNames memberDBRowNames : MemberDBRowNames.values()) {
-            //Adds the string variant of the enum, which correlates to the column name in the MemberDB csv file,
-            //to the arraylist.
-            rowNamesToCreate.add(memberDBRowNames.getStringVariant());
-        }
-        return rowNamesToCreate;
+    public DBRowNames[] getEnumRowNames() {
+        return MemberDBRowNames.values();
     }
 
     //Method for editing a member in the MemberDB csv file. Returns true if edit was successfull.
@@ -96,19 +90,19 @@ public class MemberDB extends Database implements UserReturn {
             //Gets list of all member instances from DB.
             ArrayList<User> allUsers = getListOfUsers();
             //Gets list of all members as formatted DB String from DB.
-            ArrayList<String[]> allRows = getRows();
+            ArrayList<String[]> allRows = super.getRows();
             //Creates new String[] array with length corresponding to amount of columns in DB.
-            String[] newRow = new String[8];
+            String[] newRow = new String[MemberDBRowNames.values().length];
             //Gets the id, first name, last name as a String;
-            newRow[0] = String.valueOf(member.getUserID());
-            newRow[1] = member.getFirstName();
-            newRow[2] = member.getLastName();
+            newRow[getIndexOfRowName(MemberDBRowNames.USER_ID)] = String.valueOf(member.getUserID());
+            newRow[getIndexOfRowName(MemberDBRowNames.FIRST_NAME)] = member.getFirstName();
+            newRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)] = member.getLastName();
             //Gets the activity status, competitive status, age, arrears status and yearly membership fee as Strings.
-            newRow[3] = String.valueOf(member.isActiveMember());
-            newRow[4] = String.valueOf(member.isCompetitive());
-            newRow[5] = String.valueOf(member.getAge());
-            newRow[6] = String.valueOf(member.isArrears());
-            newRow[7] = String.valueOf(member.getYearlyMembershipFee());
+            newRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)] = String.valueOf(member.isActiveMember());
+            newRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)] = String.valueOf(member.isCompetitive());
+            newRow[getIndexOfRowName(MemberDBRowNames.AGE)] = String.valueOf(member.getAge());
+            newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());
+            newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());
 
             //Loops through list of member instances.
             for (int i = 0; i < allUsers.size(); i++) {
@@ -121,9 +115,18 @@ public class MemberDB extends Database implements UserReturn {
                     break;
                 }
             }
-            //We insert the edited row into the database.
-            return insertListToDB(allRows);
+
+            //We call the function that inserts a list of formatted rows into the db. If it returns false,
+            //It was not successfull in inserting data into the database.
+            if(!insertListToDB(allRows)) {
+                return false;
+            }
+
+            if(user instanceof CompetitiveMember compMember) {
+                CompetitiveMemberDB compMemberDB = new CompetitiveMemberDB();
+                return compMemberDB.editUserInDB(compMember);
+            }
         }
-        return false;
+        return true;
     }
 }

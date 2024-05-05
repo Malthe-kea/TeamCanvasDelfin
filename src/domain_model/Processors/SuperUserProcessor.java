@@ -82,7 +82,7 @@ public class SuperUserProcessor implements Processor {
         LocalDate dob = LocalDate.parse(birthDate);
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
+        //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
 
         return testDB;
     }

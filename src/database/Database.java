@@ -1,10 +1,6 @@
 package database;
 
 import database.rowNameEnum.DBRowNames;
-import user_domain.Member;
-import user_domain.Trainer;
-import user_domain.Treasurer;
-import user_domain.User;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -97,8 +93,21 @@ public abstract class Database {
         }
     }
 
-    //Abstract method that retrieves the columnRowNames from each config.
-    protected abstract ArrayList<String> getRowNamesFromEnumConfig();
+        //Method for getting the string formats of the column names, which is stores inside the enum class of each
+        //database row name enums. See package rowNameEnum.
+        public ArrayList<String> getRowNamesFromEnumConfig() {
+            //Creates new arraylist for row Name String to be inserted into.
+            ArrayList<String> rowNamesToCreate = new ArrayList<>();
+            //Loops through each Enum value in the MemberDB Row Name Enum class.
+            for (DBRowNames singleRowName : getEnumRowNames()) {
+                //Adds the string variant of the enum, which correlates to the column name in the MemberDB csv file,
+                //to the arraylist.
+                rowNamesToCreate.add(singleRowName.getStringVariant());
+            }
+            return rowNamesToCreate;
+        }
+
+    public abstract DBRowNames[] getEnumRowNames();
 
     //Method that inserts list of rows into database
     public boolean insertListToDB(ArrayList<String[]> allRowsToInsert) {

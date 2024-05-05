@@ -1,6 +1,7 @@
 package database;
 
 import database.Database;
+import database.rowNameEnum.DBRowNames;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class BankDB extends Database {
 
 
     @Override
-    ArrayList<String> getRowNamesFromEnumConfig() {
-        return null;
+    public DBRowNames[] getEnumRowNames() {
+        return new DBRowNames[0];
     }
 }

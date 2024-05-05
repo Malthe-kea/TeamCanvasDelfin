@@ -6,9 +6,10 @@ public class Competition {
     private String location;
     private ArrayList<Style> styleList;
 
-    public Competition(int id, String location) {
+    public Competition(int id, String location, ArrayList<Style> styleList) {
         this.id = id;
         this.location = location;
+        this.styleList = styleList;
     }
 
     public String getLocation() {

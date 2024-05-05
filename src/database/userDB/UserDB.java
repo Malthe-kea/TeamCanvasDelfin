@@ -34,30 +34,29 @@ public class UserDB extends Database implements UserReturn {
     //Retrieves list of User instances from all users based on database.
     public ArrayList<User> getListOfUsers() {
         //Gets list of rows from the database class getRows method.
-        ArrayList<String[]> allRows = getRows();
         //Inserts the rows from this specific database class into the UserReturn default method for getting users.
-        return getListOfUsers(allRows);
+        return getListOfUsers(super.getRows());
     }
 
 
     //Method for searching through database and creating a new User instance based on found user.
     public User searchAndCreateUser(DBRowNames catToFindBy, String searchValue) {
         //Gets the index number of the column that was wished to be searched for.
-        int indexToSearchBy = getIndexOfRowName(catToFindBy);
+        int indexToSearchBy = super.getIndexOfRowName(catToFindBy);
         //Calls the default method in User Return, inserting the rows and index of column to be searched through.
-        return searchAndCreateUser(searchValue, indexToSearchBy, getRows());
+        return UserReturn.super.searchAndCreateUser(searchValue, indexToSearchBy, super.getRows());
     }
 
     //Method for creating a user Instance from a single row. A Single row represents one users data.
     @Override
     public User createUserFromSingleRow(String[] singleRow) {
         //Gets the user id from the row.
-        int userId = Integer.parseInt(singleRow[0]);
+        int userId = Integer.parseInt(singleRow[getIndexOfRowName(UserDBRowNames.USER_ID)]);
         //Gets the permission level of the user.
-        int permissionLevelOfPulledRow = Integer.parseInt(singleRow[1]);
+        int permissionLevelOfPulledRow = Integer.parseInt(singleRow[getIndexOfRowName(UserDBRowNames.PERMISSION_LEVEL)]);
         //Gets first and last name from the user.
-        String firstName = singleRow[3];
-        String lastName = singleRow[4];
+        String firstName = singleRow[getIndexOfRowName(UserDBRowNames.FIRST_NAME)];
+        String lastName = singleRow[getIndexOfRowName(UserDBRowNames.LAST_NAME)];
 
         //Checks which permissionlevel the user has.
         //1: SuperUser
@@ -91,17 +90,8 @@ public class UserDB extends Database implements UserReturn {
     //Method for getting the string formats of the column names, which is stores inside the enum class of each
     //database row name enums. See package rowNameEnum.
     @Override
-    public ArrayList<String> getRowNamesFromEnumConfig() {
-        //Creates new arraylist for row Name String to be inserted into.
-        ArrayList<String> rowNamesToCreate = new ArrayList<>();
-
-        //Loops through each Enum value in the UserDB Row Name Enum class.
-        for(UserDBRowNames userDBRowNames: UserDBRowNames.values()) {
-            //Adds the string variant of the enum, which correlates to the column name in the UserDB csv file,
-            //to the arraylist.
-            rowNamesToCreate.add(userDBRowNames.getStringVariant());
-        }
-        return rowNamesToCreate;
+    public DBRowNames[] getEnumRowNames() {
+        return UserDBRowNames.values();
     }
 
     //Method for editing a user in the UserDB csv file. Returns true if edit was successfull.
@@ -111,11 +101,11 @@ public class UserDB extends Database implements UserReturn {
         //Gets list of all users in UserDB csv file.
         ArrayList<User> allUsers = getListOfUsers();
         //Creates new String[] array with length corresponding to amount of columns in DB.
-        String[] newRow = new String[5];
+        String[] newRow = new String[UserDBRowNames.values().length];
         //Retrieves the user id as String aswell as first and lastname.
-        newRow[0] = String.valueOf(user.getUserID());
-        newRow[3] = user.getFirstName();
-        newRow[4] = user.getLastName();
+        newRow[getIndexOfRowName(UserDBRowNames.USER_ID)] = String.valueOf(user.getUserID());
+        newRow[getIndexOfRowName(UserDBRowNames.FIRST_NAME)] = user.getFirstName();
+        newRow[getIndexOfRowName(UserDBRowNames.LAST_NAME)] = user.getLastName();
 
 
         //This switch case checks the instance of the user, and sets the correct permissionLevel
@@ -137,14 +127,14 @@ public class UserDB extends Database implements UserReturn {
         //This code retrieves the password set in the database, as passwords are not saved inside the member
         //Instance itself.
         //Gets rows in UserDB.
-        ArrayList<String[]> allRows = getRows();
+        ArrayList<String[]> allRows = super.getRows();
         //Loops through the user instances.
         for (int i = 0; i < allUsers.size(); i++) {
             //If the userid in allusers equals the user id of the wished edited user, it means we now know the
             //index place of the wished user in the database, and we can now retrieve the password.
             if(allUsers.get(i).getUserID() == user.getUserID()) {
                 //Retrieves the password from the database and indserts it into our row.
-                newRow[2] = getRows().get(i)[2];
+                newRow[2] = allRows.get(i)[getIndexOfRowName(UserDBRowNames.PASSWORD)];
                 //We now replace our old user inside our row with the edited data.
                 allRows.set(i,newRow);
                 break;
@@ -165,7 +155,6 @@ public class UserDB extends Database implements UserReturn {
             case MEMBER, COMPETITIVE -> {
                 MemberDB memberDB = new MemberDB();
                 return memberDB.editUserInDB(user);
-
             }
             case TRAINER -> {
                 TrainerDB trainerDB = new TrainerDB();
