@@ -21,12 +21,13 @@ public class StyleDB extends Database {
 
 
     public ArrayList<Style> getUserCompetitionStyles(int competitionID, int userID) {
-        int competitionIDFromDB = getIndexOfRowName(StyleDBRowNames.COMPETITION_ID);
-        int userIDFromDB = getIndexOfRowName(StyleDBRowNames.USER_ID);
+        int competitionIDIndex = getIndexOfRowName(StyleDBRowNames.COMPETITION_ID);
+        int userIDIndex = getIndexOfRowName(StyleDBRowNames.USER_ID);
         ArrayList<String[]> allRowsFromDB = super.getRows();
         ArrayList<Style> styles = new ArrayList<>();
         for(String[] singleRow : allRowsFromDB) {
-
+            int userIDFromDB = Integer.parseInt(singleRow[userIDIndex]);
+            int competitionIDFromDB = Integer.parseInt(singleRow[competitionIDIndex]);
             if(competitionIDFromDB == competitionID && userIDFromDB == userID) {
                 int styleID = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)]);
                 String styleName = singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)];

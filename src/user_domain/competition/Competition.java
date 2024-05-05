@@ -16,6 +16,10 @@ public class Competition {
         return location;
     }
 
+    public int getID() {
+        return id;
+    }
+
     public ArrayList<Style> getStyleList() {
         return styleList;
     }
