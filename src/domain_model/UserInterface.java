@@ -42,9 +42,9 @@ public class UserInterface {
                 String password = loginInfo[1];
                 if (loginSucces) {
                     navigateToRole(userID);
-                    programIsRunning = false;
+//                   programIsRunning = false;
                 } else {
-                    programIsRunning = false;
+                    JOptionPane.showMessageDialog(null, "Login mislykkedes. Prøv igen.", "Fejl", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -123,7 +123,7 @@ public class UserInterface {
             case "7" -> {
                 superUserProcessor.getUserFromDB(1);
             }
-             case"9"->{
+            case "9" -> {
                 print("Farvel");
                 programIsRunning = false;
                 System.exit(0);
@@ -148,23 +148,22 @@ public class UserInterface {
         memberMenuInformation();
         String command = userInput.nextLine().toLowerCase();
 
-        switch (command){
-            case"1"->{
+        switch (command) {
+            case "1" -> {
                 memberProcessor.displayMemberOverview();
             }
-            case"2"->{
+            case "2" -> {
                 memberProcessor.displayTrainingResultsForEachDiscipline();
             }
-            case"3"->{
+            case "3" -> {
                 memberProcessor.displayCompetitionResults();
             }
-            case"9"->{
+            case "9" -> {
                 print("Farvel");
                 programIsRunning = false;
                 System.exit(0);
             }
         }
-
     }
 
 
@@ -192,14 +191,23 @@ public class UserInterface {
                 """);
     }
 
-    private void trainerMenuInformation(){
-
+    private void trainerMenuInformation() {
+        print("""
+                Du har nu følgende muligheder:
+                1 - 
+                2 - 
+                3 -     
+                """);
     }
 
-    private void treasurerMenuInformation(){
-
+    private void treasurerMenuInformation() {
+        print("""
+                Du har nu følgende muligheder:
+                1 - 
+                2 - 
+                3 -     
+                """);
     }
-
 
 
     private void print(String s) {
@@ -207,7 +215,8 @@ public class UserInterface {
     }
 }
 
-//    private void logout(){
+
+//    private void logout() {
 //        int valg = JOptionPane.showOptionDialog(null,
 //                "Vil du logge ud?",
 //                "Log ud",
@@ -216,12 +225,17 @@ public class UserInterface {
 //                null,
 //                new String[]{"Ja", "Nej"},
 //                "Ja");
-//        if (valg == JOptionPane.YES_OPTION){
+//        if (valg == JOptionPane.YES_OPTION) {
 //            startProgram();
-//        }
-//        else {
+//        } else {
+//            //JOptionPane.showMessageDialog(null,"Du er fortsat logget ind", "fortsæt", JOptionPane.PLAIN_MESSAGE);
+//            }
 //        }
 //    }
+
+
+
+
 
 
 
