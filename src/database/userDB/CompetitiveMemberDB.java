@@ -2,11 +2,15 @@ package database.userDB;
 
 import database.Database;
 import database.competition_style_DB.CompetitionDB;
+import database.competition_style_DB.StyleDB;
+import database.rowNameEnum.CompetitionDBRowNames;
 import database.rowNameEnum.CompetitiveMemberDBRowNames;
 import database.rowNameEnum.DBRowNames;
+import database.rowNameEnum.UserDBRowNames;
 import user_domain.CompetitiveMember;
 import user_domain.User;
 import user_domain.competition.Competition;
+import user_domain.competition.Style;
 
 import java.util.ArrayList;
 
@@ -98,6 +102,13 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
     public boolean editUserInDB(User user) {
         //Checks of the user instance is indeed an instance of Member.
         if (user instanceof CompetitiveMember compMember) {
+            userIDFromMemberDB = compMember.getUserID();
+            firstNameFromMemberDB = compMember.getFirstName();
+            lastNameFromMemberDB = compMember.getLastName();
+            isActiveMemberFromMemberDB = compMember.isActiveMember();
+            ageFromMemberDB = compMember.getAge();
+            isArrearsFromMemberDB = compMember.isArrears();
+
             //Gets list of all member instances from DB.
             ArrayList<User> allUsers = getListOfUsers();
             //Gets list of all members as formatted DB String from DB.
@@ -105,12 +116,17 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
             //Creates new String[] array with length corresponding to amount of columns in DB.
             String[] newRow = new String[CompetitiveMemberDBRowNames.values().length];
             //Gets the id, first name, last name as a String;
-            newRow[0] = String.valueOf(compMember.getUserID());
-            newRow[1] = compMember.getFirstName();
-            newRow[2] = compMember.getLastName();
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)] = String.valueOf(compMember.getUserID());
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.FIRST_NAME)] = compMember.getFirstName();
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.LAST_NAME)] = compMember.getLastName();
             //Gets the activity status, competitive status, age, arrears status and yearly membership fee as Strings.
             ArrayList<Competition> compList = compMember.getCompetitionList();
-            newRow[3] = compList.toString();
+            ArrayList<Integer> compIDList = new ArrayList<>();
+            compList.forEach(comp -> compIDList.add(comp.getID()));
+
+
+
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST)] = compIDList.toString();
 
             //Loops through list of member instances.
             for (int i = 0; i < allUsers.size(); i++) {
@@ -137,8 +153,76 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
 
                 return !compErrorReturns.contains(false);
             }
+            return true;
+        }
+        return false;
+    }
+
+    public int getIDForNewUser() {
+        return getIDForNewEntry(UserDBRowNames.USER_ID, super.getRows());
+    }
 
 
+    public boolean addUserInDB(User user) {
+        if(!(user instanceof CompetitiveMember compMember && user.getUserID() == getIDForNewUser())) {
+            return false;
+        } else {
+            ArrayList<String[]> allRows = getRows();
+
+            String[] newRow = new String[CompetitiveMemberDBRowNames.values().length];
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)] = String.valueOf(compMember.getUserID());
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.FIRST_NAME)] = compMember.getFirstName();
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.LAST_NAME)] = compMember.getLastName();
+
+            ArrayList<Competition> compList = compMember.getCompetitionList();
+            ArrayList<Integer> compIDList = new ArrayList<>();
+            compList.forEach(comp -> compIDList.add(comp.getID()));
+
+            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST)] = compIDList.toString();
+
+
+            allRows.add(newRow);
+
+            if(!insertListToDB(allRows)) {
+                return false;
+            }
+
+            if(!compList.isEmpty()) {
+                CompetitionDB compDB = new CompetitionDB();
+                for (Competition singleComp : compList) {
+                    compDB.addCompetitionToDB(singleComp);
+                }
+            }
+            return true;
+        }
+    }
+
+    @Override
+    public boolean removeUserFromDB(User user) {
+        if(user instanceof CompetitiveMember compMember) {
+            ArrayList<String[]> allRows = getRows();
+
+            for(String[] singleRow : allRows) {
+                int userIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)]);
+                if(userIDFromDB == compMember.getUserID()) {
+                    allRows.remove(singleRow);
+                    break;
+                }
+            }
+
+            ArrayList<Competition> compList = compMember.getCompetitionList();
+
+            if(!insertListToDB(allRows)) {
+                return false;
+            }
+            StyleDB styleDB = new StyleDB();
+            for(Competition comp : compList) {
+                for(Style style : comp.getStyleList()) {
+                    if(!styleDB.removeStyleFromDB(style)) {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
         return false;

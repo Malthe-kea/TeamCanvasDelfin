@@ -1,4 +1,8 @@
 id;permissionLevel;password;firstName;lastName;
-1;4;mypassword;Noah;Van Wagenen;
-2;4;hdhsgh;My 143;YOLO;
-3;4;hdhsgh;Casper;Van Wagenen;
+3;4;testPassword;Laura;Bøjden;
+4;4;testPassword;Laura;Bøjden;
+5;4;testPassword;Laura;Bøjden;
+6;4;testPassword;Laura;Bøjden;
+7;4;testPassword;Laura;Bøjden;
+8;4;testPassword;Laura;Bøjden;
+9;4;testPassword;Laura;Bøjden;

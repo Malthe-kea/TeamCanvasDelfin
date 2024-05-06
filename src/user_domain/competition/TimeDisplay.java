@@ -3,7 +3,7 @@ package user_domain.competition;
 import java.time.Duration;
 
 public class TimeDisplay {
-    private final Duration duration;
+    private Duration duration;
 
     public TimeDisplay(long totalSeconds) {
         this.duration = Duration.ofSeconds(totalSeconds);
@@ -17,5 +17,9 @@ public class TimeDisplay {
 
     public long getDurationInSeconds() {
         return duration.toSeconds();
+    }
+
+    public void setDurationInSeconds(long seconds) {
+        duration = Duration.ofSeconds(seconds);
     }
 }

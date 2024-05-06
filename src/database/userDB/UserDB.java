@@ -1,6 +1,7 @@
 package database.userDB;
 
 import database.Database;
+import database.SortRowByIDComparator;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.UserDBRowNames;
 import domain_model.DelfinUtil;
@@ -169,4 +170,107 @@ public class UserDB extends Database implements UserReturn {
         }
         return false;
     }
+
+    //Method for getting the next ID for a new user to be inserted into the database.
+    public int getIDForNewUser() {
+        return getIDForNewEntry(UserDBRowNames.USER_ID, super.getRows());
+    }
+
+
+    public boolean addUserInDB(User user, String password) {
+        if(user.getUserID() != getIDForNewUser()) {
+            return false;
+        } else {
+            ArrayList<String[]> allRows = getRows();
+
+            String[] newRow = new String[UserDBRowNames.values().length];
+            newRow[getIndexOfRowName(UserDBRowNames.USER_ID)] = String.valueOf(user.getUserID());
+            newRow[getIndexOfRowName(UserDBRowNames.FIRST_NAME)] = user.getFirstName();
+            newRow[getIndexOfRowName(UserDBRowNames.LAST_NAME)] = user.getLastName();
+            newRow[getIndexOfRowName(UserDBRowNames.PASSWORD)] = password;
+            int permissionLevelIndex = getIndexOfRowName(UserDBRowNames.PERMISSION_LEVEL);
+            switch(DelfinUtil.checkUserInstance(user)) {
+                case SUPER -> {
+                    newRow[permissionLevelIndex] = "1";
+                }
+                case TREASURER -> {
+                    newRow[permissionLevelIndex] = "2";
+                }
+                case TRAINER -> {
+                    newRow[permissionLevelIndex] = "3";
+                }
+                default -> {
+                    newRow[permissionLevelIndex] = "4";
+                }
+            }
+
+
+            allRows.add(newRow);
+
+            if(!insertListToDB(allRows)) {
+                return false;
+            }
+
+            switch(DelfinUtil.checkUserInstance(user)) {
+                case MEMBER, COMPETITIVE -> {
+                    MemberDB memberDB = new MemberDB();
+                    return memberDB.addUserInDB(user);
+                }
+                case TRAINER -> {
+                    TrainerDB trainerDB = new TrainerDB();
+                    return trainerDB.addUserInDB(user);
+                }
+                case SUPER, TREASURER -> {
+                    return true;
+                }
+                case NOTFOUND -> {
+                    return false;
+                }
+            }
+
+        }
+        return false;
+    }
+
+
+    public boolean removeUserFromDB(int id) {
+        return removeUserFromDB(getUserFromID(id));
+    }
+
+    public boolean removeUserFromDB(User user) {
+        ArrayList<String[]> allRows = getRows();
+
+        for(String[] singleRow : allRows) {
+            int userIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(UserDBRowNames.USER_ID)]);
+            if(userIDFromDB == user.getUserID()) {
+                allRows.remove(singleRow);
+                break;
+            }
+        }
+
+
+        if(!insertListToDB(allRows)) {
+            return false;
+        }
+
+        switch(DelfinUtil.checkUserInstance(user)) {
+            case MEMBER, COMPETITIVE -> {
+                MemberDB memberDB = new MemberDB();
+                return memberDB.removeUserFromDB(user);
+            }
+            case TRAINER -> {
+                TrainerDB trainerDB = new TrainerDB();
+                return trainerDB.removeUserFromDB(user);
+            }
+            case SUPER, TREASURER -> {
+                return true;
+            }
+            case NOTFOUND -> {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
 }

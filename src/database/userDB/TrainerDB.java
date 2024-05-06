@@ -3,6 +3,7 @@ package database.userDB;
 import database.Database;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.TrainerDBRowNames;
+import database.rowNameEnum.UserDBRowNames;
 import user_domain.Trainer;
 import user_domain.User;
 
@@ -98,6 +99,41 @@ public class TrainerDB extends Database implements UserReturn {
             //We insert the edited row into the database.
             return insertListToDB(allRows);
 
+        }
+        return false;
+    }
+
+    public int getIDForNewUser() {
+        return getIDForNewEntry(UserDBRowNames.USER_ID, super.getRows());
+    }
+
+    public boolean addUserInDB(User user) {
+        if(!(user instanceof Trainer trainer && user.getUserID() == getIDForNewUser())) {
+            return false;
+        } else {
+            ArrayList<String[]> allRows = super.getRows();
+            String[] newRow = new String[TrainerDBRowNames.values().length];
+            newRow[getIndexOfRowName(TrainerDBRowNames.USER_ID)] = String.valueOf(trainer.getUserID());
+            newRow[getIndexOfRowName(TrainerDBRowNames.FIRST_NAME)] = trainer.getFirstName();
+            newRow[getIndexOfRowName(TrainerDBRowNames.LAST_NAME)] = trainer.getLastName();
+            newRow[getIndexOfRowName(TrainerDBRowNames.IS_SENIOR_TRAINER)] = String.valueOf(trainer.isSeniorTrainer());
+            allRows.add(newRow);
+            return insertListToDB(allRows);
+        }
+    }
+
+    @Override
+    public boolean removeUserFromDB(User user) {
+        if(user instanceof Trainer trainer) {
+            ArrayList<String[]> allRows = getRows();
+
+            for(String[] singleRow : allRows) {
+                int userIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(TrainerDBRowNames.USER_ID)]);
+                if(userIDFromDB == trainer.getUserID()) {
+                    allRows.remove(singleRow);
+                    return insertListToDB(allRows);
+                }
+            }
         }
         return false;
     }

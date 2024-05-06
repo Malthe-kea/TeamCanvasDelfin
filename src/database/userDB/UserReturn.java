@@ -64,4 +64,6 @@ public interface UserReturn {
     static String getFolderPath() {
         return "UserDB" + File.separator;
     }
+
+    boolean removeUserFromDB(User user);
 }

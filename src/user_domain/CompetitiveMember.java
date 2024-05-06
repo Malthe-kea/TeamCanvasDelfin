@@ -72,4 +72,28 @@ public class CompetitiveMember extends Member {
             System.out.println(competition.staevne + " - " + competition.lokation + " - " + competition.tid);
         }
     }
+
+    public void setBackStrokePR(Style backStrokePR) {
+        this.backStrokePR = backStrokePR;
+    }
+
+    public void setCrawlPR(Style crawlPR) {
+        this.crawlPR = crawlPR;
+    }
+
+    public void setBreastStrokePR(Style breastStrokePR) {
+        this.breastStrokePR = breastStrokePR;
+    }
+
+    public void setButterflyPR(Style butterflyPR) {
+        this.butterflyPR = butterflyPR;
+    }
+
+    public void addCompition(Competition competition){
+        competitionList.add(competition);
+    }
+
+    public void removeCompetitionFromID(int id){
+        competitionList.removeIf(comp -> id == comp.getID());
+    }
 }

@@ -23,4 +23,12 @@ public class Competition {
     public ArrayList<Style> getStyleList() {
         return styleList;
     }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setStyleList(ArrayList<Style> styleList) {
+        this.styleList = styleList;
+    }
 }

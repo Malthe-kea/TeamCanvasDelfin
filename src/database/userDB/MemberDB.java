@@ -3,6 +3,8 @@ package database.userDB;
 import database.Database;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.MemberDBRowNames;
+import database.rowNameEnum.UserDBRowNames;
+import domain_model.DelfinUtil;
 import user_domain.CompetitiveMember;
 import user_domain.Member;
 import user_domain.User;
@@ -65,7 +67,7 @@ public class MemberDB extends Database implements UserReturn {
             //Returns a new Competitive Member instance.
             CompetitiveMemberDB competitiveMemberDB = new CompetitiveMemberDB();
             //Passes the already known Member values to the CompetitiveMemberDB for instancing a CompetitiveMember.
-            competitiveMemberDB.setMemberAttributes(userid, firstName,lastName, isActiveMember, age, isArrears);
+            competitiveMemberDB.setMemberAttributes(userid, firstName, lastName, isActiveMember, age, isArrears);
             return competitiveMemberDB.getUserFromID(userid);
         } else {
             //Returns a new Member instance.
@@ -128,5 +130,72 @@ public class MemberDB extends Database implements UserReturn {
             }
         }
         return true;
+    }
+
+    public int getIDForNewUser() {
+        return getIDForNewEntry(UserDBRowNames.USER_ID, super.getRows());
+    }
+
+    public boolean addUserInDB(User user) {
+        if(!(user instanceof Member member && user.getUserID() == getIDForNewUser())) {
+            return false;
+        } else {
+            ArrayList<String[]> allRows = getRows();
+
+            String[] newRow = new String[MemberDBRowNames.values().length];
+            newRow[getIndexOfRowName(MemberDBRowNames.USER_ID)] = String.valueOf(member.getUserID());
+            newRow[getIndexOfRowName(MemberDBRowNames.FIRST_NAME)] = member.getFirstName();
+            newRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)] = member.getLastName();
+            newRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)] = String.valueOf(member.isActiveMember());
+            newRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)] = String.valueOf(member.isCompetitive());
+            newRow[getIndexOfRowName(MemberDBRowNames.AGE)] = String.valueOf(member.getAge());
+            newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());
+            newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());
+
+
+
+            allRows.add(newRow);
+
+            if(!insertListToDB(allRows)) {
+                return false;
+            }
+
+            if(member instanceof CompetitiveMember compMember) {
+                CompetitiveMemberDB compMemberDB = new CompetitiveMemberDB();
+                return compMemberDB.addUserInDB(compMember);
+
+            } else {
+                return true;
+            }
+
+        }
+    }
+
+    @Override
+    public boolean removeUserFromDB(User user) {
+        if(user instanceof Member member) {
+            ArrayList<String[]> allRows = getRows();
+
+            for(String[] singleRow : allRows) {
+                int userIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(MemberDBRowNames.USER_ID)]);
+                if(userIDFromDB == member.getUserID()) {
+                    allRows.remove(singleRow);
+                    break;
+                }
+            }
+
+            if(!insertListToDB(allRows)) {
+                return false;
+            }
+
+            if(member instanceof CompetitiveMember) {
+                CompetitiveMemberDB compDB = new CompetitiveMemberDB();
+                return compDB.removeUserFromDB(member);
+            } else {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

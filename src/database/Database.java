@@ -1,6 +1,7 @@
 package database;
 
 import database.rowNameEnum.DBRowNames;
+import database.rowNameEnum.UserDBRowNames;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -136,5 +137,21 @@ public abstract class Database {
         //Returns true as insertion was successful.
         return true;
     }
+
+    public int getIDForNewEntry(DBRowNames dbRowName, ArrayList<String[]> allRows) {
+        allRows.sort(new SortRowByIDComparator());
+        int newID = allRows.size()+1;
+        for (int i = 1; i < allRows.size(); i++) {
+            int previousID = Integer.parseInt(allRows.get(i - 1)[getIndexOfRowName(dbRowName)]);
+            int currentID = Integer.parseInt(allRows.get(i)[getIndexOfRowName(dbRowName)]);
+            if (currentID - previousID != 1) {
+                newID = previousID + 1;
+                break;
+            }
+        }
+
+        return newID;
+    }
+
 
 }
