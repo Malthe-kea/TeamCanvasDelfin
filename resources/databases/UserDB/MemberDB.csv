@@ -1,2 +1,5 @@
 id;firstName;lastName;isActiveMember;isCompetitive;dateOfBirth;isArrears;yearlyMembershipFee;
-1;Laura;Bøjden;true;true;10/10/2001;false;1600.0;
+1;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;
+2;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;
+3;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;
+4;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;

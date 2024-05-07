@@ -1,6 +1,6 @@
 package domain_model;
 
-import database.UserDB;
+import database.DBController;
 import domain_model.Processors.*;
 import user_domain.Member;
 
@@ -24,7 +24,7 @@ public class UserInterface {
         loginSucces = true;
         userInput = new Scanner(System.in);
 
-        Member member = new Member(1, "esra", "lund", false, false, 25, false); // Eksempel p� medlem
+        Member member = new Member(1, "esra", "lund", false, false, "29/09/1990", false); // Eksempel p� medlem
 
         memberProcessor = new MemberProcessor(member);
         superUserProcessor = new SuperUserProcessor();
@@ -112,7 +112,7 @@ public class UserInterface {
                 superUserProcessor.CreateandAddCompetitiveMembertoDB();
             }
             case "4" -> {
-                superUserProcessor.CreateandAddTreasurertoDB();
+                superUserProcessor.CreateAndAddTreasurertoDB();
             }
             case "5" -> {
                 superUserProcessor.editUserFromDB(1, "esra");
@@ -141,6 +141,25 @@ public class UserInterface {
 
     private void loginAsTreasurer() {
         print("Logget ind som Treasurer.");
+        treasurerMenuInformation();
+        String command = userInput.nextLine().toLowerCase();
+        switch (command) {
+            case "1" -> {
+                print("Dette års forventede indkomst er: ");
+                treasurerProcessor.getExpectedIncome();
+            }
+            case "2" -> {
+
+            }
+            case "3" -> {
+
+            }
+            case "9" -> {
+                print("Farvel");
+                programIsRunning = false;
+                System.exit(0);
+            }
+        }
     }
 
     private void loginAsMember() {
@@ -203,8 +222,8 @@ public class UserInterface {
     private void treasurerMenuInformation() {
         print("""
                 Du har nu f�lgende muligheder:
-                1 - 
-                2 - 
+                1 - Tjek den forventede årlige indkomst.
+                2 - Få en liste af medlemmer, der er i restance. 
                 3 -     
                 """);
     }
@@ -239,5 +258,5 @@ public class UserInterface {
 
 
 
-}
+
 

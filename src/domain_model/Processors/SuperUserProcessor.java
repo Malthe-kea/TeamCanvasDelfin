@@ -1,7 +1,7 @@
 package domain_model.Processors;
 
 import database.Database;
-import database.UserDB;
+import database.DBController;
 import domain_model.DelfinUtil;
 import domain_model.UserInstance;
 import domain_model.UserInterface;
@@ -46,7 +46,7 @@ public class SuperUserProcessor implements Processor {
         LocalDate dob = LocalDate.parse(birthDate);
 
 
-        testDB.add(new Member(1, firstNames, lastNames, isActiveMember, true, calculateAge(dob), false));
+        testDB.add(new Member(1, firstNames, lastNames, isActiveMember, true, "29/09/1990", false));
 
         return testDB;
     }
@@ -65,7 +65,7 @@ public class SuperUserProcessor implements Processor {
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
-//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
+
         testDB.add(new Trainer(2, "Flemming", "Rasmussen", true));
 
         return testDB;
@@ -87,11 +87,12 @@ public class SuperUserProcessor implements Processor {
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
         //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
+        testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, "20/09/1990", false, new ArrayList<>()));
 
         return testDB;
     }
 
-    public ArrayList CreateandAddTreasurertoDB() {
+    public ArrayList CreateAndAddTreasurertoDB() {
 
         print("Indtast fornavne");
         String firstNames = userInput.nextLine();
@@ -105,7 +106,6 @@ public class SuperUserProcessor implements Processor {
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
 
-//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
         testDB.add(new Treasurer(4, "Steen", "Secher"));
 
         return testDB;
