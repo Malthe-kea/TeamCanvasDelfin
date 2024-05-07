@@ -17,6 +17,12 @@ public class CompetitiveMember extends Member {
         this.competitionList = competitionList;
     }
 
+    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears) {
+        super(userID, firstName, lastName, isActiveMember, isCompetitive, dateOfBirth, isArrears);
+        this.competitionList = new ArrayList<>();
+
+    }
+
     public ArrayList<Competition> getCompetitionList() {
         return competitionList;
     }
