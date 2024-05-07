@@ -51,15 +51,17 @@ public class Main {
         CompetitiveMember member = new CompetitiveMember(userDB.getIDForNewUser(), "Laura", "Bøjden",
                 true, true, "10/10/2001", false, new ArrayList<>(Arrays.asList(comp)));
 
-        userDB.addUserInDB(member,"hdshdsj");
+        //userDB.addUserInDB(member,"hdshdsj");
         //Member member = new Member(1, "Laura", "Bøjden", true, true, "23/05/1998", false);
 
         /*System.out.println(member.getDateOfBirth());
         System.out.println(member.getAge());*/
 
-        printCompetitiveMember((CompetitiveMember) userDB.getUserFromID(member.getUserID()));
+        //printCompetitiveMember((CompetitiveMember) userDB.getUserFromID(member.getUserID()));
 
+        CompetitionDB compDB = new CompetitionDB();
 
+        Competition compTest = compDB.getCompetitionFromID(1);
 
 
 

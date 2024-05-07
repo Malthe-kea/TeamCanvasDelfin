@@ -152,8 +152,6 @@ public class MemberDB extends Database implements UserReturn {
             newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());
             newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());
 
-
-
             allRows.add(newRow);
 
             if(!insertListToDB(allRows)) {

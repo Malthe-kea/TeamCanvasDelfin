@@ -231,7 +231,6 @@ public class UserDB extends Database implements UserReturn {
         return false;
     }
 
-
     public boolean removeUserFromDB(int id) {
         return removeUserFromDB(getUserFromID(id));
     }
