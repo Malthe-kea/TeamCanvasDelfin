@@ -1,15 +1,13 @@
 package database.rowNameEnum;
 
-//Enum class containing column of TrainerDB csv file.
-public enum TrainerDBRowNames implements DBRowNames {
-    USER_ID("id"),
-    FIRST_NAME("firstName"),
-    LAST_NAME("lastName"),
-    IS_SENIOR_TRAINER("isSeniorTrainer");
+//Enum class containing column of CompetitiveDB csv file.
+public enum CompetitionDBRowNames implements DBRowNames {
+    COMPETITIVE_ID("id"),
+    LOCATION("location");
 
     //String variant contains the displayed name inside the csv file for each column.
-    private String stringVariant;
-    TrainerDBRowNames(String stringVariant) {
+    final String stringVariant;
+    CompetitionDBRowNames(String stringVariant) {
         this.stringVariant = stringVariant;
     }
 
@@ -17,4 +15,6 @@ public enum TrainerDBRowNames implements DBRowNames {
     public String getStringVariant() {
         return stringVariant;
     }
+
+
 }

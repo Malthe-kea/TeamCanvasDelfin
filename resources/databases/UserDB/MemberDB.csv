@@ -1,4 +1,8 @@
 id;firstName;lastName;isActiveMember;isCompetitive;age;isArrears;yearlyMembershipFee;
-1;Test igen;Hej;true;true;12;false;1000.0;
-2;My 143;YOLO;true;true;12;false;1000.0;
-3;My 143;YOLO;true;true;12;false;1000.0;
+3;Laura;Bøjden;true;true;23;false;1600.0;
+4;Laura;Bøjden;true;true;23;false;1600.0;
+5;Laura;Bøjden;true;true;23;false;1600.0;
+6;Laura;Bøjden;true;true;23;false;1600.0;
+7;Laura;Bøjden;true;true;23;false;1600.0;
+8;Laura;Bøjden;true;true;23;false;1600.0;
+9;Laura;Bøjden;true;true;23;false;1600.0;

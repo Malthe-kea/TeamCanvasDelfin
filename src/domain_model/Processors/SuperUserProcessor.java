@@ -5,14 +5,13 @@ import database.UserDB;
 import domain_model.DelfinUtil;
 import domain_model.UserInstance;
 import domain_model.UserInterface;
+import database.userDB.UserDB;
 import user_domain.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Scanner;
 
 public class SuperUserProcessor implements Processor {
     private Scanner userInput;
@@ -87,7 +86,7 @@ public class SuperUserProcessor implements Processor {
         LocalDate dob = LocalDate.parse(birthDate);
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
+        //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
 
         return testDB;
     }

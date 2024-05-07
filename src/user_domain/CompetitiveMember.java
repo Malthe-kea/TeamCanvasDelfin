@@ -2,7 +2,6 @@ package user_domain;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import database.CompetitiveDB;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
 
@@ -13,8 +12,9 @@ public class CompetitiveMember extends Member {
     private Style butterflyPR;
     private ArrayList<Competition> competitionList;
 
-    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears) {
+    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears, ArrayList<Competition> competitionList) {
         super(userID, firstName, lastName, isActiveMember, isCompetitive, age, isArrears);
+        this.competitionList = competitionList;
     }
 
     public ArrayList<Competition> getCompetitionList() {
@@ -71,5 +71,29 @@ public class CompetitiveMember extends Member {
         for (SortExampleTest competition : sortingExample) {
             System.out.println(competition.staevne + " - " + competition.lokation + " - " + competition.tid);
         }
+    }
+
+    public void setBackStrokePR(Style backStrokePR) {
+        this.backStrokePR = backStrokePR;
+    }
+
+    public void setCrawlPR(Style crawlPR) {
+        this.crawlPR = crawlPR;
+    }
+
+    public void setBreastStrokePR(Style breastStrokePR) {
+        this.breastStrokePR = breastStrokePR;
+    }
+
+    public void setButterflyPR(Style butterflyPR) {
+        this.butterflyPR = butterflyPR;
+    }
+
+    public void addCompition(Competition competition){
+        competitionList.add(competition);
+    }
+
+    public void removeCompetitionFromID(int id){
+        competitionList.removeIf(comp -> id == comp.getID());
     }
 }

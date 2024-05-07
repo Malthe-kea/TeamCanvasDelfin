@@ -51,4 +51,20 @@ public class Member extends User {
     public double getYearlyMembershipFee() {
         return yearlyMembershipFee;
     }
+
+    public void setActiveMember(boolean activeMember) {
+        isActiveMember = activeMember;
+    }
+
+    public void setCompetitive(boolean competitive) {
+        isCompetitive = competitive;
+    }
+
+    public void setArrears(boolean arrears) {
+        isArrears = arrears;
+    }
+
+    public void setSenior(boolean senior) {
+        isSenior = senior;
+    }
 }
