@@ -20,7 +20,7 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
     private String lastNameFromMemberDB;
     private boolean isActiveMemberFromMemberDB;
     private final boolean isCompetitiveFromMemberDB;
-    private int ageFromMemberDB;
+    private String dateOfBirthFromMemberDB;
     private boolean isArrearsFromMemberDB;
 
 
@@ -35,17 +35,17 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
         firstNameFromMemberDB = null;
         lastNameFromMemberDB = null;
         isActiveMemberFromMemberDB = false;
-        ageFromMemberDB = -1;
+        dateOfBirthFromMemberDB = "";
         isArrearsFromMemberDB = false;
     }
 
     public void setMemberAttributes(int userIDFromMemberDB, String firstNameFromMemberDB, String lastNameFromMemberDB,
-                                    boolean isActiveMemberFromMemberDB, int ageFromMemberDB, boolean isArrearsFromMemberDB) {
+                                    boolean isActiveMemberFromMemberDB, String dateOfBirthFromMemberDB, boolean isArrearsFromMemberDB) {
         this.userIDFromMemberDB = userIDFromMemberDB;
         this.firstNameFromMemberDB = firstNameFromMemberDB;
         this.lastNameFromMemberDB = lastNameFromMemberDB;
         this.isActiveMemberFromMemberDB = isActiveMemberFromMemberDB;
-        this.ageFromMemberDB = ageFromMemberDB;
+        this.dateOfBirthFromMemberDB = dateOfBirthFromMemberDB;
         this.isArrearsFromMemberDB = isArrearsFromMemberDB;
     }
 
@@ -90,7 +90,7 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
             }
 
             return new CompetitiveMember(userIDFromMemberDB, firstNameFromMemberDB, lastNameFromMemberDB, isActiveMemberFromMemberDB,
-                    isCompetitiveFromMemberDB, ageFromMemberDB, isArrearsFromMemberDB, compList);
+                    isCompetitiveFromMemberDB, dateOfBirthFromMemberDB, isArrearsFromMemberDB, compList);
         }
 
 
@@ -106,7 +106,7 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
             firstNameFromMemberDB = compMember.getFirstName();
             lastNameFromMemberDB = compMember.getLastName();
             isActiveMemberFromMemberDB = compMember.isActiveMember();
-            ageFromMemberDB = compMember.getAge();
+            dateOfBirthFromMemberDB = compMember.getDateOfBirth();
             isArrearsFromMemberDB = compMember.isArrears();
 
             //Gets list of all member instances from DB.

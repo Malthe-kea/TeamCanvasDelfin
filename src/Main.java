@@ -5,6 +5,7 @@ import database.rowNameEnum.DBRowNames;
 import database.userDB.CompetitiveMemberDB;
 import database.userDB.UserDB;
 import user_domain.CompetitiveMember;
+import user_domain.Member;
 import user_domain.User;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
@@ -39,26 +40,28 @@ public class Main {
             member = (CompetitiveMember) userDB.getUserFromID(1);
             printCompetitiveMember(member);
         }*/
-        Style style1 = new Style(1, userDB.getIDForNewUser(), competitionDB.getIDForNewCompetition(), "Butterfly", 2, 100);
-        Style style2 = new Style(2, userDB.getIDForNewUser(), competitionDB.getIDForNewCompetition(), "Butterfly", 2, 100);
-        Style style3 = new Style(3, userDB.getIDForNewUser(), competitionDB.getIDForNewCompetition(), "Butterfly", 2, 100);
-        Style style4 = new Style(4, userDB.getIDForNewUser(), competitionDB.getIDForNewCompetition(), "Butterfly", 2, 100);
 
-        Competition comp = new Competition(1, "Hellerup", new ArrayList<>(Arrays.asList(style1,style2,style3,style4)));
+        Competition comp = new Competition(1, "Hellerup", new ArrayList<>());
+        Style style1 = new Style(1, comp.getID(), 1, "Butterfly", 2, 100);
+        Style style2 = new Style(2, comp.getID(), 1, "Butterfly", 2, 100);
+        Style style3 = new Style(3, comp.getID(), 1, "Butterfly", 2, 100);
+        Style style4 = new Style(4, comp.getID(), 1, "Butterfly", 2, 100);
 
+        comp.setStyleList(new ArrayList<>(Arrays.asList(style1, style2, style3, style4)));
+        CompetitiveMember member = new CompetitiveMember(userDB.getIDForNewUser(), "Laura", "Bøjden",
+                true, true, "10/10/2001", false, new ArrayList<>(Arrays.asList(comp)));
 
-        CompetitiveMember member = new CompetitiveMember(2, "Laura", "Bøjden",
-                true, true, 23, false, new ArrayList<>(Arrays.asList(comp)));
+        //userDB.addUserInDB(member,"hdshdsj");
+        //Member member = new Member(1, "Laura", "Bøjden", true, true, "23/05/1998", false);
 
-        userDB.removeUserFromDB(member);
+        /*System.out.println(member.getDateOfBirth());
+        System.out.println(member.getAge());*/
 
-        /*for(User user : userDB.getListOfUsers()) {
-            if(user instanceof CompetitiveMember compMember) {
-                printCompetitiveMember(compMember);
-            }
+        //printCompetitiveMember((CompetitiveMember) userDB.getUserFromID(member.getUserID()));
 
-        }*/
+        CompetitionDB compDB = new CompetitionDB();
 
+        Competition compTest = compDB.getCompetitionFromID(1);
 
 
 

@@ -15,7 +15,6 @@ public class UserDB extends Database implements UserReturn {
     public UserDB() {
         //Sets the filepath of the specific csv file to be used when calling this DB class.
         super(UserReturn.getFolderPath() + "UserDB.csv");
-
     }
 
     //Method for retreiving a User instance based on data from database, where the search criteria is that the
@@ -232,7 +231,6 @@ public class UserDB extends Database implements UserReturn {
         return false;
     }
 
-
     public boolean removeUserFromDB(int id) {
         return removeUserFromDB(getUserFromID(id));
     }
@@ -269,7 +267,6 @@ public class UserDB extends Database implements UserReturn {
                 return false;
             }
         }
-
         return false;
     }
 

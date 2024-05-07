@@ -7,7 +7,7 @@ public enum MemberDBRowNames implements DBRowNames {
     LAST_NAME("lastName"),
     IS_ACTIVE_MEMBER("isActiveMember"),
     IS_COMPETITIVE("isCompetitive"),
-    AGE("age"),
+    DATE_OF_BIRTH("dateOfBirth"),
     IS_ARREARS("isArrears"),
     YEARLY_MEMBERSHIP_FEE("yearlyMembershipFee");
 

@@ -58,7 +58,7 @@ public class MemberDB extends Database implements UserReturn {
         //Gets and converts the activity status (passive/active) to boolean.
         boolean isActiveMember = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)]);
         //Gets and converts the age of the member.
-        int age = Integer.parseInt(singleRow[getIndexOfRowName(MemberDBRowNames.AGE)]);
+        String dateOfBirth = singleRow[getIndexOfRowName(MemberDBRowNames.DATE_OF_BIRTH)];
         //Gets and converts the arrears status (is not in debt/is in debt) to boolean.
         boolean isArrears = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)]);
         //Checks if the user is a Competitive member.
@@ -67,11 +67,11 @@ public class MemberDB extends Database implements UserReturn {
             //Returns a new Competitive Member instance.
             CompetitiveMemberDB competitiveMemberDB = new CompetitiveMemberDB();
             //Passes the already known Member values to the CompetitiveMemberDB for instancing a CompetitiveMember.
-            competitiveMemberDB.setMemberAttributes(userid, firstName, lastName, isActiveMember, age, isArrears);
+            competitiveMemberDB.setMemberAttributes(userid, firstName, lastName, isActiveMember, dateOfBirth, isArrears);
             return competitiveMemberDB.getUserFromID(userid);
         } else {
             //Returns a new Member instance.
-            return new Member(userid, firstName, lastName, isActiveMember, false, age, isArrears);
+            return new Member(userid, firstName, lastName, isActiveMember, false, dateOfBirth, isArrears);
         }
     }
 
@@ -102,7 +102,7 @@ public class MemberDB extends Database implements UserReturn {
             //Gets the activity status, competitive status, age, arrears status and yearly membership fee as Strings.
             newRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)] = String.valueOf(member.isActiveMember());
             newRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)] = String.valueOf(member.isCompetitive());
-            newRow[getIndexOfRowName(MemberDBRowNames.AGE)] = String.valueOf(member.getAge());
+            newRow[getIndexOfRowName(MemberDBRowNames.DATE_OF_BIRTH)] = member.getDateOfBirth();
             newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());
             newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());
 
@@ -148,11 +148,9 @@ public class MemberDB extends Database implements UserReturn {
             newRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)] = member.getLastName();
             newRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)] = String.valueOf(member.isActiveMember());
             newRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)] = String.valueOf(member.isCompetitive());
-            newRow[getIndexOfRowName(MemberDBRowNames.AGE)] = String.valueOf(member.getAge());
+            newRow[getIndexOfRowName(MemberDBRowNames.DATE_OF_BIRTH)] = member.getDateOfBirth();
             newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());
             newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());
-
-
 
             allRows.add(newRow);
 

@@ -1,28 +1,33 @@
 package user_domain;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 public class Member extends User {
     private boolean isActiveMember;
+    DateTimeFormatter birthDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private boolean isCompetitive;
-    private int age;
+    private LocalDate dateOfBirth;
     private boolean isArrears;
     private boolean isSenior;
     private double yearlyMembershipFee;
 
-    public Member(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, int age, boolean isArrears) {
+    public Member(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears) {
         super(userID, firstName, lastName);
+        this.dateOfBirth = LocalDate.parse(dateOfBirth, birthDateFormat);
         this.isActiveMember = isActiveMember;
         this.isCompetitive = isCompetitive;
-        this.age = age;
         this.isArrears = isArrears;
-        this.isSenior = (age >= 18);
+        this.isSenior = (getAge() >= 18);
         this.yearlyMembershipFee = calculateFee();
     }
     private double calculateFee() {
         if (!isActiveMember) {
             return 500;
-        } else if (age < 18) {
+        } else if (getAge() < 18) {
             return 1000;
-        } else if (age >= 60) {
+        } else if (getAge() >= 60) {
             return 1200;
         }
         return 1600;
@@ -37,7 +42,11 @@ public class Member extends User {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth.format(birthDateFormat);
     }
 
     public boolean isArrears() {

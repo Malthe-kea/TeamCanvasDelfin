@@ -105,8 +105,8 @@ public class StyleDB extends Database {
 
     }
 
-    public boolean removeStyleFromDB(Style style) {
-        int styleID = style.getID();
+    public boolean removeStyleFromDB(int id) {
+        int styleID = id;
         ArrayList<String[]> allRows = getRows();
         for (String[] singleRow : allRows) {
             int styleIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)]);
@@ -116,5 +116,9 @@ public class StyleDB extends Database {
             }
         }
         return false;
+    }
+
+    public boolean removeStyleFromDB(Style style) {
+        return removeStyleFromDB(style.getID());
     }
 }

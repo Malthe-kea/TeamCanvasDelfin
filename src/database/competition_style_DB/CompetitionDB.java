@@ -27,32 +27,25 @@ public class CompetitionDB extends Database {
         for (String[] singleRow : allRowsFromDB) {
             int competitionID = Integer.parseInt(singleRow[getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID)]);
             String location = singleRow[getIndexOfRowName(CompetitionDBRowNames.LOCATION)];
-            ArrayList<Style> styles = styleDB.getUserCompetitionStyles(competitionID, userID);
+            ArrayList<Style> styles;
 
-            if (!styles.isEmpty()) {
-                competitionList.add(new Competition(competitionID, location, styles));
+            if(userID == -1) {
+                styles = new ArrayList<>();
+            } else {
+                styles = styleDB.getUserCompetitionStyles(competitionID, userID);
             }
-        }
+            competitionList.add(new Competition(competitionID, location, styles));
 
-        if (competitionList.isEmpty()) {
-            return null;
-        } else {
-            return competitionList;
         }
+        return competitionList;
     }
 
     public ArrayList<Competition> getListOfCompetitions() {
-        ArrayList<Competition> competitionList = new ArrayList<>();
-        ArrayList<String[]> allRowsFromDB = getRows();
-        for (String[] singleRow : allRowsFromDB) {
-            int competitionID = Integer.parseInt(singleRow[getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID)]);
-            String location = singleRow[getIndexOfRowName(CompetitionDBRowNames.LOCATION)];
+        return getListOfCompetitions(-1);
+    }
 
-            competitionList.add(new Competition(competitionID, location, new ArrayList<>()));
-
-        }
-
-        return competitionList;
+    public Competition getCompetitionFromID(int competitionIDToSearchFor) {
+        return getCompetitionFromID(competitionIDToSearchFor, -1);
     }
 
     public Competition getCompetitionFromID(int competitionIDToSearchFor, int userID) {
@@ -66,8 +59,12 @@ public class CompetitionDB extends Database {
             competitionID = Integer.parseInt(singleRow[competitiveIDIndex]);
             if (competitionID == competitionIDToSearchFor) {
                 location = singleRow[locationIndex];
-
-                ArrayList<Style> styles = styleDB.getUserCompetitionStyles(competitionID, userID);
+                ArrayList<Style> styles;
+                if(userID == -1) {
+                    styles = new ArrayList<>();
+                } else {
+                    styles = styleDB.getUserCompetitionStyles(competitionID, userID);
+                }
                 return new Competition(competitionID, location, styles);
             }
         }
@@ -86,6 +83,9 @@ public class CompetitionDB extends Database {
         return false;
     }
 
+    public Competition getCompetitionFromLocation(String locationToSearch) {
+        return getCompetitionFromLocation(locationToSearch, -1);
+    }
 
     public Competition getCompetitionFromLocation(String locationToSearch, int userID) {
         int competitiveIDIndex = getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID);
@@ -98,9 +98,14 @@ public class CompetitionDB extends Database {
             location = singleRow[locationIndex];
             if (locationToSearch.equalsIgnoreCase(location)) {
                 competitionID = Integer.parseInt(singleRow[competitiveIDIndex]);
-
-                ArrayList<Style> styles = styleDB.getUserCompetitionStyles(competitionID, userID);
+                ArrayList<Style> styles;
+                if(userID == -1) {
+                    styles = new ArrayList<>();
+                } else {
+                    styles = styleDB.getUserCompetitionStyles(competitionID, userID);
+                }
                 return new Competition(competitionID, location, styles);
+
             }
         }
 
@@ -163,17 +168,21 @@ public class CompetitionDB extends Database {
 
     }
 
-    public boolean removeCompFromDB(Competition comp) {
+    public boolean removeCompFromDB(int id) {
         ArrayList<String[]> allRows = getRows();
 
         for (String[] singleRow : allRows) {
             int compIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID)]);
-            if (compIDFromDB == comp.getID()) {
+            if (compIDFromDB == id) {
                 allRows.remove(singleRow);
                 return super.insertListToDB(allRows);
             }
         }
         return false;
+    }
+
+    public boolean removeCompFromDB(Competition comp) {
+        return removeCompFromDB(comp.getID());
     }
 
 }
