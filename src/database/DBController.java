@@ -8,8 +8,6 @@ import user_domain.Member;
 import user_domain.User;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DBController {
