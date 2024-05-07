@@ -1,6 +1,9 @@
 package domain_model;
+
+import database.UserDB;
 import domain_model.Processors.*;
 import user_domain.Member;
+
 import javax.swing.*;
 import java.util.Scanner;
 
@@ -9,15 +12,25 @@ public class UserInterface {
     Scanner userInput;
     Controller controller;
     boolean loginSucces;
+
     MemberProcessor memberProcessor;
+    SuperUserProcessor superUserProcessor;
+    TrainerProcessor trainerProcessor;
+    TreasurerProcessor treasurerProcessor;
 
     public UserInterface() {
         controller = new Controller();
         programIsRunning = true;
         loginSucces = true;
         userInput = new Scanner(System.in);
-        Member member = new Member(1, "hej", "hej",true,true,15,true); // Eksempel på medlem
+
+        Member member = new Member(1, "esra", "lund", false, false, 25, false); // Eksempel p� medlem
+
         memberProcessor = new MemberProcessor(member);
+        superUserProcessor = new SuperUserProcessor();
+        treasurerProcessor = new TreasurerProcessor();
+        trainerProcessor = new TrainerProcessor();
+
     }
 
     public void startProgram() {
@@ -29,10 +42,9 @@ public class UserInterface {
                 String password = loginInfo[1];
                 if (loginSucces) {
                     navigateToRole(userID);
-                    programIsRunning = false;
-                }
-                else{
-                    programIsRunning = false;
+//                   programIsRunning = false;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Login mislykkedes. Pr�v igen.", "Fejl", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -74,18 +86,53 @@ public class UserInterface {
                 break;
 
             default:
-                print("Forkert input, prøv igen.");
+                print("Forkert input, pr�v igen.");
                 showWelcomeMessage();
                 break;
         }
     }
 
     private void showWelcomeMessage() {
-        JOptionPane.showMessageDialog(null, "Velkommen til Delfinen Sv\u00F8mmehal. \n Indtast login.", "Velkommen", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Velkommen til Delfinen Sv�mmehal. \n Indtast login.", "Velkommen", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void loginAsSuperUser() {
         print("Logget ind som Super User.");
+        superUserMenuInformation();
+        String command = userInput.nextLine().toLowerCase();
+
+        switch (command) {
+            case "1" -> {
+                superUserProcessor.CreateandAddCompetitiveMembertoDB();
+            }
+            case "2" -> {
+                superUserProcessor.CreateandAddTrainertoDB();
+            }
+            case "3" -> {
+                superUserProcessor.CreateandAddCompetitiveMembertoDB();
+            }
+            case "4" -> {
+                superUserProcessor.CreateandAddTreasurertoDB();
+            }
+            case "5" -> {
+                superUserProcessor.editUserFromDB(1, "esra");
+            }
+            case "6" -> {
+                superUserProcessor.deleteUserFromDB(1, "esra");
+            }
+            case "7" -> {
+                superUserProcessor.getUserFromDB(1);
+            }
+            case "9" -> {
+                print("Farvel");
+                programIsRunning = false;
+                System.exit(0);
+            }
+            default -> {
+                print("Forkert input, pr�v igen");
+                showWelcomeMessage();
+            }
+        }
     }
 
     private void loginAsTrainer() {
@@ -98,12 +145,98 @@ public class UserInterface {
 
     private void loginAsMember() {
         print("Logget ind som Member.");
-        memberProcessor.displayMemberOverview();
+        memberMenuInformation();
+        String command = userInput.nextLine().toLowerCase();
+
+        switch (command) {
+            case "1" -> {
+                memberProcessor.displayMemberOverview();
+            }
+            case "2" -> {
+                memberProcessor.displayTrainingResultsForEachDiscipline();
+            }
+            case "3" -> {
+                memberProcessor.displayCompetitionResults();
+            }
+            case "9" -> {
+                print("Farvel");
+                programIsRunning = false;
+                System.exit(0);
+            }
+        }
     }
+
+
+    private void superUserMenuInformation() {
+        print("""
+                Du har nu f�lgende muligheder:
+                1 - Tilf�j member til databasen
+                2 - Tilf�j tr�ner til databasen
+                3 - Tilf�j konkurrence-medlem til databasen
+                4 - Tilf�j kasserer til databasen
+                5 - �ndre medlemsoplysninger
+                6 - Slet medlem
+                7 - Se brugeroversigt
+                9 - Exit
+                """);
+    }
+
+    private void memberMenuInformation() {
+        print("""
+                Du har nu f�lgende muligheder:
+                1 - Se member information
+                2 - Se tr�ningsresultater
+                3 - Se konkurrenceresultater  
+                9 - Exit     
+                """);
+    }
+
+    private void trainerMenuInformation() {
+        print("""
+                Du har nu f�lgende muligheder:
+                1 - 
+                2 - 
+                3 -     
+                """);
+    }
+
+    private void treasurerMenuInformation() {
+        print("""
+                Du har nu f�lgende muligheder:
+                1 - 
+                2 - 
+                3 -     
+                """);
+    }
+
 
     public static void print(String s) {
         System.out.println(s);
     }
+}
+
+
+//    private void logout() {
+//        int valg = JOptionPane.showOptionDialog(null,
+//                "Vil du logge ud?",
+//                "Log ud",
+//                JOptionPane.YES_NO_OPTION,
+//                JOptionPane.QUESTION_MESSAGE,
+//                null,
+//                new String[]{"Ja", "Nej"},
+//                "Ja");
+//        if (valg == JOptionPane.YES_OPTION) {
+//            startProgram();
+//        } else {
+//            //JOptionPane.showMessageDialog(null,"Du er fortsat logget ind", "forts�t", JOptionPane.PLAIN_MESSAGE);
+//            }
+//        }
+//    }
+
+
+
+
+
 
 
 }
