@@ -123,21 +123,13 @@ public class SuperUserProcessor implements Processor {
                     1. Fornavn(e)
                     2. Efternavn
                     3. Aktivitetsstatus
-                    4.???
                     """);
             String command = userInput.nextLine().toLowerCase();
             String commandPrompt = userInput.nextLine().toLowerCase();
-            switch (command) {
+            switch (DelfinUtil.checkUserInstance(userToEdit)) {
 
-                case "1" -> {
-                    commandPrompt = userInput.nextLine().toLowerCase();
-                    userToEdit.setFirstName(commandPrompt);
-                }
                 case MEMBER, COMPETITIVE -> {
                     print("""
-                            1. Rediger fornavn
-                            2. Rediger efternavn
-                            3. Rediger aktivitetsstatus
                             4. Konkurrence/Motionist
                             5. Restancestatus.
                             """);
@@ -155,8 +147,6 @@ public class SuperUserProcessor implements Processor {
                     Trainer trainer = (Trainer) userToEdit;
 
                     print("""
-                            1. Rediger fornavn
-                            2. Rediger efternavn
                             3. Senior/Junior
                             """);
                     //TODO lav switchcase, der passer til menuen.
