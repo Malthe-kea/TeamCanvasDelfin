@@ -4,10 +4,12 @@ import database.Database;
 import database.userDB.UserDB;
 import user_domain.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Scanner;
 
 public class SuperUserProcessor implements Processor {
     private Scanner userInput;
@@ -42,7 +44,7 @@ public class SuperUserProcessor implements Processor {
         LocalDate dob = LocalDate.parse(birthDate);
 
 
-        testDB.add(new Member(1, firstNames, lastNames, isActiveMember, true, calculateAge(dob), false));
+        testDB.add(new Member(1, firstNames, lastNames, isActiveMember, true, birthDate, false));
 
         return testDB;
     }
@@ -80,9 +82,10 @@ public class SuperUserProcessor implements Processor {
         print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
         String birthDate = userInput.nextLine();
         LocalDate dob = LocalDate.parse(birthDate);
+        System.out.println(Period.between(dob,LocalDate.now()).getYears());
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
+        testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, birthDate, false, new ArrayList<>()));
 
         return testDB;
     }
@@ -116,6 +119,8 @@ public class SuperUserProcessor implements Processor {
                     Hvilket parameter vil du ændre?
                     1. Fornavn(e)
                     2. Efternavn
+                    3. Aktivitetsstatus
+                    4.???
                     """);
             String command = userInput.nextLine().toLowerCase();
             String commandPrompt = userInput.nextLine().toLowerCase();
@@ -146,6 +151,17 @@ public class SuperUserProcessor implements Processor {
             return db.editUserInDB(userToEdit);
         }
 
+
+        //User userToEdit = null;
+
+
+
+        /*for (User u : userListArr) {
+            if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
+
+                break;
+            }
+        }*/
 
         return false;
     }
