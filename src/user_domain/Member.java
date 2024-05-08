@@ -8,10 +8,10 @@ public class Member extends User {
     private boolean isActiveMember;
     DateTimeFormatter birthDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private boolean isCompetitive;
-    private LocalDate dateOfBirth;
+    private final LocalDate dateOfBirth;
     private boolean isArrears;
     private boolean isSenior;
-    private double yearlyMembershipFee;
+    private final double yearlyMembershipFee;
 
     public Member(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears) {
         super(userID, firstName, lastName);
