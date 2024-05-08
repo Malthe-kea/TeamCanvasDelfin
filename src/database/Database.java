@@ -120,13 +120,13 @@ public abstract class Database {
             //Removes all content of the file.
             out.flush();
             //Gets and inserts the rowName into the file.
-            String rowNameAsDBFormat = String.join(";",getRowNamesFromEnumConfig())+";";
+            String rowNameAsDBFormat = String.join(";",getRowNamesFromEnumConfig());
             out.println(rowNameAsDBFormat);
 
             //Loops through the rows.
             for (String[] singleRow : allRowsToInsert) {
                 //Formats each row with delimiter ';' for insertion in database.
-                String rowAsDBFormat = String.join(";",singleRow)+";";
+                String rowAsDBFormat = String.join(";",singleRow);
                 //Inserts the row into the csv file.
                 out.println(rowAsDBFormat);
             }

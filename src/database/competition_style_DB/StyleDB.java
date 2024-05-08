@@ -4,6 +4,7 @@ import database.Database;
 import database.rowNameEnum.DBRowNames;
 import database.rowNameEnum.StyleDBRowNames;
 import user_domain.competition.Style;
+import user_domain.competition.StyleCategories;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,13 +26,13 @@ public class StyleDB extends Database {
         for (String[] singleRow : allRows) {
             int styleID = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)]);
             if (styleIDToEdit == styleID) {
-                String styleName = singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)];
+                StyleCategories styleCategory = StyleCategories.valueOf(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_CATEGORY)]);
                 int stylePlacement = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_PLACEMENT)]);
                 long timeInSeconds = Long.parseLong(singleRow[getIndexOfRowName(StyleDBRowNames.TIME_IN_SECONDS)]);
                 int userID = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.USER_ID)]);
                 int competitionID = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.COMPETITION_ID)]);
 
-                return new Style(styleID, userID, competitionID, styleName, stylePlacement, timeInSeconds);
+                return new Style(styleID, userID, competitionID, styleCategory, stylePlacement, timeInSeconds);
             }
         }
 
@@ -44,7 +45,7 @@ public class StyleDB extends Database {
         for (String[] singleRow : allRows) {
             int styleIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)]);
             if (styleIDFromDB == styleID) {
-                singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)] = styleToEdit.getStyleName();
+                singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_CATEGORY)] = styleToEdit.getStyleCategory().name();
                 singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_PLACEMENT)] = String.valueOf(styleToEdit.getPlacement());
                 singleRow[getIndexOfRowName(StyleDBRowNames.TIME_IN_SECONDS)] = String.valueOf(styleToEdit.getTime().getDurationInSeconds());
                 singleRow[getIndexOfRowName(StyleDBRowNames.USER_ID)] = String.valueOf(styleToEdit.getUserID());
@@ -67,11 +68,11 @@ public class StyleDB extends Database {
             int competitionIDFromDB = Integer.parseInt(singleRow[competitionIDIndex]);
             if (competitionIDFromDB == competitionID && userIDFromDB == userID) {
                 int styleID = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)]);
-                String styleName = singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)];
+                StyleCategories styleCategory = StyleCategories.valueOf(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_CATEGORY)]);
                 int stylePlacement = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_PLACEMENT)]);
                 long timeInSeconds = Long.parseLong(singleRow[getIndexOfRowName(StyleDBRowNames.TIME_IN_SECONDS)]);
 
-                styles.add(new Style(styleID, userIDFromDB, competitionID, styleName, stylePlacement, timeInSeconds));
+                styles.add(new Style(styleID, userIDFromDB, competitionID, styleCategory, stylePlacement, timeInSeconds));
             }
         }
 
@@ -94,7 +95,7 @@ public class StyleDB extends Database {
             ArrayList<String[]> allRows = getRows();
             String[] newRow = new String[StyleDBRowNames.values().length];
             newRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)] = String.valueOf(styleToAdd.getID());
-            newRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)] = styleToAdd.getStyleName();
+            newRow[getIndexOfRowName(StyleDBRowNames.STYLE_CATEGORY)] = styleToAdd.getStyleCategory().name();
             newRow[getIndexOfRowName(StyleDBRowNames.STYLE_PLACEMENT)] = String.valueOf(styleToAdd.getPlacement());
             newRow[getIndexOfRowName(StyleDBRowNames.TIME_IN_SECONDS)] = String.valueOf(styleToAdd.getTime().getDurationInSeconds());
             newRow[getIndexOfRowName(StyleDBRowNames.USER_ID)] = String.valueOf(styleToAdd.getUserID());

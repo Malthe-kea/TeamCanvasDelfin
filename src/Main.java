@@ -1,9 +1,11 @@
+import database.DBController;
 import database.competition_style_DB.CompetitionDB;
 import database.competition_style_DB.StyleDB;
 import database.userDB.UserDB;
 import user_domain.CompetitiveMember;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
+import user_domain.competition.StyleCategories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,12 +13,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
 
-        //MAKE CONTROLLER
-
-        UserDB userDB = new UserDB();
-        //System.out.println(userDB.getIDForNewUser());
-        StyleDB styleDB = new StyleDB();
-        CompetitionDB competitionDB = new CompetitionDB();
+        DBController dbController = new DBController();
 
 
         /*if(userDB.getUserFromID(1) instanceof CompetitiveMember member) {
@@ -35,14 +32,21 @@ public class Main {
         }*/
 
         Competition comp = new Competition(1, "Hellerup", new ArrayList<>());
-        Style style1 = new Style(1, comp.getID(), 1, "Butterfly", 2, 100);
-        Style style2 = new Style(2, comp.getID(), 1, "Butterfly", 2, 100);
-        Style style3 = new Style(3, comp.getID(), 1, "Butterfly", 2, 100);
-        Style style4 = new Style(4, comp.getID(), 1, "Butterfly", 2, 100);
+        Style style1 = new Style(1, 1, comp.getID(), StyleCategories.BACKSTROKE, 2, 100);
+        Style style2 = new Style(2, 1, comp.getID(), StyleCategories.BREASTSTROKE, 2, 100);
+        Style style3 = new Style(3, 1, comp.getID(), StyleCategories.CRAWL, 2, 100);
+        Style style4 = new Style(4, 1, comp.getID(), StyleCategories.BUTTERFLY, 2, 100);
 
-        comp.setStyleList(new ArrayList<>(Arrays.asList(style1, style2, style3, style4)));
-        CompetitiveMember member = new CompetitiveMember(userDB.getIDForNewUser(), "Laura", "Bøjden",
-                true, true, "10/10/2001", false, new ArrayList<>(Arrays.asList(comp)));
+        dbController.addStyleToDB(style1);
+        dbController.addStyleToDB(style2);
+        dbController.addStyleToDB(style3);
+        dbController.addStyleToDB(style4);
+
+        printCompetitiveMember((CompetitiveMember) dbController.getUserFromID(1));
+
+        //comp.setStyleList(new ArrayList<>(Arrays.asList(style1, style2, style3, style4)));
+        //CompetitiveMember member = new CompetitiveMember(userDB.getIDForNewUser(), "Laura", "Bøjden",
+          //      true, true, "10/10/2001", false, new ArrayList<>(Arrays.asList(comp)));
 
         //userDB.addUserInDB(member,"hdshdsj");
         //Member member = new Member(1, "Laura", "Bøjden", true, true, "23/05/1998", false);
@@ -51,10 +55,6 @@ public class Main {
         System.out.println(member.getAge());*/
 
         //printCompetitiveMember((CompetitiveMember) userDB.getUserFromID(member.getUserID()));
-
-        CompetitionDB compDB = new CompetitionDB();
-
-        Competition compTest = compDB.getCompetitionFromID(1);
 
 
 
@@ -75,7 +75,7 @@ public class Main {
             System.out.println(comp.getID());
             System.out.println(comp.getLocation());
             for (Style style : comp.getStyleList()) {
-                System.out.println(style.getStyleName());
+                System.out.println(style.getStyleCategory().name());
                 System.out.println(style.getPlacement());
                 System.out.println(style.getTime().getDisplayTime());
             }

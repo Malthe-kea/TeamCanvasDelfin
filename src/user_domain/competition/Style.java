@@ -6,21 +6,21 @@ public class Style {
     private int id;
     private int userID;
     private int competitionID;
-    private String styleName;
+    private StyleCategories styleCategory;
     private int placement;
     private final TimeDisplay time;
 
-    public Style(int id, int userID, int competitionID, String styleName, int placement, long timeInSeconds) {
+    public Style(int id, int userID, int competitionID, StyleCategories styleCategory, int placement, long timeInSeconds) {
         this.id = id;
         this.userID = userID;
         this.competitionID = competitionID;
-        this.styleName = styleName;
+        this.styleCategory = styleCategory;
         this.placement = placement;
         this.time = new TimeDisplay(timeInSeconds);
     }
 
-    public String getStyleName() {
-        return styleName;
+    public StyleCategories getStyleCategory() {
+        return styleCategory;
     }
 
     public int getPlacement() {
@@ -35,8 +35,8 @@ public class Style {
         return id;
     }
 
-    public void setStyleName(String styleName) {
-        this.styleName = styleName;
+    public void setStyleName(StyleCategories styleCategory) {
+        this.styleCategory = styleCategory;
     }
 
     public void setPlacement(int placement) {
