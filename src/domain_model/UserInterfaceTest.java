@@ -90,7 +90,7 @@ public class UserInterfaceTest {
 
     public String loginMenu() {
         return (String)JOptionPane.showInputDialog(null,
-                TextStyle.format("Indtast brugernavn:"),
+                TextStyle.format("Indtast Kodeord:"),
                 "Log ind",
                 JOptionPane.PLAIN_MESSAGE,
                 icon, null, null);
@@ -152,7 +152,7 @@ public class UserInterfaceTest {
 
 
         dialog.getContentPane().add(panel, BorderLayout.CENTER); //Sætter vores hovedpanel ind i vores dialog som er selve vinduet. Sætter indholdet i midten af vinduet.
-        dialog.pack(); //Indbygget metode i dialog der skalere vinduet så det passer til indholdet.
+        dialog.pack(); //Indbygget metode i JDialog der skalere vinduet så det passer til indholdet.
         dialog.setLocationRelativeTo(null); // Sætter vinduet til midten af skærmen.
         dialog.setVisible(true); //Viser vinduet.
 
