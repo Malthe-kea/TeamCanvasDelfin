@@ -1,5 +1,6 @@
 package domain_model;
 
+import database.DBController;
 import domain_model.Processors.*;
 import user_domain.Member;
 
@@ -10,6 +11,7 @@ public class UserInterface {
     private boolean programIsRunning;
     Scanner userInput;
     Controller controller;
+    DBController dbController = new DBController();
     boolean loginSucces;
 
     MemberProcessor memberProcessor;
@@ -23,10 +25,10 @@ public class UserInterface {
         loginSucces = true;
         userInput = new Scanner(System.in);
         Member member = new Member(1, "hej", "hej",true,true,"10/10/2001",true); // Eksempel pÃ¥ medlem
-        memberProcessor = new MemberProcessor(member);
-        superUserProcessor = new SuperUserProcessor();
-        treasurerProcessor = new TreasurerProcessor();
-        trainerProcessor = new TrainerProcessor();
+        memberProcessor = new MemberProcessor(dbController);
+        superUserProcessor = new SuperUserProcessor(dbController);
+        treasurerProcessor = new TreasurerProcessor(dbController);
+        trainerProcessor = new TrainerProcessor(dbController);
 
     }
 

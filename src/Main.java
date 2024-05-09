@@ -1,19 +1,17 @@
-import database.DBController;
-import database.competition_style_DB.CompetitionDB;
-import database.competition_style_DB.StyleDB;
-import database.userDB.UserDB;
+import domain_model.UserInterfaceTest;
 import user_domain.CompetitiveMember;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
-import user_domain.competition.StyleCategories;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
 
-        DBController dbController = new DBController();
+        UserInterfaceTest UI = new UserInterfaceTest();
+
+        UI.startProgram();
+
+
+        //DBController dbController = new DBController();
 
 
         /*if(userDB.getUserFromID(1) instanceof CompetitiveMember member) {
@@ -30,7 +28,7 @@ public class Main {
             member = (CompetitiveMember) userDB.getUserFromID(1);
             printCompetitiveMember(member);
         }*/
-
+/*
         Competition comp = new Competition(1, "Hellerup", new ArrayList<>());
         Style style1 = new Style(1, 1, comp.getID(), StyleCategories.BACKSTROKE, 2, 100);
         Style style2 = new Style(2, 1, comp.getID(), StyleCategories.BREASTSTROKE, 2, 100);
@@ -55,7 +53,6 @@ public class Main {
         System.out.println(member.getAge());*/
 
         //printCompetitiveMember((CompetitiveMember) userDB.getUserFromID(member.getUserID()));
-
 
 
     }

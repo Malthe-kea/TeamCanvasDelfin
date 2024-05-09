@@ -27,6 +27,11 @@ public class DBController {
 
     //USERDB METHODS
 
+    /**GET USER FROM PASSWORD'*/
+    public User getUserFromPassword(String password) {
+        return userDB.getUserFromPassword(password);
+    }
+
     /**REMOVE USER FROM DB WITH ID. RETURNS TRUE IF SUCCESSFUL*/
     public boolean removeUserFromDB(int userID) {
         return userDB.removeUserFromDB(userID);

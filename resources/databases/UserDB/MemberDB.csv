@@ -1,2 +1,3 @@
 id;firstName;lastName;isActiveMember;isCompetitive;dateOfBirth;isArrears;yearlyMembershipFee
 1;Laura;Bøjden;true;true;10/10/2001;false;1600.0
+2;Noah;Van Wagenen;true;false;10/10/2001;false;1600.0

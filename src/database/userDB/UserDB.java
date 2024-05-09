@@ -24,6 +24,10 @@ public class UserDB extends Database implements UserReturn {
         return searchAndCreateUser(UserDBRowNames.USER_ID, String.valueOf(id));
     }
 
+    public User getUserFromPassword(String password) {
+        return searchAndCreateUser(UserDBRowNames.PASSWORD, String.valueOf(password));
+    }
+
     //Method for retreiving a User instance based on data from database, where the search criteria is that the
     //User retrieved needs to match the inserted last name of the user.
     @Override
@@ -269,5 +273,7 @@ public class UserDB extends Database implements UserReturn {
         }
         return false;
     }
+
+
 
 }

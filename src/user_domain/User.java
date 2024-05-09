@@ -32,4 +32,12 @@ public abstract class User {
         this.lastName = lastName;
     }
 
+    public String toString() {
+        return "User{" +
+                "userID=" + userID + "\n" +
+                ", firstName='" + firstName + '\'' + "\n" +
+                ", lastName='" + lastName + '\'' + "\n" +
+                '}';
+    }
+
 }

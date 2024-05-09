@@ -1,5 +1,6 @@
 package domain_model.Processors;
 
+import database.DBController;
 import database.Database;
 import database.userDB.UserDB;
 import domain_model.DelfinUtil;
@@ -7,22 +8,25 @@ import domain_model.UserInstance;
 import domain_model.UserInterface;
 import user_domain.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Scanner;
 
 public class SuperUserProcessor implements Processor {
+
+    private DBController dbController;
     private Scanner userInput;
     private ArrayList testDB = new ArrayList<>();
     private ArrayList<User> userListArr;
     boolean programRunning = true;
 
-    public SuperUserProcessor() {
+    public SuperUserProcessor(DBController dbController) {
         userInput = new Scanner(System.in);
+        this.dbController = dbController;
     }
+
+
 
     public ArrayList createSuperUser() {
         ArrayList<SuperUser> superUser = new ArrayList<>();
