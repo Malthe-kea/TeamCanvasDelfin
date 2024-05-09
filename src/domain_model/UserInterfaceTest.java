@@ -98,23 +98,31 @@ public class UserInterfaceTest {
     }
 
     public int showMenu(String title, String message, String[] options) {
-        //Opretter JButton array med længden af options
-        JButton[] buttons = new JButton[options.length];
-        final int[] chosenOption = {-1}; // Denne array bruges til at gemme den valgte menu mulighed. Skal være final for at kunne bruges i en ActionListener. Derfor en array da en array index kan ændres selvom den er final.
 
+        //OPRETTELSE A SELVE VINDUET JDIALOG
 
-        //Laver et JLabel med Delfin logoet for at vise i menuen.
-        JLabel iconLabel = new JLabel(icon);
+        JDialog dialog = new JDialog(); //Opretter en JDialog. Dette er selve vinduet, hvor vores JLabel og JButtons placeres indeni.
+        dialog.setTitle(title); //Sætter titlen af selve vinduet.
+        dialog.setModal(true); //Om vinduet skal være Modal. Hvis det er modal kan der kun interageres med dette vindue. Sættes true for at undgå fejl med andre vinduer.
+        dialog.setIconImage(icon.getImage()); //Sætter det lille ikon i hjørnet til vores delfin logo
 
+        ///OPRETTELSE AF TITLE PANEL MED IKON OG OVERSKRIFT
+
+        JLabel iconLabel = new JLabel(icon); //Laver et JLabel med Delfin logoet for at vise i menuen.
 
         JLabel titleLabel = new JLabel(message, SwingConstants.CENTER);  //Laver et JLabel med Menu overskriften for at vise i menuen. Sætter den til message og for at være i midten af selve JLabelen.
         titleLabel.setFont(new Font("Arial", Font.BOLD, 15)); //Sætter fonten
 
-        //Opretter en JDialog. Dette er selve vinduet, hvor vores JLabel og JButtons placeres indeni.
-        JDialog dialog = new JDialog();
-        dialog.setTitle(title); //Sætter titlen af selve vinduet.
-        dialog.setModal(true); //Om vinduet skal være Modal. Hvis det er modal kan der kun interageres med dette vindue. Sættes true for at undgå fejl med andre vinduer.
-        dialog.setIconImage(icon.getImage()); //Sætter det lille ikon i hjørnet til vores delfin logo
+        //Laver et JPanel som er vores title og ikon, så de er ved siden af hinanden. Gøres så vi kan gruppere og positionere dem sammen.
+        JPanel northPanel = new JPanel();
+        northPanel.add(iconLabel);
+        northPanel.add(titleLabel);
+
+        //OPRETTELSE AF KNAPPER OG TILFØJELSE TIL PANEL MED ALLE KNAPPER
+
+        //Opretter JButton array med længden af options
+        JButton[] buttons = new JButton[options.length];
+        final int[] chosenOption = {-1}; // Denne array bruges til at gemme den valgte menu mulighed. Skal være final for at kunne bruges i en ActionListener. Derfor en array da en array index kan ændres selvom den er final.
 
         //Loop som tilføjer knapper ud fra indsat options.
         for (int i = 0; i < options.length; i++) {
@@ -126,11 +134,6 @@ public class UserInterfaceTest {
             });
         }
 
-        //Opretter et JPanel som er vores hovedpanel. Indeholder vores JLabel title, vores JLabel icon og vores JButton panel.
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout()); // Sætter layout til BorderLayout. Blot en af flere typer layouts et vindue kan have.
-        panel.setBorder(new EmptyBorder(10, 50, 10, 50)); // Tilføjer en tom kant rundt om vores panel, så der er luft imellem elementerne og siderne af vinduet.
-
         //Opretter et JPanel som indeholder vores knapper. Sætter layout til BoxLayout, så knapperne står under hinanden.
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -141,15 +144,19 @@ public class UserInterfaceTest {
             buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Tilføjer et lille luftrum imellem knapperne.
         }
 
-        //Laver et JPanel som er vores title og ikon, så de er ved siden af hinanden. Gøres så vi kan gruppere og positionere dem sammen.
-        JPanel northPanel = new JPanel();
-        northPanel.add(iconLabel);
-        northPanel.add(titleLabel);
+        //OPRETTELSE AF ET SAMLET PANEL DER INDEHOLDER ALLE VORES ELEMENTER
+
+        //Opretter et JPanel som er vores hovedpanel. Indeholder vores JLabel title, vores JLabel icon og vores JButton panel.
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout()); // Sætter layout til BorderLayout. Blot en af flere typer layouts et vindue kan have.
+        panel.setBorder(new EmptyBorder(10, 50, 10, 50)); // Tilføjer en tom kant rundt om vores panel, så der er luft imellem elementerne og siderne af vinduet.
+
 
         //Sætter vores northPanel og buttonPanel ind i vores hovedpanel. Northpanel øverst.
         panel.add(northPanel, BorderLayout.NORTH); // Add the icon and title to the north of the main panel
         panel.add(buttonPanel, BorderLayout.CENTER); // Add the button panel to the center of the main panel
 
+        //INDSÆTTELSE AF HOVEDPANEL I VINDUET OG VISNING AF VINDUET
 
         dialog.getContentPane().add(panel, BorderLayout.CENTER); //Sætter vores hovedpanel ind i vores dialog som er selve vinduet. Sætter indholdet i midten af vinduet.
         dialog.pack(); //Indbygget metode i JDialog der skalere vinduet så det passer til indholdet.
