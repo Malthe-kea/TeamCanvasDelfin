@@ -37,7 +37,8 @@ public class Main {
         userDB.addUserInDB(member3,"Bjerne");
         userDB.addUserInDB(member4,"Bjerne");
         //System.out.println("Den forventede indkomst for i år er: "+ treasurerProcessor.getExpectedIncome());
-        System.out.println("Følgende liste af folk i restance: \n" + treasurerProcessor.geMembersInArrears());
+        //System.out.println("Følgende liste af folk i restance: \n" + treasurerProcessor.geMembersInArrears());
+        System.out.println("printing" + styleDB.getStyleList());
 
 
         /*if(userDB.getUserFromID(1) instanceof CompetitiveMember member) {

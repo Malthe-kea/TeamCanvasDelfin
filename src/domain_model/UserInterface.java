@@ -103,25 +103,33 @@ public class UserInterface {
 
         switch (command) {
             case "1" -> {
-                superUserProcessor.CreateandAddCompetitiveMembertoDB();
+
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateandAddMembertoDB();
             }
             case "2" -> {
-                superUserProcessor.CreateandAddTrainertoDB();
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateandAddTrainertoDB();
             }
             case "3" -> {
-                superUserProcessor.CreateandAddCompetitiveMembertoDB();
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateandAddCompetitiveMembertoDB();
             }
             case "4" -> {
-                superUserProcessor.CreateAndAddTreasurertoDB();
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateAndAddTreasurertoDB();
             }
             case "5" -> {
-                superUserProcessor.editUserFromDB(1, "esra");
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.editUserFromDB(1, "esra");
             }
             case "6" -> {
-                superUserProcessor.deleteUserFromDB(1, "esra");
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.deleteUserFromDB(1, "esra");
             }
             case "7" -> {
-                superUserProcessor.getUserFromDB(1);
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.getUserFromDB(1);
             }
             case "9" -> {
                 print("Farvel");

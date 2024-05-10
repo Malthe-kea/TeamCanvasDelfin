@@ -8,6 +8,7 @@ import user_domain.Member;
 import user_domain.User;
 import user_domain.competition.Competition;
 import user_domain.competition.Style;
+
 import java.util.ArrayList;
 
 public class DBController {
@@ -80,6 +81,7 @@ public class DBController {
     public ArrayList<Competition> getListOfCompetitions() {
         return compDB.getListOfCompetitions();
     }
+
     //GET LIST OF COMPETITION WITH STYLE LIST FROM COMPETITIVE USER ID
     public ArrayList<Competition> getListOfCompetitions(int userID) {
         return compDB.getListOfCompetitions(userID);
@@ -124,6 +126,7 @@ public class DBController {
     public boolean removeCompFromDB(int competitionID) {
         return compDB.removeCompFromDB(competitionID);
     }
+
     //REMOVE COMPETITION TO DB FROM COMPETITION OBJECT. RETURNS TRUE IF SUCCESSFUL
     public boolean removeCompFromDB(Competition comp) {
         return compDB.removeCompFromDB(comp);
@@ -159,13 +162,11 @@ public class DBController {
     public boolean removeStyleFromDB(int styleID) {
         return styleDB.removeStyleFromDB(styleID);
     }
+
     //REMOVE STYLE FROM DB FROM STYLE OBJECT. RETURNS TRUE IF SUCCESSFUL
     public boolean removeStyleFromDB(Style style) {
         return styleDB.removeStyleFromDB(style);
     }
-
-
-
 
 
 }

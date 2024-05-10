@@ -82,6 +82,30 @@ public class StyleDB extends Database {
         }
     }
 
+    public ArrayList<String> getStyleList() {
+        ArrayList<String[]> allRowsFromDB = super.getRows();
+        ArrayList<String> styles = new ArrayList<>();
+        for (String[] singleRow : allRowsFromDB) {
+
+            String styleName = singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)];
+            int stylePlacement = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_PLACEMENT)]);
+            long timeInSeconds = Long.parseLong(singleRow[getIndexOfRowName(StyleDBRowNames.TIME_IN_SECONDS)]);
+            int userIDIndex = getIndexOfRowName(StyleDBRowNames.USER_ID);
+
+            styles.add(styleName);
+            styles.add(String.valueOf(stylePlacement));
+            styles.add(String.valueOf(timeInSeconds));
+            styles.add(String.valueOf(userIDIndex));
+        }
+
+        if (styles.isEmpty()) {
+            return null;
+        } else {
+            return styles;
+        }
+    }
+
+
     public int getIDForNewStyle() {
         return getIDForNewEntry(StyleDBRowNames.STYLE_ID, super.getRows());
     }
