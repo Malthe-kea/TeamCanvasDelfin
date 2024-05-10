@@ -102,7 +102,7 @@ public class UserInterface {
                 case 3 -> {
                     int indexToEdit = 0;
 
-                    while(indexToEdit != -1) {
+                    while (indexToEdit != -1) {
                         indexToEdit = drawMenu("Slet bruger", "Vælg bruger du gerne vil ændre", controller.getUserList());
                     }
 
@@ -120,10 +120,11 @@ public class UserInterface {
                 }
                 case 5 -> {
                     int indexToShow = 0;
-                    while (indexToShow != -1)
+                    while (indexToShow != -1) {
                         indexToShow = drawMenu("Brugeroversigt", "Vælg bruger du gerne vil se", controller.getUserList());
-                    if (indexToShow != -1) {
-                        smallWindow("Bruger info", controller.getUserInfo(indexToShow), "OK");
+                        if (indexToShow != -1) {
+                            smallWindow("Bruger info", controller.getUserInfo(indexToShow), "OK");
+                        }
                     }
 
                 }
