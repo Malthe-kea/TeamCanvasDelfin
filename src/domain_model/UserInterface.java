@@ -87,7 +87,7 @@ public class UserInterface {
                     String password = inputMenu(title, "Indast kodeord for træneren");
                     String firstName = inputMenu(title, "Indast fornavn for træneren");
                     String lastName = inputMenu(title, "Indast efternavn for træneren");
-                    boolean isSeniorTrainer = inputMenu(title, "Er træneren senior eller juniortræner? (Senior/Junior)").toLowerCase() == "senior";
+                    boolean isSeniorTrainer = inputMenu(title, "Er træneren senior eller juniortræner? (Senior/Junior)").equalsIgnoreCase("senior");
 
                     controller.CreateandAddTrainerToDB(password, firstName, lastName, isSeniorTrainer);
                 }
