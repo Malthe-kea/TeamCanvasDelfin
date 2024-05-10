@@ -1,6 +1,13 @@
 package domain_model.Processors;
 
 import database.DBController;
+import database.competition_style_DB.StyleDB;
+import user_domain.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import database.DBController;
 
 public class TrainerProcessor implements Processor {
 
@@ -10,3 +17,22 @@ public class TrainerProcessor implements Processor {
         this.dbController = dbController;
     }
 }
+
+
+    //TODO tr?ner skal oprette st?vner for members. Det er ikke noget SuperUser g?r.
+
+//
+//    public List<String> getBackStrokeTopFive(){
+//        ArrayList<StyleDB> backStrokeTopFive = new ArrayList<>();
+//        styleDB.getStyleList();
+//
+//        for (Member m : styleDB){
+//
+//
+//        }
+//
+//
+//
+//        return backStrokeTopFive;
+//    }
+//}

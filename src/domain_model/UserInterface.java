@@ -11,7 +11,6 @@ public class UserInterface {
     private boolean programIsRunning;
     Scanner userInput;
     Controller controller;
-    DBController dbController = new DBController();
     boolean loginSucces;
 
     MemberProcessor memberProcessor;
@@ -24,11 +23,13 @@ public class UserInterface {
         programIsRunning = true;
         loginSucces = true;
         userInput = new Scanner(System.in);
-        Member member = new Member(1, "hej", "hej",true,true,"10/10/2001",true); // Eksempel pÃ¥ medlem
-        memberProcessor = new MemberProcessor(dbController);
-        superUserProcessor = new SuperUserProcessor(dbController);
-        treasurerProcessor = new TreasurerProcessor(dbController);
-        trainerProcessor = new TrainerProcessor(dbController);
+
+        Member member = new Member(1, "esra", "lund", false, false, "29/09/1990", false); // Eksempel p� medlem
+
+        memberProcessor = new MemberProcessor(member);
+        superUserProcessor = new SuperUserProcessor();
+        treasurerProcessor = new TreasurerProcessor();
+        trainerProcessor = new TrainerProcessor();
 
     }
 
@@ -43,7 +44,7 @@ public class UserInterface {
                     navigateToRole(userID);
 //                   programIsRunning = false;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Login mislykkedes. Prøv igen.", "Fejl", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Login mislykkedes. Pr�v igen.", "Fejl", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -85,14 +86,14 @@ public class UserInterface {
                 break;
 
             default:
-                print("Forkert input, prøv igen.");
+                print("Forkert input, pr�v igen.");
                 showWelcomeMessage();
                 break;
         }
     }
 
     private void showWelcomeMessage() {
-        JOptionPane.showMessageDialog(null, "Velkommen til Delfinen Svømmehal. \n Indtast login.", "Velkommen", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Velkommen til Delfinen Sv�mmehal. \n Indtast login.", "Velkommen", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void loginAsSuperUser() {
@@ -102,25 +103,33 @@ public class UserInterface {
 
         switch (command) {
             case "1" -> {
-                superUserProcessor.CreateandAddCompetitiveMembertoDB();
+
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateandAddMembertoDB();
             }
             case "2" -> {
-                superUserProcessor.CreateandAddTrainertoDB();
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateandAddTrainertoDB();
             }
             case "3" -> {
-                superUserProcessor.CreateandAddCompetitiveMembertoDB();
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateandAddCompetitiveMembertoDB();
             }
             case "4" -> {
-                superUserProcessor.CreateandAddTreasurertoDB();
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.CreateAndAddTreasurertoDB();
             }
             case "5" -> {
-                superUserProcessor.editUserFromDB(1, "esra");
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.editUserFromDB(1, "esra");
             }
             case "6" -> {
-                superUserProcessor.deleteUserFromDB(1, "esra");
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.deleteUserFromDB(1, "esra");
             }
             case "7" -> {
-                superUserProcessor.getUserFromDB(1);
+                //TODO indsæt korrekte parametre herunder.
+                //superUserProcessor.getUserFromDB(1);
             }
             case "9" -> {
                 print("Farvel");
@@ -128,7 +137,7 @@ public class UserInterface {
                 System.exit(0);
             }
             default -> {
-                print("Forkert input, prøv igen");
+                print("Forkert input, pr�v igen");
                 showWelcomeMessage();
             }
         }
@@ -140,6 +149,25 @@ public class UserInterface {
 
     private void loginAsTreasurer() {
         print("Logget ind som Treasurer.");
+        treasurerMenuInformation();
+        String command = userInput.nextLine().toLowerCase();
+        switch (command) {
+            case "1" -> {
+                print("Dette års forventede indkomst er: ");
+                treasurerProcessor.getExpectedIncome();
+            }
+            case "2" -> {
+
+            }
+            case "3" -> {
+
+            }
+            case "9" -> {
+                print("Farvel");
+                programIsRunning = false;
+                System.exit(0);
+            }
+        }
     }
 
     private void loginAsMember() {
@@ -168,12 +196,12 @@ public class UserInterface {
 
     private void superUserMenuInformation() {
         print("""
-                Du har nu følgende muligheder:
-                1 - Tilføj member til databasen
-                2 - Tilføj træner til databasen
-                3 - Tilføj konkurrence-medlem til databasen
-                4 - Tilføj kasserer til databasen
-                5 - Ændre medlemsoplysninger
+                Du har nu f�lgende muligheder:
+                1 - Tilf�j member til databasen
+                2 - Tilf�j tr�ner til databasen
+                3 - Tilf�j konkurrence-medlem til databasen
+                4 - Tilf�j kasserer til databasen
+                5 - �ndre medlemsoplysninger
                 6 - Slet medlem
                 7 - Se brugeroversigt
                 9 - Exit
@@ -182,9 +210,9 @@ public class UserInterface {
 
     private void memberMenuInformation() {
         print("""
-                Du har nu følgende muligheder:
+                Du har nu f�lgende muligheder:
                 1 - Se member information
-                2 - Se træningsresultater
+                2 - Se tr�ningsresultater
                 3 - Se konkurrenceresultater  
                 9 - Exit     
                 """);
@@ -192,7 +220,7 @@ public class UserInterface {
 
     private void trainerMenuInformation() {
         print("""
-                Du har nu følgende muligheder:
+                Du har nu f�lgende muligheder:
                 1 - 
                 2 - 
                 3 -     
@@ -201,9 +229,9 @@ public class UserInterface {
 
     private void treasurerMenuInformation() {
         print("""
-                Du har nu følgende muligheder:
-                1 - 
-                2 - 
+                Du har nu f�lgende muligheder:
+                1 - Tjek den forventede årlige indkomst.
+                2 - Få en liste af medlemmer, der er i restance. 
                 3 -     
                 """);
     }
@@ -227,10 +255,12 @@ public class UserInterface {
 //        if (valg == JOptionPane.YES_OPTION) {
 //            startProgram();
 //        } else {
-//            //JOptionPane.showMessageDialog(null,"Du er fortsat logget ind", "fortsæt", JOptionPane.PLAIN_MESSAGE);
+//            //JOptionPane.showMessageDialog(null,"Du er fortsat logget ind", "forts�t", JOptionPane.PLAIN_MESSAGE);
 //            }
 //        }
 //    }
+
+
 
 
 

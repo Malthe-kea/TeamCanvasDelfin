@@ -1,11 +1,11 @@
 package domain_model.Processors;
 
-import database.DBController;
 import database.Database;
-import database.userDB.UserDB;
+import database.DBController;
 import domain_model.DelfinUtil;
 import domain_model.UserInstance;
 import domain_model.UserInterface;
+import database.userDB.UserDB;
 import user_domain.*;
 
 import java.util.ArrayList;
@@ -14,19 +14,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class SuperUserProcessor implements Processor {
-
-    private DBController dbController;
     private Scanner userInput;
-    private ArrayList testDB = new ArrayList<>();
+    DBController dbController = new DBController();
     private ArrayList<User> userListArr;
     boolean programRunning = true;
 
-    public SuperUserProcessor(DBController dbController) {
+    public SuperUserProcessor() {
         userInput = new Scanner(System.in);
-        this.dbController = dbController;
     }
-
-
 
     public ArrayList createSuperUser() {
         ArrayList<SuperUser> superUser = new ArrayList<>();
@@ -34,110 +29,73 @@ public class SuperUserProcessor implements Processor {
         return superUser;
     }
 
-    public ArrayList CreateandAddMembertoDB() {
+    public void CreateandAddMembertoDB(String password, int userID, String firstNames, String lastNames, String activePassiveInput, String birthDate, String isCompetitiveInput, String isArrearsInput) {
 
-        print("Indtast fornavne");
-        String firstNames = userInput.nextLine();
-
-        print("indtast efternavne");
-        String lastNames = userInput.nextLine();
-
-        print("Aktiv/passiv");
-        String activePassiveInput = userInput.nextLine();
         Boolean isActiveMember = Boolean.parseBoolean(activePassiveInput);
-
-        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
-        String birthDate = userInput.nextLine();
+        Boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
+        Boolean isArrears = Boolean.parseBoolean(isArrearsInput);
         LocalDate dob = LocalDate.parse(birthDate);
 
-
-        testDB.add(new Member(1, firstNames, lastNames, isActiveMember, true, birthDate, false));
-
-        return testDB;
+        //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.
+        User memberToAdd = new Member(userID, firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);
+        dbController.addUserToDB(memberToAdd, password);
     }
 
-    public ArrayList CreateandAddTrainertoDB() {
+    public void CreateandAddTrainertoDB(int userID, String password, String firstNames, String lastNames, String isSeniorTrainerInput) {
 
-        print("Indtast fornavne");
-        String firstNames = userInput.nextLine();
-
-        print("indtast efternavne");
-        String lastNames = userInput.nextLine();
-
-        print("Aktiv/passiv");
-
-        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
-        String birthDate = userInput.nextLine();
-        LocalDate dob = LocalDate.parse(birthDate);
-
-//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        testDB.add(new Trainer(2, "Flemming", "Rasmussen", true));
-
-        return testDB;
+        Boolean isSeniorTrainer = Boolean.parseBoolean(isSeniorTrainerInput);
+        User trainerToAdd = new Trainer(userID, firstNames, lastNames, isSeniorTrainer);
+        dbController.addUserToDB(trainerToAdd, password);
     }
 
-    public ArrayList CreateandAddCompetitiveMembertoDB() {
+    public void CreateandAddCompetitiveMembertoDB(int userID, String password, String firstNames, String lastName, String isActiveMemberInput, String isCompetitiveInput, String birthDate, String isArrearsInput, ArrayList competitionList) {
 
-        print("Indtast fornavne");
-        String firstNames = userInput.nextLine();
-
-        print("indtast efternavne");
-        String lastNames = userInput.nextLine();
-
-        print("Aktiv/passiv");
-
-        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
-        String birthDate = userInput.nextLine();
-        LocalDate dob = LocalDate.parse(birthDate);
-        System.out.println(Period.between(dob,LocalDate.now()).getYears());
-
-//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, birthDate, false, new ArrayList<>()));
-
-        return testDB;
-    }
-
-    public ArrayList CreateandAddTreasurertoDB() {
-
-        print("Indtast fornavne");
-        String firstNames = userInput.nextLine();
-
-        print("indtast efternavne");
-        String lastNames = userInput.nextLine();
-
-        print("Aktiv/passiv");
-
-        print("Indtast fødselsdato i ÅÅÅÅ-MM-DD");
-        String birthDate = userInput.nextLine();
+        Boolean isActiveMember = Boolean.parseBoolean(isActiveMemberInput);
+        Boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
+        Boolean isArrears = Boolean.parseBoolean(isArrearsInput);
+        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.
         LocalDate dob = LocalDate.parse(birthDate);
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        testDB.add(new Treasurer(4, "Steen", "Secher"));
-
-        return testDB;
+        //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
+        User competitiveMemberToAdd = new CompetitiveMember(userID, firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears, competitionList);
+        dbController.addUserToDB(competitiveMemberToAdd, password);
     }
 
+    public void CreateAndAddTreasurertoDB(int userID, String password, String firstNames, String lastNames) {
+
+        User treasurerToAdd = new Treasurer(userID, firstNames, lastNames);
+        dbController.addUserToDB(treasurerToAdd, password);
+    }
+
+    //TODO fiks den her metode, så den ikke returnerer noget.
     public boolean editUserFromDB(int idToEdit, String firstName) {
         UserDB db = new UserDB();
         User userToEdit = db.getUserFromID(idToEdit);
 
         if (userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
-            print("""
-                    Hvilket parameter vil du ændre?
-                    1. Fornavn(e)
-                    2. Efternavn
-                    3. Aktivitetsstatus
-                    """);
+
             String command = userInput.nextLine().toLowerCase();
             String commandPrompt = userInput.nextLine().toLowerCase();
             switch (DelfinUtil.checkUserInstance(userToEdit)) {
 
+                case SUPER, TREASURER -> {
+                    print("""
+                                       1. Rediger fornavn
+                            2. Rediger efternavn
+                            """);
+                    commandPrompt = userInput.nextLine().toLowerCase();
+                    userToEdit.setFirstName(commandPrompt);
+                }
                 case MEMBER, COMPETITIVE -> {
                     print("""
-                            4. Konkurrence/Motionist
+                            1. Rediger fornavn
+                                 2. Rediger efternavn
+                                     3. Rediger aktivitetsstatus
+                                 4. Konkurrence/Motionist
                             5. Restancestatus.
                             """);
-                    if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE){
+                    if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE) {
                         //TODO når Style.class er oprettet kan vi tilføje discipliner herunder.
                         print("""
                                 6. 
@@ -151,6 +109,8 @@ public class SuperUserProcessor implements Processor {
                     Trainer trainer = (Trainer) userToEdit;
 
                     print("""
+                            1. Rediger fornavn
+                            2. Rediger efternavn
                             3. Senior/Junior
                             """);
                     //TODO lav switchcase, der passer til menuen.
@@ -164,21 +124,9 @@ public class SuperUserProcessor implements Processor {
                 }
 
             }
-
             return db.editUserInDB(userToEdit);
         }
 
-
-        //User userToEdit = null;
-
-
-
-        /*for (User u : userListArr) {
-            if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
-
-                break;
-            }
-        }*/
 
         return false;
     }
@@ -189,7 +137,7 @@ public class SuperUserProcessor implements Processor {
 
         for (User u : userListArr) {
             if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
-                //TODO slet fra DB
+                dbController.removeUserFromDB(u);
             }
         }
     }

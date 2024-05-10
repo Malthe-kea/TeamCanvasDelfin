@@ -76,4 +76,5 @@ public class Member extends User {
     public void setSenior(boolean senior) {
         isSenior = senior;
     }
+
 }
