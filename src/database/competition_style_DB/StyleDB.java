@@ -88,7 +88,7 @@ public class StyleDB extends Database {
         ArrayList<String> styles = new ArrayList<>();
         for (String[] singleRow : allRowsFromDB) {
 
-            String styleName = singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_NAME)];
+            String styleName = singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_CATEGORY)];
             int stylePlacement = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_PLACEMENT)]);
             long timeInSeconds = Long.parseLong(singleRow[getIndexOfRowName(StyleDBRowNames.TIME_IN_SECONDS)]);
             int userIDIndex = getIndexOfRowName(StyleDBRowNames.USER_ID);

@@ -2,6 +2,7 @@ package domain_model.Processors;
 
 import database.DBController;
 import database.competition_style_DB.StyleDB;
+import domain_model.UIDisplayInfo;
 import user_domain.*;
 
 import java.util.ArrayList;
@@ -16,7 +17,20 @@ public class TrainerProcessor implements Processor {
     public TrainerProcessor(DBController dbController) {
         this.dbController = dbController;
     }
+
+
+    @Override
+    public UIDisplayInfo getMainMenu() {
+        return null;
+    }
+
+    @Override
+    public UIDisplayInfo processMainMenuOption(int option) {
+        return null;
+    }
 }
+
+
 
 
     //TODO tr?ner skal oprette st?vner for members. Det er ikke noget SuperUser g?r.

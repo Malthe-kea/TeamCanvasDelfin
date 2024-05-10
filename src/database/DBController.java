@@ -76,7 +76,11 @@ public class DBController {
     /**GET LIST OF MEMBERS*/
     public ArrayList<Member> getListOfMembers() {
         ArrayList<Member> memberList = new ArrayList<>();
-        memberDB.getListOfUsers().forEach(user -> memberList.add((Member) user));
+        memberDB.getListOfUsers().forEach(user -> {
+            if (user instanceof Member member) {
+                memberList.add(member);
+            }
+        });
         return memberList;
     }
 

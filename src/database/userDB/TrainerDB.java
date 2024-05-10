@@ -108,7 +108,7 @@ public class TrainerDB extends Database implements UserReturn {
     }
 
     public boolean addUserInDB(User user) {
-        if(!(user instanceof Trainer trainer && user.getUserID() == getIDForNewUser())) {
+        if(!(user instanceof Trainer trainer)) {
             return false;
         } else {
             ArrayList<String[]> allRows = super.getRows();

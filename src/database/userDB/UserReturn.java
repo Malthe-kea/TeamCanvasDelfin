@@ -22,7 +22,12 @@ public interface UserReturn {
         //Loops through each row og database.
         for (String[] singleRow : allRows) {
             //Calls the method for creating a user instance based on a single row from the DB.
-            userList.add(createUserFromSingleRow(singleRow));
+            User createdUser = createUserFromSingleRow(singleRow);
+
+            if(createdUser != null) {
+                userList.add(createdUser);
+
+            }
         }
         return userList;
     }

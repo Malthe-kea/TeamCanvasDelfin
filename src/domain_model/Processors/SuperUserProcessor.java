@@ -2,25 +2,49 @@ package domain_model.Processors;
 
 import database.Database;
 import database.DBController;
-import domain_model.DelfinUtil;
-import domain_model.UserInstance;
-import domain_model.UserInterface;
+import domain_model.*;
 import database.userDB.UserDB;
 import user_domain.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.Period;
 
 public class SuperUserProcessor implements Processor {
     private Scanner userInput;
-    DBController dbController = new DBController();
+    DBController dbController;
     private ArrayList<User> userListArr;
     boolean programRunning = true;
 
-    public SuperUserProcessor() {
+    public SuperUserProcessor(DBController dbController) {
+        this.dbController = dbController;
         userInput = new Scanner(System.in);
+    }
+
+    @Override
+    public UIDisplayInfo getMainMenu() {
+
+
+        ArrayList<String> options = new ArrayList<>(List.of(
+                "Tilføj medlem",
+                "Tilføj træner",
+                "Tilføj konkurrence-medlem",
+                "Tilføj kasserer",
+                "Ændre medlemsoplysninger",
+                "Slet medlem",
+                "Se brugeroversigt"));
+
+
+        return new UIDisplayInfo("SuperUser Menu","Vælg en af følgende muligheder", DisplayType.MENU ,options);
+
+
+    }
+
+    @Override
+    public UIDisplayInfo processMainMenuOption(int option) {
+        return null;
     }
 
     public ArrayList createSuperUser() {
@@ -29,47 +53,69 @@ public class SuperUserProcessor implements Processor {
         return superUser;
     }
 
-    public void CreateandAddMembertoDB(String password, int userID, String firstNames, String lastNames, String activePassiveInput, String birthDate, String isCompetitiveInput, String isArrearsInput) {
+    public ArrayList<String> getUserList() {
+        ArrayList<String> userList = new ArrayList<>();
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        for (User u : allUsers) {
+            UserInstance userInstance = DelfinUtil.checkUserInstance(u);
+            switch (userInstance) {
+                case MEMBER -> {
+                    userList.add(((Member)u).toString());
+                }
+                case COMPETITIVE -> {
+                    userList.add(((CompetitiveMember)u).toString());
+                }
+                case TRAINER -> {
+                    userList.add(((Trainer)u).toString());
+                }
+                case SUPER, TREASURER -> {
+                    userList.add(u.toString());
+                }
+            }
+        }
+        return userList;
+    }
 
-        Boolean isActiveMember = Boolean.parseBoolean(activePassiveInput);
-        Boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
-        Boolean isArrears = Boolean.parseBoolean(isArrearsInput);
-        LocalDate dob = LocalDate.parse(birthDate);
+    public void CreateandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
+
+        Boolean isActiveMember = activePassiveInput;
+        Boolean isCompetitive = isCompetitiveInput;
+        Boolean isArrears = isArrearsInput;
+        //LocalDate dob = LocalDate.parse(birthDate);
 
         //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.
-        User memberToAdd = new Member(userID, firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);
+        User memberToAdd = new Member(dbController.getIDForNewUser(), firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(memberToAdd, password);
     }
 
-    public void CreateandAddTrainertoDB(int userID, String password, String firstNames, String lastNames, String isSeniorTrainerInput) {
+    public void CreateandAddTrainertoDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {
 
-        Boolean isSeniorTrainer = Boolean.parseBoolean(isSeniorTrainerInput);
-        User trainerToAdd = new Trainer(userID, firstNames, lastNames, isSeniorTrainer);
+        User trainerToAdd = new Trainer(dbController.getIDForNewUser(), firstNames, lastNames, isSeniorTrainer);
         dbController.addUserToDB(trainerToAdd, password);
     }
 
-    public void CreateandAddCompetitiveMembertoDB(int userID, String password, String firstNames, String lastName, String isActiveMemberInput, String isCompetitiveInput, String birthDate, String isArrearsInput, ArrayList competitionList) {
+    public void CreateandAddCompetitiveMembertoDB(String password, String firstNames, String lastName, boolean isActiveMemberInput, boolean isCompetitiveInput, String birthDate, boolean isArrearsInput) {
 
-        Boolean isActiveMember = Boolean.parseBoolean(isActiveMemberInput);
-        Boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
-        Boolean isArrears = Boolean.parseBoolean(isArrearsInput);
+        Boolean isActiveMember = isActiveMemberInput;
+        Boolean isCompetitive = isCompetitiveInput;
+        Boolean isArrears = isArrearsInput;
         //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.
-        LocalDate dob = LocalDate.parse(birthDate);
+//        LocalDate dob = LocalDate.parse(birthDate);
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
         //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
-        User competitiveMemberToAdd = new CompetitiveMember(userID, firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears, competitionList);
+        User competitiveMemberToAdd = new CompetitiveMember(dbController.getIDForNewUser(), firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(competitiveMemberToAdd, password);
     }
 
-    public void CreateAndAddTreasurertoDB(int userID, String password, String firstNames, String lastNames) {
+    public void CreateAndAddTreasurertoDB(String password, String firstNames, String lastNames) {
 
-        User treasurerToAdd = new Treasurer(userID, firstNames, lastNames);
+        User treasurerToAdd = new Treasurer(dbController.getIDForNewUser(), firstNames, lastNames);
         dbController.addUserToDB(treasurerToAdd, password);
     }
 
     //TODO fiks den her metode, så den ikke returnerer noget.
-    public boolean editUserFromDB(int idToEdit, String firstName) {
+    public void editUserFromDB(int idToEdit, String firstName) {
         UserDB db = new UserDB();
         User userToEdit = db.getUserFromID(idToEdit);
 
@@ -81,7 +127,7 @@ public class SuperUserProcessor implements Processor {
 
                 case SUPER, TREASURER -> {
                     print("""
-                                       1. Rediger fornavn
+                            1. Rediger fornavn
                             2. Rediger efternavn
                             """);
                     commandPrompt = userInput.nextLine().toLowerCase();
@@ -92,7 +138,7 @@ public class SuperUserProcessor implements Processor {
                             1. Rediger fornavn
                                  2. Rediger efternavn
                                      3. Rediger aktivitetsstatus
-                                 4. Konkurrence/Motionist
+                            4. Konkurrence/Motionist
                             5. Restancestatus.
                             """);
                     if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE) {
@@ -124,28 +170,44 @@ public class SuperUserProcessor implements Processor {
                 }
 
             }
-            return db.editUserInDB(userToEdit);
+            db.editUserInDB(userToEdit);
         }
 
-
-        return false;
     }
 
-    public void deleteUserFromDB(int idToEdit, String firstName) {
-        User userToDelete = null;
-        String command = userInput.nextLine().toLowerCase();
+    public void deleteUserFromDB(int indexInList) {
 
-        for (User u : userListArr) {
-            if (u.getUserID() == idToEdit && u.getFirstName() == firstName) {
-                dbController.removeUserFromDB(u);
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        User userToDelete = allUsers.get(indexInList);
+        dbController.removeUserFromDB(userToDelete);
+
+    }
+
+    public String getUserInfo(int indexToEdit) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        User userForInfo = allUsers.get(indexToEdit);
+
+        switch (DelfinUtil.checkUserInstance(userForInfo)) {
+            case MEMBER -> {
+                return ((Member)userForInfo).toString();
+            }
+            case COMPETITIVE -> {
+                return ((CompetitiveMember)userForInfo).toString();
+            }
+            case TRAINER -> {
+                return ((Trainer)userForInfo).toString();
+            }
+            case SUPER, TREASURER -> {
+                return userForInfo.toString();
             }
         }
+        return "null";
     }
 
 
     public Database getUserFromDB(int idToEdit) {
         //TODO send DB return
-        String command = userInput.nextLine().toLowerCase();
+        String command = "1";
         print("""
                 Hvilket brugeroversigt vil du gerne se?
                 1. Crawl
@@ -194,6 +256,6 @@ public class SuperUserProcessor implements Processor {
     }
 
     private void print(String s) {
-        UserInterface.print(s);
+        UserInterfaceEsra.print(s);
     }
 }

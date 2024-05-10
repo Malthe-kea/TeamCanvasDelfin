@@ -1,3 +1,21 @@
 id;permissionLevel;password;firstName;lastName
-1;4;testPassword;Laura;Bøjden
-2;4;testPassword;Noah;Van Wagenen
+1;1;testPassword;Laura;Bøjden
+2;1;testPassword;Mikkel;Bøjden
+3;1;testPassword;Mads;Bøjden
+4;1;testPassword;Morten;Bøjden
+5;1;testPassword;Mette;Bøjden
+6;1;testPassword;Mikkel;Bøjden
+7;2;sdsd;sdsdsd;sdsdsd
+8;1;testPassword;Morten;Bøjden
+12;1;testPassword;Morten;Bøjden
+13;1;testPassword;Mette;Bøjden
+14;1;testPassword;Mikkel;Bøjden
+15;1;testPassword;Mads;Bøjden
+16;1;testPassword;Morten;Bøjden
+17;1;testPassword;Mette;Bøjden
+18;1;testPassword;Mikkel;Bøjden
+19;1;testPassword;Mads;Bøjden
+20;1;testPassword;Morten;Bøjden
+21;1;testPassword;Mette;Bøjden
+22;1;testPassword;Mikkel;Bøjden
+23;1;testPassword;Mads;Bøjden

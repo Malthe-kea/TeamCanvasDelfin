@@ -21,7 +21,6 @@ public class TextStyle {
         s = s.replaceAll("\\[",YELLOW_FG);
         s = s.replaceAll("]",RESET);
 
-        s = "<html>" + s + "</html>";
 
 
         s = s.replaceAll("\\[", GREEN_FG);
@@ -65,6 +64,9 @@ public class TextStyle {
         }
 
         s = sb.toString();
+
+        s = "<html>" + s + "</html>";
+
 
         return s;
     }

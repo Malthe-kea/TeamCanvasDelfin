@@ -1,6 +1,7 @@
 package domain_model.Processors;
 
 import database.DBController;
+import domain_model.UIDisplayInfo;
 import user_domain.Member;
 
 public class MemberProcessor implements Processor {
@@ -33,6 +34,16 @@ public class MemberProcessor implements Processor {
         System.out.println("Is a competitive member: " + member.isCompetitive());
         System.out.println("Restance: " + member.isArrears());
         System.out.println("Yearly membership fee: " + member.getYearlyMembershipFee());
+    }
+
+    @Override
+    public UIDisplayInfo getMainMenu() {
+        return null;
+    }
+
+    @Override
+    public UIDisplayInfo processMainMenuOption(int option) {
+        return null;
     }
 
     // Metode til at vise tr?ningsresultat og dato for hver disciplin

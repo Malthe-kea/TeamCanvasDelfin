@@ -137,7 +137,7 @@ public class MemberDB extends Database implements UserReturn {
     }
 
     public boolean addUserInDB(User user) {
-        if(!(user instanceof Member member && user.getUserID() == getIDForNewUser())) {
+        if(!(user instanceof Member member)) {
             return false;
         } else {
             ArrayList<String[]> allRows = getRows();

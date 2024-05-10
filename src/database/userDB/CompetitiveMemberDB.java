@@ -164,7 +164,7 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
 
 
     public boolean addUserInDB(User user) {
-        if(!(user instanceof CompetitiveMember compMember && user.getUserID() == getIDForNewUser())) {
+        if(!(user instanceof CompetitiveMember compMember)) {
             return false;
         } else {
             ArrayList<String[]> allRows = getRows();

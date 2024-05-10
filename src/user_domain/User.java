@@ -37,8 +37,8 @@ public abstract class User {
     @Override
     public String toString() {
         return"\n"+
-                "UserID: " + userID +
-                 " " + firstName +
+                "UserID: " + userID + "\n" +
+                 " " + firstName + "\n" +
                 " " + lastName;
     }
 }
