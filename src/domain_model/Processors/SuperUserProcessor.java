@@ -81,7 +81,7 @@ public class SuperUserProcessor implements Processor {
 
                 case SUPER, TREASURER -> {
                     print("""
-                                       1. Rediger fornavn
+                            1. Rediger fornavn
                             2. Rediger efternavn
                             """);
                     commandPrompt = userInput.nextLine().toLowerCase();

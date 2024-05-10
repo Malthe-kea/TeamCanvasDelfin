@@ -3,3 +3,4 @@ id;firstName;lastName;isActiveMember;isCompetitive;dateOfBirth;isArrears;yearlyM
 2;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;
 3;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;
 4;malthe;Tiufkær;true;false;29/09/1990;true;1600.0;
+5;Max;Mustermann;true;true;29/09/1990;false;1600.0;
