@@ -6,6 +6,15 @@ import user_domain.competition.Competition;
 import user_domain.competition.Style;
 
 public class CompetitiveMember extends Member {
+    //TODO
+    // 1. Inde i CompetitiveMember - Lav metode der læser igennem hver style for hvert stævne,
+    // og sætter PR for hver disciplin inde i CompetitiveMember klassen.
+    // 2. inde i TrainerProcessor. Når ovenstående er færdigt, lav top5 der sammenligner
+    // forskellige competitivemember resultater. Dog opdelt i Junior og Senior!
+    // TOP 5 metoden skal returnere ArrayList<String>. Hver String er en række i menuen, og derfor skal
+    // den opsættes således.
+
+
     private Style backStrokePR;
     private Style crawlPR;
     private Style breastStrokePR;

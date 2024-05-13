@@ -274,6 +274,21 @@ public class UserDB extends Database implements UserReturn {
         return false;
     }
 
+    public String getPasswordFromID(int idInput) {
+        ArrayList<String[]> allRows = getRows();
+        int indexOfID = getIndexOfRowName(UserDBRowNames.USER_ID);
+        int indexOfPassword = getIndexOfRowName(UserDBRowNames.PASSWORD);
+        for (int i = 0; i < allRows.size(); i++) {
+            int id = Integer.parseInt(allRows.get(i)[indexOfID]);
+            if(id == idInput) {
+                return allRows.get(i)[indexOfPassword];
+            }
+        }
+
+        return null;
+
+    }
+
 
 
 }

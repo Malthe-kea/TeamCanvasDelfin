@@ -1,7 +1,5 @@
 package domain_model;
 
-import user_domain.User;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -76,9 +74,9 @@ public class UserInterface {
                     boolean isArrearsInput = false;
 
                     if (isCompetitiveInput) {
-                        controller.CreateandAddCompetitiveMembertoDB(password, firstName, lastName, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
+                        controller.createandAddCompetitiveMembertoDB(password, firstName, lastName, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
                     } else {
-                        controller.CreateandAddMembertoDB(password, firstName, lastName, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
+                        controller.createandAddMembertoDB(password, firstName, lastName, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
                     }
 
                 }
@@ -89,7 +87,7 @@ public class UserInterface {
                     String lastName = inputMenu(title, "Indast efternavn for træneren");
                     boolean isSeniorTrainer = inputMenu(title, "Er træneren senior eller juniortræner? (Senior/Junior)").equalsIgnoreCase("senior");
 
-                    controller.CreateandAddTrainerToDB(password, firstName, lastName, isSeniorTrainer);
+                    controller.createandAddTrainerToDB(password, firstName, lastName, isSeniorTrainer);
                 }
                 case 2 -> {
                     String title = "Ny kassér";
@@ -97,7 +95,7 @@ public class UserInterface {
                     String firstName = inputMenu(title, "Indast fornavn for træneren");
                     String lastName = inputMenu(title, "Indast efternavn for træneren");
 
-                    controller.CreateandAddTreasurertoDB(password, firstName, lastName);
+                    controller.createandAddTreasurertoDB(password, firstName, lastName);
                 }
                 case 3 -> {
                     int indexToEdit = 0;
@@ -119,6 +117,8 @@ public class UserInterface {
 
                 }
                 case 5 -> {
+
+                    //TODO FIX bug. Kun superusers vises i brugeroversigt.
                     int indexToShow = 0;
                     while (indexToShow != -1) {
                         indexToShow = drawMenu("Brugeroversigt", "Vælg bruger du gerne vil se", controller.getUserList());

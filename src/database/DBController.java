@@ -172,4 +172,7 @@ public class DBController {
     public boolean removeStyleFromDB(Style style) {
         return styleDB.removeStyleFromDB(style);
     }
+    public String getPasswordFromID(int idInput) {
+        return userDB.getPasswordFromID(idInput);
+    }
 }

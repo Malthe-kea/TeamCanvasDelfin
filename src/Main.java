@@ -6,6 +6,22 @@ public class Main {
 
         UI.startProgram();
 
+        /*TODO
+            1. SuperUserProcessor editMember skal laves og opsættes til UI.
+            2. SuperUserProcessor Brugeroversigt skal fixes med bug hvor kun superuser vises.
+            3. toString metoder for alle brugertyper skal laves. De skal kalde deres parent class toString,
+            og blot bygges videre på denne.
+            4. MemberProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String>
+            5. TrainerProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String>
+            6. KassérProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String>
+            7. Member, Trainer og Kassér processor metoder skal tilføjes til Controller.
+            8. UI skal have en cancel button ved login siden, som lukker programmet.
+            9. UI skal have "Ja/Nej" knapper istedet for input text.
+            10. REFACTORING NÅR OVENSTÅENDE ER DONE.
+
+        */
+
+
     }
 
 

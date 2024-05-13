@@ -45,33 +45,52 @@ public class Controller implements Processor {
     }
 
 
-    public void CreateandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
+    public void createandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         superUserProcessor.CreateandAddMembertoDB(password, firstNames, lastNames, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
     }
 
-    public void CreateandAddTrainerToDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {
+    public void createandAddTrainerToDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         superUserProcessor.CreateandAddTrainertoDB(password, firstNames, lastNames, isSeniorTrainer);
     }
 
-    public void CreateandAddCompetitiveMembertoDB(String password, String firstNames, String lastNames, boolean isActiveMemberInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
+    public void createandAddCompetitiveMembertoDB(String password, String firstNames, String lastNames, boolean isActiveMemberInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
         superUserProcessor.CreateandAddCompetitiveMembertoDB(password, firstNames, lastNames, isActiveMemberInput, isCompetitiveInput, birthDate, isArrearsInput);
     }
 
-    public void CreateandAddTreasurertoDB(String password, String firstNames, String lastNames) {
+    public void createandAddTreasurertoDB(String password, String firstNames, String lastNames) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         superUserProcessor.CreateAndAddTreasurertoDB(password, firstNames, lastNames);
     }
 
-    public void editUserFromDB(int idToEdit, String firstName) {
+    public void editMember(
+            String userIDInput,
+            String firstNameInput,
+            String lastNameInput,
+            String isActiveMemberInput,
+            String isCompetitiveInput,
+            String isArrearsInput)
+    {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
-        superUserProcessor.editUserFromDB(idToEdit, firstName);
+        superUserProcessor.editMember(userIDInput, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
+    }
+
+    public void editTrainer() {
+        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
+
+        superUserProcessor.editTrainer();
+    }
+
+    public void editAdmin() {
+        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
+
+        superUserProcessor.editAdmin();
     }
 
     public void deleteUserFromDB(int indexInList) {

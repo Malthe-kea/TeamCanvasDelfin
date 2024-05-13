@@ -7,6 +7,7 @@ import database.userDB.UserDB;
 import user_domain.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -114,64 +115,45 @@ public class SuperUserProcessor implements Processor {
         dbController.addUserToDB(treasurerToAdd, password);
     }
 
-    //TODO fiks den her metode, så den ikke returnerer noget.
-    public void editUserFromDB(int idToEdit, String firstName) {
-        UserDB db = new UserDB();
-        User userToEdit = db.getUserFromID(idToEdit);
+    public void editMember(String userIDInput, String firstNameInput, String lastNameInput, String isActiveMemberInput, String isCompetitiveInput, String isArrearsInput) {
+        int userID = Integer.parseInt(userIDInput);
+        Member userToEdit = (Member) dbController.getUserFromID(userID);
 
-        if (userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
-
-            String command = userInput.nextLine().toLowerCase();
-            String commandPrompt = userInput.nextLine().toLowerCase();
-            switch (DelfinUtil.checkUserInstance(userToEdit)) {
-
-                case SUPER, TREASURER -> {
-                    print("""
-                            1. Rediger fornavn
-                            2. Rediger efternavn
-                            """);
-                    commandPrompt = userInput.nextLine().toLowerCase();
-                    userToEdit.setFirstName(commandPrompt);
-                }
-                case MEMBER, COMPETITIVE -> {
-                    print("""
-                            1. Rediger fornavn
-                                 2. Rediger efternavn
-                                     3. Rediger aktivitetsstatus
-                            4. Konkurrence/Motionist
-                            5. Restancestatus.
-                            """);
-                    if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE) {
-                        //TODO når Style.class er oprettet kan vi tilføje discipliner herunder.
-                        print("""
-                                6. 
-                                """);
-                    }
-                    commandPrompt = userInput.nextLine().toLowerCase();
-                    userToEdit.setLastName(commandPrompt);
-                }
-                case TRAINER -> {
-                    commandPrompt = userInput.nextLine().toLowerCase();
-                    Trainer trainer = (Trainer) userToEdit;
-
-                    print("""
-                            1. Rediger fornavn
-                            2. Rediger efternavn
-                            3. Senior/Junior
-                            """);
-                    //TODO lav switchcase, der passer til menuen.
-
-                    boolean seniorOrNot = (commandPrompt.equalsIgnoreCase("senior")) ? true : false;
-                    trainer.setSeniorTrainer(seniorOrNot);
-
-                }
-                default -> {
-                    print("invalid input");
-                }
-
-            }
-            db.editUserInDB(userToEdit);
+        if(!firstNameInput.isBlank()) {
+            userToEdit.setFirstName(firstNameInput);
         }
+
+        if(!lastNameInput.isBlank()) {
+            userToEdit.setLastName(lastNameInput);
+        }
+
+        userToEdit.setActiveMember(Boolean.parseBoolean(isActiveMemberInput));
+        userToEdit.setArrears(Boolean.parseBoolean(isArrearsInput));
+
+        boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
+
+        if(isCompetitive != userToEdit.isCompetitive()) {
+            User convertedMember;
+
+            if(isCompetitive) {
+                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());
+            } else {
+                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());
+            }
+
+            String password = dbController.getPasswordFromID(userToEdit.getUserID());
+            dbController.removeUserFromDB(userID);
+            dbController.addUserToDB(convertedMember, password);
+        } else {
+            dbController.editUserInDB(userToEdit);
+        }
+
+    }
+
+    public void editTrainer() {
+    }
+
+    public void editAdmin() {
 
     }
 
@@ -256,6 +238,6 @@ public class SuperUserProcessor implements Processor {
     }
 
     private void print(String s) {
-        UserInterfaceEsra.print(s);
+        System.out.println(s);
     }
 }
