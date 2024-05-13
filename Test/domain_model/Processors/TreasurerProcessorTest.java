@@ -68,8 +68,6 @@ class TreasurerProcessorTest {
             }
         }
             //ACT
-
-
             double expectedResults = 3;
             double actualResults = membersInArrears.size();
 
