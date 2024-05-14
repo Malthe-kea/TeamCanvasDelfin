@@ -18,7 +18,6 @@ public class Main {
             8. UI skal have en cancel button ved login siden, som lukker programmet.
             9. UI skal have "Ja/Nej" knapper istedet for input text.
             10. REFACTORING NÅR OVENSTÅENDE ER DONE.
-
         */
 
 

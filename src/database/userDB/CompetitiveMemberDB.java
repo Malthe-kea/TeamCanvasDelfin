@@ -83,11 +83,14 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
             String[] compEntries = compEntriesAsString.split(",");
             ArrayList<Competition> compList = new ArrayList<>();
 
-            CompetitionDB compDB = new CompetitionDB();
 
-            for (String idAsString : compEntries) {
-                compList.add(compDB.getCompetitionFromID(Integer.parseInt(idAsString), userIDFromMemberDB));
+            if(!(compEntries.length == 1 && compEntries[0].isBlank())) {
+                CompetitionDB compDB = new CompetitionDB();
+                for (String idAsString : compEntries) {
+                    compList.add(compDB.getCompetitionFromID(Integer.parseInt(idAsString), userIDFromMemberDB));
+                }
             }
+
 
             return new CompetitiveMember(userIDFromMemberDB, firstNameFromMemberDB, lastNameFromMemberDB, isActiveMemberFromMemberDB,
                     isCompetitiveFromMemberDB, dateOfBirthFromMemberDB, isArrearsFromMemberDB, compList);
