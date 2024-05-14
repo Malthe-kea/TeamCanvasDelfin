@@ -94,13 +94,13 @@ public class Controller implements Processor {
         superUserProcessor.deleteUserFromDB(indexInList);
     }
 
-    public ArrayList<String> getUserList() {
+    public ArrayList<String> getUserIDAndNameList() {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         return superUserProcessor.getUserIDAndNameList();
     }
 
-    public String getUserInfo(int indexOfList) {
+    public ArrayList<String> getUserInfo(int indexOfList) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         return superUserProcessor.getUserInfo(indexOfList);

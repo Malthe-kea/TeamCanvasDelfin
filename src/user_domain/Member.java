@@ -80,7 +80,7 @@ public class Member extends User {
     @Override
     public String toString() {
         return super.toString() +  "\n"+
-                "Fødselsdag: " + dateOfBirth+ "\n" +
+                "Fødselsdag: " + dateOfBirth.format(birthDateFormat)+ "\n" +
                 "Er aktiv (ja/nej): " + isActiveMember + "\n" +
                 "Er konkurrencesvømmer (ja/nej): " + isCompetitive + "\n" +
                 "Er i restance (ja/nej): " + isArrears + "\n" +

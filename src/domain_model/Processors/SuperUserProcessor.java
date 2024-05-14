@@ -6,6 +6,7 @@ import domain_model.*;
 import user_domain.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class SuperUserProcessor implements Processor {
@@ -124,7 +125,7 @@ public class SuperUserProcessor implements Processor {
 
         dbController.editUserInDB(userToEdit);
     }
-    public void editTreassurer(String userIDInput, String firstNameInput, String lastNameInput) {
+    public void editTreasurer(String userIDInput, String firstNameInput, String lastNameInput) {
         int userID = Integer.parseInt(userIDInput);
         Member userToEdit = (Member) dbController.getUserFromID(userID);
 
@@ -152,68 +153,15 @@ public class SuperUserProcessor implements Processor {
 
     }
 
-    public String getUserInfo(int indexToShow) {
+    public ArrayList<String> getUserInfo(int indexToShow) {
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
         User userForInfo = allUsers.get(indexToShow);
+        ArrayList<String> userInfo;
+        String userString = userForInfo.toString();
+        userInfo = new ArrayList<>(List.of(userString.split("\n")));
+        userInfo.remove(0);
 
-        switch (DelfinUtil.checkUserInstance(userForInfo)) {
-            case MEMBER -> {
-                return ((Member) userForInfo).toString();
-            }
-            case COMPETITIVE -> {
-                return ((CompetitiveMember) userForInfo).toString();
-            }
-            case TRAINER -> {
-                return ((Trainer) userForInfo).toString();
-            }
-            case SUPER, TREASURER -> {
-                return userForInfo.toString();
-            }
-        }
-        return "null";
+        return userInfo;
     }
 
-
-    public Database getUserFromDB(int idToEdit) {
-        //TODO send DB return
-        String command = "1";
-        print("""
-                Hvilket brugeroversigt vil du gerne se?
-                1. Crawl
-                2. Rygcrawl
-                3. Brystsvømning
-                4. Butterfly
-                5. Aktive/Passive medlemmer
-                6. Juniorer/Seniorer
-                """);
-        while (programRunning)
-            switch (command) {
-                case "1" -> {
-                    print("Get XYZ-database");
-                }
-                case "2" -> {
-                    print("Get XYZ-database");
-                }
-                case "3" -> {
-                    print("Get XYZ-database");
-                }
-                case "4" -> {
-                    print("Get XYZ-database");
-                }
-                case "5" -> {
-                    print("Get XYZ-database");
-                }
-                case "6" -> {
-                    print("Get XYZ-database");
-                }
-                default -> {
-                    print("invalid input");
-                }
-            }
-        return null;
-    }
-
-    private void print(String s) {
-        System.out.println(s);
-    }
 }

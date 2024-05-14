@@ -5,25 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Fixed bug with COmpetitionList conversion from String to Int. Implemented Yes/No Button in UI">
-      <change afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace-DESKTOP-UOI9AEA.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/DisplayType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/DisplayType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/MemberProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/MemberProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/Processor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TreasurerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TreasurerProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/TextStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/TextStyle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/UIDisplayInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/UIDisplayInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Member.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +51,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -76,6 +68,7 @@
     "JUnit.TreasurerProcessorTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Noah-UserInterfaceChanges",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",

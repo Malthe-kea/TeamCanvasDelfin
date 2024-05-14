@@ -27,7 +27,10 @@ public class UserInterface {
         smallWindow("Velkommen", TextStyle.format("(Velkommen) til Delfin svømmeklubben"), "Log ind");
 
         while (programRunning) {
-            UserInstance userInstance = controller.getUserFromPassword(inputMenu("Log ind", "Indtast dit password"));
+
+            String input = inputMenu("Log ind", "Indtast dit password", "Log ind","Afslut program", true);
+
+            UserInstance userInstance = controller.getUserFromPassword(input);
 
             switch (userInstance) {
                 case MEMBER, COMPETITIVE -> {
@@ -44,7 +47,13 @@ public class UserInterface {
                     //TREASURER INTERFACE
                 }
                 case NOTFOUND -> {
-                    JOptionPane.showMessageDialog(null, "Brugeren blev ikke fundet", "Fejl", JOptionPane.ERROR_MESSAGE);
+
+                    if(input == null) {
+                        programRunning = false;
+                    } else {
+                        showErrorMessage("Fejl","Brugeren blev ikke fundet");
+                    }
+
                 }
             }
         }
@@ -81,24 +90,53 @@ public class UserInterface {
     }
 
 
-    public static String inputMenu(String title, String message) {
-        return (String) JOptionPane.showInputDialog(null,
-                TextStyle.format(message),
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                icon, null, null);
+    public static String inputMenu(String title, String message, String okButtonText, String cancelButtonText, boolean isPassword) {
+        JTextField textField;
+        if(isPassword) {
+            textField = new JPasswordField();
+        } else {
+            textField = new JTextField();
+        }
 
+        Object[] messageArray = {message, textField};
+        String[] options = {okButtonText, cancelButtonText};
+        int optionType = JOptionPane.showOptionDialog(null, messageArray, title, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, options, options[0]);
+        if (optionType == 0) {
+            String inputText = textField.getText();
+            if(inputText.isBlank()) {
+                return null;
+            } else {
+                return inputText;
+            }
+        } else {
+            return null;
+        }
+    }
+    //Overload method for inputMenu, which sets isPassword to false.
+    public static String inputMenu(String title, String message, String okButtonText, String cancelButtonText) {
+        return inputMenu(title, message, okButtonText, cancelButtonText, false);
     }
 
-    public static boolean yesNoMenu(String title, String message) {
-        int choice = JOptionPane.showConfirmDialog(null,
+    public static boolean yesNoMenu(String title, String message, String yesButtonText, String noButtonText) {
+        String[] options = {yesButtonText, noButtonText};
+        int choice = JOptionPane.showOptionDialog(null,
                 TextStyle.format(message),
                 title,
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
-                icon);
+                icon,
+                options,
+                options[0]);
 
-        return choice == 0;
+        return choice == JOptionPane.YES_OPTION;
+    }
+
+    public static void showErrorMessage(String title, String message) {
+        JOptionPane.showMessageDialog(null, TextStyle.format(message), title, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void showSuccessMessage(String title, String message) {
+        JOptionPane.showMessageDialog(null, TextStyle.format(message), title, JOptionPane.INFORMATION_MESSAGE);
     }
 
 
