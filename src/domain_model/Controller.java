@@ -17,11 +17,6 @@ public class Controller implements Processor {
         DBCONTROLLER = new DBController();
 
     }
-
-    public UIDisplayInfo getMainMenu() {
-        return processor.getMainMenu();
-    }
-
     public UserInstance getUserFromPassword(String password) {
         User userLoggingIn = DBCONTROLLER.getUserFromPassword(password);
         userInstance = DelfinUtil.checkUserInstance(userLoggingIn);
@@ -102,7 +97,7 @@ public class Controller implements Processor {
     public ArrayList<String> getUserList() {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
-        return superUserProcessor.getUserList();
+        return superUserProcessor.getUserIDAndNameList();
     }
 
     public String getUserInfo(int indexOfList) {
@@ -112,8 +107,4 @@ public class Controller implements Processor {
     }
 
 
-    @Override
-    public UIDisplayInfo processMainMenuOption(int option) {
-        return processor.processMainMenuOption(option);
-    }
 }

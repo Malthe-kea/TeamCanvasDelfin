@@ -1,4 +1,4 @@
-package domain_model;
+package domain_model.userInterface;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,8 @@
-import domain_model.UserInterface;
+import domain_model.userInterface.UserInterface;
 
 public class Main {
     public static void main(String[] args) {
         UserInterface UI = new UserInterface();
-
         UI.startProgram();
 
         /*TODO

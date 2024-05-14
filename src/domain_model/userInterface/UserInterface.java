@@ -1,4 +1,9 @@
-package domain_model;
+package domain_model.userInterface;
+
+import database.DBController;
+import domain_model.Controller;
+import domain_model.UserInstance;
+import domain_model.userInterface.MemberInterface.SuperUserInterface;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,7 +14,7 @@ import java.util.List;
 
 public class UserInterface {
 
-    ImageIcon icon = new ImageIcon("resources" + File.separator + "images" + File.separator + "swimclub.png");
+    static ImageIcon icon = new ImageIcon("resources" + File.separator + "images" + File.separator + "swimclub.png");
     Controller controller;
 
     public UserInterface() {
@@ -26,136 +31,28 @@ public class UserInterface {
 
             switch (userInstance) {
                 case MEMBER, COMPETITIVE -> {
-                    memberMenu();
+                    //MEMBER INTERFACE
                 }
                 case TRAINER -> {
-                    trainerMenu();
+                    //TRAINER INTERFACE
                 }
                 case SUPER -> {
-                    superUserMenu();
+                    SuperUserInterface superUserInterface = new SuperUserInterface(controller);
+                    superUserInterface.startMenu();
                 }
                 case TREASURER -> {
-                    treasurerMenu();
+                    //TREASURER INTERFACE
                 }
                 case NOTFOUND -> {
                     JOptionPane.showMessageDialog(null, "Brugeren blev ikke fundet", "Fejl", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
-
         }
     }
 
 
-    private void superUserMenu() {
-        boolean loggedIn = true;
-        while (loggedIn) {
 
-            ArrayList<String> options = new ArrayList<>(List.of(
-                    "Tilføj medlem",
-                    "Tilføj træner",
-                    "Tilføj kasserer",
-                    "Ændre medlemsoplysninger",
-                    "Slet medlem",
-                    "Se brugeroversigt"));
-
-
-            int choice = drawMenu("SuperUser Menu", "Vælg en af følgende muligheder", options);
-
-            switch (choice) {
-                case 0 -> {
-                    String title = "Nyt medlem";
-                    String password = inputMenu(title, "Indast kodeord for medlemmet");
-                    String firstName = inputMenu(title, "Indast fornavn for medlemmet");
-                    String lastName = inputMenu(title, "Indast efternavn for medlemmet");
-                    boolean activePassiveInput = yesNoMenu(title, "Er medlemmet aktivt eller passivt?");
-                    String birthDate = inputMenu(title, "Indast fødselsdato for medlemmet format (DD/MM/YYYY)");
-                    boolean isCompetitiveInput = yesNoMenu(title, "Er medlemmet konkurrence svømmer?");
-                    boolean isArrearsInput = false;
-
-                    if (isCompetitiveInput) {
-                        controller.createandAddCompetitiveMembertoDB(password, firstName, lastName, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
-                    } else {
-                        controller.createandAddMembertoDB(password, firstName, lastName, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
-                    }
-
-                }
-                case 1 -> {
-                    String title = "Ny træner";
-                    String password = inputMenu(title, "Indast kodeord for træneren");
-                    String firstName = inputMenu(title, "Indast fornavn for træneren");
-                    String lastName = inputMenu(title, "Indast efternavn for træneren");
-                    boolean isSeniorTrainer = yesNoMenu(title, "Er træneren junior træner tryk Ja. Tryk nej hvis junior?");
-
-                    controller.createandAddTrainerToDB(password, firstName, lastName, isSeniorTrainer);
-                }
-                case 2 -> {
-                    String title = "Ny kassér";
-                    String password = inputMenu(title, "Indast kodeord for træneren");
-                    String firstName = inputMenu(title, "Indast fornavn for træneren");
-                    String lastName = inputMenu(title, "Indast efternavn for træneren");
-
-                    controller.createandAddTreasurertoDB(password, firstName, lastName);
-                }
-                case 3 -> {
-                    int indexToEdit = 0;
-
-                    while (indexToEdit != -1) {
-                        indexToEdit = drawMenu("Slet bruger", "Vælg bruger du gerne vil ændre", controller.getUserList());
-                    }
-
-
-                }
-                case 4 -> {
-                    int indexToDelete = 0;
-                    while (indexToDelete != -1) {
-                        indexToDelete = drawMenu("Slet bruger", "Vælg bruger du gerne vil ændre", controller.getUserList());
-                        if (indexToDelete != -1) {
-                            controller.deleteUserFromDB(indexToDelete);
-                        }
-                    }
-
-                }
-                case 5 -> {
-
-                    //TODO FIX bug. Kun superusers vises i brugeroversigt.
-                    int indexToShow = 0;
-                    while (indexToShow != -1) {
-                        indexToShow = drawMenu("Brugeroversigt", "Vælg bruger du gerne vil se", controller.getUserList());
-                        if (indexToShow != -1) {
-                            smallWindow("Bruger info", controller.getUserInfo(indexToShow), "OK");
-                        }
-                    }
-
-                }
-                case -1 -> {
-                    loggedIn = false;
-                }
-            }
-
-
-        }
-
-    }
-
-    private void treasurerMenu() {
-
-    }
-
-    private void trainerMenu() {
-
-    }
-
-    private void memberMenu() {
-
-    }
-
-    private void editMember() {
-
-    }
-
-
-    public void showList(String title, ArrayList<String> rows) {
+    public static void showList(String title, ArrayList<String> rows) {
         StringBuilder sb = new StringBuilder();
         for (String row : rows) {
             sb.append(row).append("\n");
@@ -172,7 +69,7 @@ public class UserInterface {
     }
 
 
-    public int smallWindow(String title, String message, String buttonText) {
+    public static int smallWindow(String title, String message, String buttonText) {
         return JOptionPane.showOptionDialog(null,
                 message,
                 title,
@@ -184,7 +81,7 @@ public class UserInterface {
     }
 
 
-    public String inputMenu(String title, String message) {
+    public static String inputMenu(String title, String message) {
         return (String) JOptionPane.showInputDialog(null,
                 TextStyle.format(message),
                 title,
@@ -193,7 +90,7 @@ public class UserInterface {
 
     }
 
-    public boolean yesNoMenu(String title, String message) {
+    public static boolean yesNoMenu(String title, String message) {
         int choice = JOptionPane.showConfirmDialog(null,
                 TextStyle.format(message),
                 title,
@@ -205,7 +102,7 @@ public class UserInterface {
     }
 
 
-    public int drawMenu(String title, String message, ArrayList<String> options) {
+    public static int drawMenu(String title, String message, ArrayList<String> options) {
 
         //OPRETTELSE A SELVE VINDUET JDIALOG
 

@@ -1,14 +1,7 @@
 package domain_model.Processors;
 
 import database.DBController;
-import database.competition_style_DB.StyleDB;
-import domain_model.UIDisplayInfo;
-import user_domain.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import database.DBController;
+import domain_model.userInterface.UIDisplayInfo;
 
 public class TrainerProcessor implements Processor {
 
@@ -18,16 +11,6 @@ public class TrainerProcessor implements Processor {
         this.dbController = dbController;
     }
 
-
-    @Override
-    public UIDisplayInfo getMainMenu() {
-        return null;
-    }
-
-    @Override
-    public UIDisplayInfo processMainMenuOption(int option) {
-        return null;
-    }
 }
 
 

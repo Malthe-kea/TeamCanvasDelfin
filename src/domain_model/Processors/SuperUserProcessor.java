@@ -3,15 +3,10 @@ package domain_model.Processors;
 import database.Database;
 import database.DBController;
 import domain_model.*;
-import database.userDB.UserDB;
 import user_domain.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.Period;
 
 public class SuperUserProcessor implements Processor {
     private Scanner userInput;
@@ -24,29 +19,6 @@ public class SuperUserProcessor implements Processor {
         userInput = new Scanner(System.in);
     }
 
-    @Override
-    public UIDisplayInfo getMainMenu() {
-
-
-        ArrayList<String> options = new ArrayList<>(List.of(
-                "Tilføj medlem",
-                "Tilføj træner",
-                "Tilføj konkurrence-medlem",
-                "Tilføj kasserer",
-                "Ændre medlemsoplysninger",
-                "Slet medlem",
-                "Se brugeroversigt"));
-
-
-        return new UIDisplayInfo("SuperUser Menu", "Vælg en af følgende muligheder", DisplayType.MENU, options);
-
-
-    }
-
-    @Override
-    public UIDisplayInfo processMainMenuOption(int option) {
-        return null;
-    }
 
     public ArrayList createSuperUser() {
         ArrayList<SuperUser> superUser = new ArrayList<>();
@@ -54,25 +26,12 @@ public class SuperUserProcessor implements Processor {
         return superUser;
     }
 
-    public ArrayList<String> getUserList() {
+    public ArrayList<String> getUserIDAndNameList() {
         ArrayList<String> userList = new ArrayList<>();
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
         for (User u : allUsers) {
             UserInstance userInstance = DelfinUtil.checkUserInstance(u);
-            switch (userInstance) {
-                case MEMBER -> {
-                    userList.add(((Member) u).toString());
-                }
-                case COMPETITIVE -> {
-                    userList.add(((CompetitiveMember) u).toString());
-                }
-                case TRAINER -> {
-                    userList.add(((Trainer) u).toString());
-                }
-                case SUPER, TREASURER -> {
-                    userList.add(u.toString());
-                }
-            }
+            userList.add(u.getUserID() + ": " + u.getFirstName() + " " + u.getLastName());
         }
         return userList;
     }
@@ -193,9 +152,9 @@ public class SuperUserProcessor implements Processor {
 
     }
 
-    public String getUserInfo(int indexToEdit) {
+    public String getUserInfo(int indexToShow) {
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
-        User userForInfo = allUsers.get(indexToEdit);
+        User userForInfo = allUsers.get(indexToShow);
 
         switch (DelfinUtil.checkUserInstance(userForInfo)) {
             case MEMBER -> {

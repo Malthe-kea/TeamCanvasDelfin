@@ -1,12 +1,7 @@
 package domain_model.Processors;
 
-import domain_model.UIDisplayInfo;
 
 public interface Processor {
-
-
-    UIDisplayInfo getMainMenu();
-    UIDisplayInfo processMainMenuOption(int option);
 
 
     //TODO

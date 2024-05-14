@@ -1,7 +1,6 @@
 package domain_model.Processors;
 
-import database.*;
-import domain_model.UIDisplayInfo;
+import domain_model.userInterface.UIDisplayInfo;
 import user_domain.Member;
 
 import java.util.ArrayList;
@@ -34,16 +33,6 @@ public class TreasurerProcessor implements Processor {
             }
         }
         return membersInArrearsList;
-    }
-
-    @Override
-    public UIDisplayInfo getMainMenu() {
-        return null;
-    }
-
-    @Override
-    public UIDisplayInfo processMainMenuOption(int option) {
-        return null;
     }
 }
 
