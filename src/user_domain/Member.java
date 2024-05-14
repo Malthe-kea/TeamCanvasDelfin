@@ -77,4 +77,15 @@ public class Member extends User {
         isSenior = senior;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() +  "\n"+
+                "Fødselsdag: " + dateOfBirth+ "\n" +
+                "Er aktiv (ja/nej): " + isActiveMember + "\n" +
+                "Er konkurrencesvømmer (ja/nej): " + isCompetitive + "\n" +
+                "Er i restance (ja/nej): " + isArrears + "\n" +
+                "Er senior (ja/nej): " + isSenior + "\n" +
+                "Kontingent: " + yearlyMembershipFee;
+    }
+
 }

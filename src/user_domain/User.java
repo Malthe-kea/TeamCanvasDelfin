@@ -38,7 +38,7 @@ public abstract class User {
     public String toString() {
         return"\n"+
                 "UserID: " + userID + "\n" +
-                 " " + firstName + "\n" +
-                " " + lastName;
+                "Fornavn: " + firstName + "\n" +
+                "Efternavn: " + lastName;
     }
 }

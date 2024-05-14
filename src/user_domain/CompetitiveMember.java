@@ -104,11 +104,21 @@ public class CompetitiveMember extends Member {
         this.butterflyPR = butterflyPR;
     }
 
-    public void addCompition(Competition competition){
+    public void addCompetition(Competition competition){
         competitionList.add(competition);
     }
 
     public void removeCompetitionFromID(int id){
         competitionList.removeIf(comp -> id == comp.getID());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +"\n"+
+                "Backstroke PR: " + backStrokePR + "\n" +
+                "Crawl PR: " + crawlPR + "\n" +
+                "Breaststroke PR: " + backStrokePR + "\n" +
+                "Butterfly PR: " + butterflyPR + "\n" +
+                "Konkurrence liste: " + "\n" + competitionList;
     }
 }

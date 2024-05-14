@@ -53,13 +53,10 @@ public class MemberProcessor implements Processor {
     }
 
     // Metode til at vise alle registrerede konkurrenceresultater
-    public void displayCompetitionResults() {
+    public void displayCompetitionResults(int userID) {
         if (member.isCompetitive()) {
-        //return CompetitiveMember.getCompetitionDB();
-        //return UserDB.getPR(); //eller noget til at f? pr for hver disciplin
-
+            dbController.getListOfCompetitions(userID);
         }
-
     }
 
     }
