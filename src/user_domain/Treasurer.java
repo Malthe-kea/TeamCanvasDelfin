@@ -6,4 +6,9 @@ public class Treasurer extends User {
         super(userID, firstName, lastName);
     }
 
+    @Override
+    public String toString() {
+        return "Kontotype: Kassér\n"
+                + super.toString();
+    }
 }

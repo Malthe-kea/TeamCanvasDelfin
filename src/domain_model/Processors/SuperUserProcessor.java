@@ -3,6 +3,7 @@ package domain_model.Processors;
 import database.Database;
 import database.DBController;
 import domain_model.*;
+import domain_model.userInterface.UserInterface;
 import user_domain.*;
 
 import java.util.ArrayList;
@@ -75,24 +76,32 @@ public class SuperUserProcessor implements Processor {
         dbController.addUserToDB(treasurerToAdd, password);
     }
 
-    public void editMember(String userIDInput, String firstNameInput, String lastNameInput, String isActiveMemberInput, String isCompetitiveInput, String isArrearsInput) {
-        int userID = Integer.parseInt(userIDInput);
-        Member userToEdit = (Member) dbController.getUserFromID(userID);
+    public void editMember(int indexOfUser, String firstNameInput, String lastNameInput, String isActiveMemberInput, String isCompetitiveInput, String isArrearsInput) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
 
-        if (!firstNameInput.isBlank()) {
+        Member userToEdit = (Member) allUsers.get(indexOfUser);
+
+        if (firstNameInput != null) {
             userToEdit.setFirstName(firstNameInput);
         }
 
-        if (!lastNameInput.isBlank()) {
+        if (lastNameInput != null) {
             userToEdit.setLastName(lastNameInput);
         }
 
-        userToEdit.setActiveMember(Boolean.parseBoolean(isActiveMemberInput));
-        userToEdit.setArrears(Boolean.parseBoolean(isArrearsInput));
+        boolean previousCompetitive = userToEdit.isCompetitive();
 
-        boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
+        boolean isCompetitive = previousCompetitive;
+        if (isCompetitiveInput != null) {
+            isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
+            userToEdit.setActiveMember(Boolean.parseBoolean(isActiveMemberInput));
+        }
 
-        if (isCompetitive != userToEdit.isCompetitive()) {
+        if (isArrearsInput != null) {
+            userToEdit.setArrears(Boolean.parseBoolean(isArrearsInput));
+        }
+
+        if (isCompetitive != previousCompetitive) {
             User convertedMember;
 
             if (isCompetitive) {
@@ -102,7 +111,7 @@ public class SuperUserProcessor implements Processor {
             }
 
             String password = dbController.getPasswordFromID(userToEdit.getUserID());
-            dbController.removeUserFromDB(userID);
+            dbController.removeUserFromDB(userToEdit.getUserID());
             dbController.addUserToDB(convertedMember, password);
         } else {
             dbController.editUserInDB(userToEdit);
@@ -110,40 +119,36 @@ public class SuperUserProcessor implements Processor {
 
     }
 
-    public void editTrainer(String userIDInput, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
-        int userID = Integer.parseInt(userIDInput);
-        Member userToEdit = (Member) dbController.getUserFromID(userID);
+    public void editTrainer(int indexOfUser, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
 
-        if (!firstNameInput.isBlank()) {
+        Trainer userToEdit = (Trainer) allUsers.get(indexOfUser);
+
+        if (firstNameInput != null) {
             userToEdit.setFirstName(firstNameInput);
         }
-        if (!lastNameInput.isBlank()) {
+        if (lastNameInput != null) {
             userToEdit.setLastName(lastNameInput);
         }
-        boolean isSenior = Boolean.parseBoolean(isSeniorTrainerInput);
-        userToEdit.setSenior(isSenior);
+        boolean isSeniorTrainer = Boolean.parseBoolean(isSeniorTrainerInput);
+        userToEdit.setSeniorTrainer(isSeniorTrainer);
 
         dbController.editUserInDB(userToEdit);
     }
-    public void editTreasurer(String userIDInput, String firstNameInput, String lastNameInput) {
-        int userID = Integer.parseInt(userIDInput);
-        Member userToEdit = (Member) dbController.getUserFromID(userID);
 
-        if (!firstNameInput.isBlank()) {
+    public void editAdmin(int indexOfUser, String firstNameInput, String lastNameInput) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        User userToEdit = allUsers.get(indexOfUser);
+
+        if (firstNameInput != null) {
             userToEdit.setFirstName(firstNameInput);
         }
-        if (!lastNameInput.isBlank()) {
+        if (lastNameInput != null) {
             userToEdit.setLastName(lastNameInput);
         }
         dbController.editUserInDB(userToEdit);
     }
 
-
-
-
-    public void editAdmin() {
-
-    }
 
     public void deleteUserFromDB(int indexInList) {
 
@@ -159,9 +164,15 @@ public class SuperUserProcessor implements Processor {
         ArrayList<String> userInfo;
         String userString = userForInfo.toString();
         userInfo = new ArrayList<>(List.of(userString.split("\n")));
-        userInfo.remove(0);
+        //userInfo.remove(0);
 
         return userInfo;
+    }
+
+    public UserInstance getUserType(int indexOfUser) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        User user = allUsers.get(indexOfUser);
+        return DelfinUtil.checkUserInstance(user);
     }
 
 }

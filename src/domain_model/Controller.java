@@ -5,6 +5,7 @@ import domain_model.Processors.*;
 import user_domain.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller implements Processor {
 
@@ -17,11 +18,10 @@ public class Controller implements Processor {
         DBCONTROLLER = new DBController();
 
     }
-    public UserInstance getUserFromPassword(String password) {
+    public User getUserFromPassword(String password) {
         User userLoggingIn = DBCONTROLLER.getUserFromPassword(password);
-        userInstance = DelfinUtil.checkUserInstance(userLoggingIn);
 
-        switch (userInstance) {
+        switch (DelfinUtil.checkUserInstance(userLoggingIn)) {
             case MEMBER, COMPETITIVE -> {
                 processor = new MemberProcessor(DBCONTROLLER);
             }
@@ -36,7 +36,7 @@ public class Controller implements Processor {
             }
         }
 
-        return userInstance;
+        return userLoggingIn;
     }
 
 
@@ -64,7 +64,7 @@ public class Controller implements Processor {
     }
 
     public void editMember(
-            String userIDInput,
+            int indexOfUser,
             String firstNameInput,
             String lastNameInput,
             String isActiveMemberInput,
@@ -73,19 +73,19 @@ public class Controller implements Processor {
     {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
-        superUserProcessor.editMember(userIDInput, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
+        superUserProcessor.editMember(indexOfUser, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
     }
 
-    public void editTrainer(String userIDInput, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+    public void editTrainer(int indexOfUser, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
-        superUserProcessor.editTrainer(userIDInput,firstNameInput,lastNameInput,isSeniorTrainerInput);
+        superUserProcessor.editTrainer(indexOfUser,firstNameInput,lastNameInput,isSeniorTrainerInput);
     }
 
-    public void editAdmin() {
+    public void editAdmin(int indexOfUser, String firstNameInput, String lastNameInput) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
-        superUserProcessor.editAdmin();
+        superUserProcessor.editAdmin(indexOfUser, firstNameInput, lastNameInput);
     }
 
     public void deleteUserFromDB(int indexInList) {
@@ -104,6 +104,21 @@ public class Controller implements Processor {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         return superUserProcessor.getUserInfo(indexOfList);
+    }
+
+    public UserInstance getUserType(int indexOfUser) {
+        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
+        return superUserProcessor.getUserType(indexOfUser);
+    }
+
+    public String getExpectedIncome() {
+        TreasurerProcessor treasurerProcessor = (TreasurerProcessor) processor;
+        return treasurerProcessor.getExpectedIncome();
+    }
+
+    public ArrayList<String> getMembersInArrears() {
+        TreasurerProcessor treasurerProcessor = (TreasurerProcessor) processor;
+        return treasurerProcessor.getMembersInArrears();
     }
 
 

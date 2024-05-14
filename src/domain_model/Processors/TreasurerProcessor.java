@@ -1,6 +1,5 @@
 package domain_model.Processors;
 
-import domain_model.userInterface.UIDisplayInfo;
 import user_domain.Member;
 
 import java.util.ArrayList;
@@ -21,15 +20,15 @@ public class TreasurerProcessor implements Processor {
         for (Member m : dbController.getListOfMembers()) {
             exptectedIncome += m.getYearlyMembershipFee();
         }
-        return String.valueOf(exptectedIncome);
+        return exptectedIncome+"DKK";
     }
 
-    public List<String> geMembersInArrears() {
+    public ArrayList<String> getMembersInArrears() {
 
         ArrayList<String> membersInArrearsList = new ArrayList<>();
         for (Member m : dbController.getListOfMembers()) {
             if (m.isArrears()) {
-                membersInArrearsList.add(m.toString());
+                membersInArrearsList.add("ID " + m.getUserID() + ": " + m.getFirstName() + " " + m.getLastName());
             }
         }
         return membersInArrearsList;

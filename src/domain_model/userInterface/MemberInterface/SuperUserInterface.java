@@ -1,7 +1,10 @@
 package domain_model.userInterface.MemberInterface;
 
 import domain_model.Controller;
+import domain_model.UserInstance;
 import domain_model.userInterface.UserInterface;
+import user_domain.SuperUser;
+import user_domain.User;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -9,9 +12,11 @@ import java.util.List;
 
 public class SuperUserInterface {
     Controller controller;
+    SuperUser userLoggingIn;
 
-    public SuperUserInterface(Controller controller) {
+    public SuperUserInterface(Controller controller, User userLoggingIn) {
         this.controller = controller;
+        this.userLoggingIn = (SuperUser) userLoggingIn;
     }
 
     public void startMenu() {
@@ -27,7 +32,7 @@ public class SuperUserInterface {
                     "Se brugeroversigt"));
 
 
-            int choice = UserInterface.drawMenu("SuperUser Menu", "Vælg en af følgende muligheder", options);
+            int choice = UserInterface.drawMenu("SuperUser Menu", "Vælg en af følgende muligheder", "Afslut", options);
 
             switch (choice) {
                 case 0 -> {
@@ -64,11 +69,11 @@ public class SuperUserInterface {
         String birthDate;
 
         try {
-            password = inputForAddUser(title, "Indtast kodeord for medlemmet", "Næste","Annullér");
-            firstName = inputForAddUser(title, "Indtast fornavn for medlemmet","Næste","Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for medlemmet", "Næste","Annullér");
-            birthDate = inputForAddUser(title, "Indtast fødselsdato for medlemmet format (DD/MM/YYYY)", "Næste","Annullér");
-        } catch(IllegalArgumentException e) {
+            password = inputForAddUser(title, "Indtast kodeord for medlemmet", "Næste", "Annullér");
+            firstName = inputForAddUser(title, "Indtast fornavn for medlemmet", "Næste", "Annullér");
+            lastName = inputForAddUser(title, "Indtast efternavn for medlemmet", "Næste", "Annullér");
+            birthDate = inputForAddUser(title, "Indtast fødselsdato for medlemmet format (DD/MM/YYYY)", "Næste", "Annullér");
+        } catch (IllegalArgumentException e) {
             return;
         }
 
@@ -91,10 +96,10 @@ public class SuperUserInterface {
         String lastName;
 
         try {
-            password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste","Annullér");
-            firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste","Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste","Annullér");
-        } catch(IllegalArgumentException e) {
+            password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste", "Annullér");
+            firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste", "Annullér");
+            lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste", "Annullér");
+        } catch (IllegalArgumentException e) {
             return;
         }
 
@@ -109,10 +114,10 @@ public class SuperUserInterface {
         String firstName;
         String lastName;
         try {
-            password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste","Annullér");
-            firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste","Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste","Annullér");
-        } catch(IllegalArgumentException e) {
+            password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste", "Annullér");
+            firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste", "Annullér");
+            lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste", "Annullér");
+        } catch (IllegalArgumentException e) {
             return;
         }
 
@@ -124,21 +129,115 @@ public class SuperUserInterface {
         int indexToEdit = 0;
 
         while (indexToEdit != -1) {
-            indexToEdit = UserInterface.drawMenu("Redigér bruger", "Vælg bruger du gerne vil ændre", controller.getUserIDAndNameList());
+            indexToEdit = UserInterface.drawMenu("Redigér bruger", "Vælg bruger du gerne vil ændre", "Afslut", controller.getUserIDAndNameList());
 
-            if(indexToEdit != -1) {
+
+            if (indexToEdit != -1) {
                 ArrayList<String> userInfo = controller.getUserInfo(indexToEdit);
-                int infoSize = userInfo.size()-1;
-                if (infoSize >= 8) {
-                    userInfo.subList(8, infoSize + 1).clear();
+                UserInstance userType = controller.getUserType(indexToEdit);
+
+                if (userType == UserInstance.COMPETITIVE) { //If the user is a member the list is longer than 7
+                    userInfo.subList(7, userInfo.size()).clear();
                 }
 
+                if (userType == UserInstance.MEMBER || userType == UserInstance.COMPETITIVE) {
+                    userInfo.remove(4); //Removes birthdate from editing list.
+                }
 
-                userInfo.remove(0); //Removes ID from editing list.
-                userInfo.remove(2); //Removes birthdate from editing list.
+                if (userType == UserInstance.TRAINER) {
+                    userInfo.remove(5);
+                }
+
+                userInfo.remove(1); //Removes ID from editing list.
+                userInfo.remove(0); //Removes user type from editing list.
 
 
-                UserInterface.drawMenu("Redigér bruger","Tryk på det du gerne vil ændre",userInfo);
+                /*
+                INDEX SPACES MEMBER:
+                0: First name
+                1: Last name
+                2: Active/Passive
+                3: Competitive/Recreational
+                4: Arrears
+                */
+
+                /*
+                INDEX SPACES TRAINER:
+                0: First name
+                1: Last name
+                2: Senior/Junior Trainer
+                */
+
+                String newFirstName = null;
+                String newLastName = null;
+                String newActivePassive = null;
+                String newCompetitiveRecreational = null;
+                String newArrears = null;
+
+                String isSeniorTrainer = null;
+
+                int choice = 10;
+                while (choice != -1) {
+                    if (newFirstName != null) {
+                        userInfo.set(0, "Fornavn: " + newFirstName);
+                    }
+
+                    if (newLastName != null) {
+                        userInfo.set(1, "Efternavn: " + newLastName);
+                    }
+
+                    if (newActivePassive != null) {
+                        userInfo.set(2, "Aktiv/Passiv: " + (newActivePassive.equals("true") ? "Aktiv" : "Passiv"));
+                    }
+
+                    if (newCompetitiveRecreational != null) {
+                        userInfo.set(3, "Aktivitetsstatus: " + (newCompetitiveRecreational.equals("true") ? "Konkurrence" : "Motionist"));
+                    }
+
+                    if (newArrears != null) {
+                        userInfo.set(4, "Restance: " + (newArrears.equals("true") ? "Ja" : "Nej"));
+                    }
+
+                    if(isSeniorTrainer != null) {
+                        userInfo.set(2, "Træner type: " + (isSeniorTrainer.equals("true") ? "Senior" : "Junior"));
+
+                    }
+
+                    choice = UserInterface.drawMenu("Redigér bruger", "Tryk på det du gerne vil ændre", "Gem", userInfo);
+
+                    switch (choice) {
+                        case 0 -> {
+                            newFirstName = UserInterface.inputMenu("Redigér fornavn", "Indtast nyt fornavn", "Redigér", "Annullér");
+                        }
+                        case 1 -> {
+                            newLastName = UserInterface.inputMenu("Redigér efternavn", "Indtast nyt efternavn", "Redigér", "Annullér");
+                        }
+                        case 2 -> {
+                            if (userType == UserInstance.MEMBER || userType == UserInstance.COMPETITIVE) {
+                                newActivePassive = String.valueOf(UserInterface.yesNoMenu("Redigér pausestatus", "Er brugeren aktiv eller passiv?", "Aktiv", "Passiv"));
+                            } else if (userType == UserInstance.TRAINER) {
+                                isSeniorTrainer = String.valueOf(UserInterface.yesNoMenu("Redigér trænerstatus", "Er brugeren Senior eller Junior træner?", "Senior", "Junior"));
+                            }
+                        }
+                        case 3 -> {
+                            newCompetitiveRecreational = String.valueOf(UserInterface.yesNoMenu("Redigér aktivitetsniveau", "Er brugeren konkurrence eller motionist?", "Konkurrence", "Motionist"));
+                        }
+                        case 4 -> {
+                            newArrears = String.valueOf(UserInterface.yesNoMenu("Redigér restancestatus", "Er brugeren i restance?", "Ja", "Nej"));
+                        }
+                        case -1 -> {
+                            if (userType == UserInstance.MEMBER || userType == UserInstance.COMPETITIVE) {
+                                controller.editMember(indexToEdit, newFirstName, newLastName, newActivePassive, newCompetitiveRecreational, newArrears);
+                            } else if (userType == UserInstance.TRAINER) {
+                                controller.editTrainer(indexToEdit, newFirstName, newLastName, isSeniorTrainer);
+                            } else if (userType == UserInstance.TREASURER || userType == UserInstance.SUPER) {
+                                controller.editAdmin(indexToEdit, newFirstName, newLastName);
+                            }
+
+                        }
+                    }
+                }
+
 
             }
 
@@ -148,7 +247,7 @@ public class SuperUserInterface {
     private void deleteUserMenu() {
         int indexToDelete = 0;
         while (indexToDelete != -1) {
-            indexToDelete = UserInterface.drawMenu("Slet bruger", "Vælg bruger du gerne vil ændre", controller.getUserIDAndNameList());
+            indexToDelete = UserInterface.drawMenu("Slet bruger", "Vælg bruger du gerne vil ændre", "Afslut", controller.getUserIDAndNameList());
             if (indexToDelete != -1) {
                 controller.deleteUserFromDB(indexToDelete);
             }
@@ -158,7 +257,7 @@ public class SuperUserInterface {
     private void userOverviewMenu() {
         int indexToShow = 0;
         while (indexToShow != -1) {
-            indexToShow = UserInterface.drawMenu("Brugeroversigt", "Vælg bruger du gerne vil se", controller.getUserIDAndNameList());
+            indexToShow = UserInterface.drawMenu("Brugeroversigt", "Vælg bruger du gerne vil se", "Afslut", controller.getUserIDAndNameList());
             if (indexToShow != -1) {
                 ArrayList<String> userInfo = controller.getUserInfo(indexToShow);
                 String displayInfo = String.join("\n", userInfo);
@@ -168,11 +267,10 @@ public class SuperUserInterface {
     }
 
 
-
     private String inputForAddUser(String title, String message, String okButtonText, String cancelButtonText) {
         String input = UserInterface.inputMenu(title, message, okButtonText, cancelButtonText);
-        if(input == null) {
-            throw new IllegalArgumentException("Input cannot be null");
+        if (input == null) {
+            throw new IllegalArgumentException();
         }
         return input;
     }

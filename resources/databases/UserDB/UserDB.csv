@@ -1,6 +1,6 @@
 id;permissionLevel;password;firstName;lastName
-1;1;testPassword;Laura;Bøjden
-2;4;hjdsds;Mette;Mikkelsen
-3;4;Hans;Hansen;Hansen
-4;4;hej123;Esra;Lund
-5;4;mitkodeord123;hallo;hallo
+1;1;testPassword;Noah;SUPER
+2;4;hallo123;Laura;Bøjden
+3;4;hej123;Mikkel;Hansen
+4;3;træner123;Peter;hallo123
+5;2;kassér123;kasser;kasser

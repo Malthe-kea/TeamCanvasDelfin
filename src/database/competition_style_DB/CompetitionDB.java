@@ -27,6 +27,7 @@ public class CompetitionDB extends Database {
         for (String[] singleRow : allRowsFromDB) {
             int competitionID = Integer.parseInt(singleRow[getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID)]);
             String location = singleRow[getIndexOfRowName(CompetitionDBRowNames.LOCATION)];
+            String date = singleRow[getIndexOfRowName(CompetitionDBRowNames.DATE)];
             ArrayList<Style> styles;
 
             if(userID == -1) {
@@ -34,7 +35,7 @@ public class CompetitionDB extends Database {
             } else {
                 styles = styleDB.getUserCompetitionStyles(competitionID, userID);
             }
-            competitionList.add(new Competition(competitionID, location, styles));
+            competitionList.add(new Competition(competitionID, location, date, styles));
 
         }
         return competitionList;
@@ -51,21 +52,24 @@ public class CompetitionDB extends Database {
     public Competition getCompetitionFromID(int competitionIDToSearchFor, int userID) {
         int competitiveIDIndex = getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID);
         int locationIndex = getIndexOfRowName(CompetitionDBRowNames.LOCATION);
+        int dateIndex = getIndexOfRowName(CompetitionDBRowNames.DATE);
         int competitionID;
         String location;
+        String date;
         ArrayList<String[]> allRowsFromDB = getRows();
         StyleDB styleDB = new StyleDB();
         for (String[] singleRow : allRowsFromDB) {
             competitionID = Integer.parseInt(singleRow[competitiveIDIndex]);
             if (competitionID == competitionIDToSearchFor) {
                 location = singleRow[locationIndex];
+                date = singleRow[dateIndex];
                 ArrayList<Style> styles;
                 if(userID == -1) {
                     styles = new ArrayList<>();
                 } else {
                     styles = styleDB.getUserCompetitionStyles(competitionID, userID);
                 }
-                return new Competition(competitionID, location, styles);
+                return new Competition(competitionID, location, date , styles);
             }
         }
         return null;
@@ -90,12 +94,15 @@ public class CompetitionDB extends Database {
     public Competition getCompetitionFromLocation(String locationToSearch, int userID) {
         int competitiveIDIndex = getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID);
         int locationIndex = getIndexOfRowName(CompetitionDBRowNames.LOCATION);
+        int dateIndex = getIndexOfRowName(CompetitionDBRowNames.DATE);
         int competitionID;
         String location;
+        String date;
         ArrayList<String[]> allRowsFromDB = getRows();
         StyleDB styleDB = new StyleDB();
         for (String[] singleRow : allRowsFromDB) {
             location = singleRow[locationIndex];
+            date = singleRow[dateIndex];
             if (locationToSearch.equalsIgnoreCase(location)) {
                 competitionID = Integer.parseInt(singleRow[competitiveIDIndex]);
                 ArrayList<Style> styles;
@@ -104,8 +111,7 @@ public class CompetitionDB extends Database {
                 } else {
                     styles = styleDB.getUserCompetitionStyles(competitionID, userID);
                 }
-                return new Competition(competitionID, location, styles);
-
+                return new Competition(competitionID, location, date, styles);
             }
         }
 

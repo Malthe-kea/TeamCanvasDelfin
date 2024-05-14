@@ -6,4 +6,9 @@ public class SuperUser extends User {
         super(userID, firstName, lastName);
     }
 
+    @Override
+    public String toString() {
+        return "Kontotype: Superbruger\n"
+                + super.toString();
+    }
 }

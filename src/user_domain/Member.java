@@ -79,13 +79,22 @@ public class Member extends User {
 
     @Override
     public String toString() {
-        return super.toString() +  "\n"+
+        String toStringMessage =
+                super.toString() +  "\n"+
                 "Fødselsdag: " + dateOfBirth.format(birthDateFormat)+ "\n" +
                 "Er aktiv (ja/nej): " + isActiveMember + "\n" +
                 "Er konkurrencesvømmer (ja/nej): " + isCompetitive + "\n" +
                 "Er i restance (ja/nej): " + isArrears + "\n" +
                 "Er senior (ja/nej): " + isSenior + "\n" +
-                "Kontingent: " + yearlyMembershipFee;
+                "Kontingent: " + yearlyMembershipFee;;
+        if(!(this instanceof CompetitiveMember)) {
+            return "Kontotype: Motonist\n" + toStringMessage;
+        } else {
+            return toStringMessage;
+        }
+
+
+
     }
 
 }

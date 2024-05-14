@@ -4,18 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Fixed bug with COmpetitionList conversion from String to Int. Implemented Yes/No Button in UI">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace-DESKTOP-UOI9AEA.xml" afterDir="false" />
+    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Editing menu now shows different edit options. Also password menu works">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/MemberInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TreasurerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/TrainerDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/TrainerDB.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/competition_style_DB/CompetitionDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/competition_style_DB/CompetitionDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/rowNameEnum/CompetitionDBRowNames.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/rowNameEnum/CompetitionDBRowNames.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/MemberProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/MemberProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TreasurerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TreasurerProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/DisplayType.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/UIDisplayInfo.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/user_domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/SuperUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/SuperUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Trainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/Treasurer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Treasurer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/competition/Competition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/competition/Competition.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715687514944</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Editing menu now shows different edit options. Also password menu works">
+      <option name="closed" value="true" />
+      <created>1715704320312</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1715704320312</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +195,8 @@
     <MESSAGE value="Removed Esra Userinterface" />
     <MESSAGE value="TODO's lavet i main. SuperUser edit er lavet." />
     <MESSAGE value="Fixed bug with COmpetitionList conversion from String to Int. Implemented Yes/No Button in UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug with COmpetitionList conversion from String to Int. Implemented Yes/No Button in UI" />
+    <MESSAGE value="Editing menu now shows different edit options. Also password menu works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Editing menu now shows different edit options. Also password menu works" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

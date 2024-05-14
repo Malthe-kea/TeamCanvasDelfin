@@ -2,8 +2,13 @@ package domain_model.userInterface;
 
 import database.DBController;
 import domain_model.Controller;
+import domain_model.DelfinUtil;
 import domain_model.UserInstance;
+import domain_model.userInterface.MemberInterface.MemberInterface;
 import domain_model.userInterface.MemberInterface.SuperUserInterface;
+import domain_model.userInterface.MemberInterface.TrainerInterface;
+import domain_model.userInterface.MemberInterface.TreasurerInterface;
+import user_domain.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -30,21 +35,25 @@ public class UserInterface {
 
             String input = inputMenu("Log ind", "Indtast dit password", "Log ind","Afslut program", true);
 
-            UserInstance userInstance = controller.getUserFromPassword(input);
+            User userLoggingIn = controller.getUserFromPassword(input);
+            UserInstance userInstance = DelfinUtil.checkUserInstance(userLoggingIn);
 
             switch (userInstance) {
                 case MEMBER, COMPETITIVE -> {
-                    //MEMBER INTERFACE
+                    MemberInterface memberInterface = new MemberInterface(controller, userLoggingIn);
+                    memberInterface.startMenu();
                 }
                 case TRAINER -> {
-                    //TRAINER INTERFACE
+                    TrainerInterface trainerInterface = new TrainerInterface(controller, userLoggingIn);
+                    trainerInterface.startMenu();
                 }
                 case SUPER -> {
-                    SuperUserInterface superUserInterface = new SuperUserInterface(controller);
+                    SuperUserInterface superUserInterface = new SuperUserInterface(controller, userLoggingIn);
                     superUserInterface.startMenu();
                 }
                 case TREASURER -> {
-                    //TREASURER INTERFACE
+                    TreasurerInterface treasurerInterface = new TreasurerInterface(controller, userLoggingIn);
+                    treasurerInterface.startMenu();
                 }
                 case NOTFOUND -> {
 
@@ -78,8 +87,8 @@ public class UserInterface {
     }
 
 
-    public static int smallWindow(String title, String message, String buttonText) {
-        return JOptionPane.showOptionDialog(null,
+    public static void smallWindow(String title, String message, String buttonText) {
+        JOptionPane.showOptionDialog(null,
                 message,
                 title,
                 JOptionPane.DEFAULT_OPTION,
@@ -112,6 +121,7 @@ public class UserInterface {
             return null;
         }
     }
+
     //Overload method for inputMenu, which sets isPassword to false.
     public static String inputMenu(String title, String message, String okButtonText, String cancelButtonText) {
         return inputMenu(title, message, okButtonText, cancelButtonText, false);
@@ -140,7 +150,7 @@ public class UserInterface {
     }
 
 
-    public static int drawMenu(String title, String message, ArrayList<String> options) {
+    public static int drawMenu(String title, String message, String exitButton, ArrayList<String> options) {
 
         //OPRETTELSE A SELVE VINDUET JDIALOG
 
@@ -207,7 +217,7 @@ public class UserInterface {
 
         }
 
-        JButton cancelButton = new JButton("Afslut");
+        JButton cancelButton = new JButton(exitButton);
         cancelButton.addActionListener(e -> {
             chosenOption[0] = -1;
             dialog.dispose();

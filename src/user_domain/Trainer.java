@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Trainer extends User {
-    private ArrayList<CompetitiveMember> competitiveMemberList;
     private boolean isSeniorTrainer;
     private ArrayList<SortExampleTest> sortingExample;
 
@@ -53,8 +52,8 @@ public class Trainer extends User {
 
     @Override
     public String toString() {
-        return super.toString() +"\n"+
-                "Er senior træner (ja/nej): " + isSeniorTrainer + "\n" +
-                "Liste over konkurrencesvømmere: " + competitiveMemberList;
+        return "Kontotype: Træner\n"
+                + super.toString() +"\n"+
+                "Er senior træner (ja/nej): " + isSeniorTrainer;
     }
 }

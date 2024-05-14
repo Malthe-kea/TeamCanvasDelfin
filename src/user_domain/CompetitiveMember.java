@@ -7,12 +7,12 @@ import user_domain.competition.Style;
 
 public class CompetitiveMember extends Member {
     //TODO
-    // 1. Inde i CompetitiveMember - Lav metode der lÃ¦ser igennem hver style for hvert stÃ¦vne,
-    // og sÃ¦tter PR for hver disciplin inde i CompetitiveMember klassen.
-    // 2. inde i TrainerProcessor. NÃ¥r ovenstÃ¥ende er fÃ¦rdigt, lav top5 der sammenligner
+    // 1. Inde i CompetitiveMember - Lav metode der læser igennem hver style for hvert stævne,
+    // og sætter PR for hver disciplin inde i CompetitiveMember klassen.
+    // 2. inde i TrainerProcessor. Når ovenstående er færdigt, lav top5 der sammenligner
     // forskellige competitivemember resultater. Dog opdelt i Junior og Senior!
-    // TOP 5 metoden skal returnere ArrayList<String>. Hver String er en rÃ¦kke i menuen, og derfor skal
-    // den opsÃ¦ttes sÃ¥ledes.
+    // TOP 5 metoden skal returnere ArrayList<String>. Hver String er en række i menuen, og derfor skal
+    // den opsættes således.
 
 
     private Style backStrokePR;
@@ -51,13 +51,13 @@ public class CompetitiveMember extends Member {
     public Style getButterflyPR() {
         return butterflyPR;
     }
-    //Muligvis omdÃ¸bes.
+    //Muligvis omdøbes.
     private ArrayList<Competition> getCompetitionDB(){
         return null;
     }
 
     //TODO
-    //FremgangsmÃ¥den her vil vÃ¦re at sortere fra lavest til hÃ¸jest ;)
+    //Fremgangsmåden her vil være at sortere fra lavest til højest ;)
 
     /*private void calculatePR(){
         ArrayList<Competition> competitionList = getCompetitionDB();
@@ -114,7 +114,8 @@ public class CompetitiveMember extends Member {
 
     @Override
     public String toString() {
-        return super.toString() +"\n"+
+        return "Kontotype: Konkurrencesvømmer\n"
+                + super.toString() +"\n"+
                 "Backstroke PR: " + backStrokePR + "\n" +
                 "Crawl PR: " + crawlPR + "\n" +
                 "Breaststroke PR: " + backStrokePR + "\n" +

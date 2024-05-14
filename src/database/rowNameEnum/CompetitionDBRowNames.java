@@ -3,7 +3,8 @@ package database.rowNameEnum;
 //Enum class containing column of CompetitiveDB csv file.
 public enum CompetitionDBRowNames implements DBRowNames {
     COMPETITIVE_ID("id"),
-    LOCATION("location");
+    LOCATION("location"),
+    DATE("date");
 
     //String variant contains the displayed name inside the csv file for each column.
     final String stringVariant;

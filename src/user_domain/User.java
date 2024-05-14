@@ -32,12 +32,9 @@ public abstract class User {
         this.lastName = lastName;
     }
 
-
-    //TODO refaktoir det her.
     @Override
     public String toString() {
-        return"\n"+
-                "UserID: " + userID + "\n" +
+        return "UserID: " + userID + "\n" +
                 "Fornavn: " + firstName + "\n" +
                 "Efternavn: " + lastName;
     }

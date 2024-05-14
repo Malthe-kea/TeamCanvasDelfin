@@ -1,7 +1,10 @@
+import database.DBController;
 import domain_model.userInterface.UserInterface;
+import user_domain.competition.Competition;
 
 public class Main {
     public static void main(String[] args) {
+
         UserInterface UI = new UserInterface();
         UI.startProgram();
 

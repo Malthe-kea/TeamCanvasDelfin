@@ -1,7 +1,6 @@
 package domain_model.Processors;
 
 import database.DBController;
-import domain_model.userInterface.UIDisplayInfo;
 
 public class TrainerProcessor implements Processor {
 
