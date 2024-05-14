@@ -1,2 +1,4 @@
 id;firstName;lastName;isActiveMember;isCompetitive;dateOfBirth;isArrears;yearlyMembershipFee
-2;sdsd;sdds;true;true;10/10/2001;false;1600.0
+2;Mette;Mikkelsen;true;true;10/10/2001;false;1600.0
+3;Hansen;Hansen;false;true;10/10/2001;false;500.0
+4;Esra;Lund;true;true;10/10/2001;false;1600.0

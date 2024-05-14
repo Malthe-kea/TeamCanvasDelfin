@@ -77,4 +77,8 @@ public class Member extends User {
         isSenior = senior;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

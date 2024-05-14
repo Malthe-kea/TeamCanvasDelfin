@@ -51,7 +51,7 @@ public interface UserReturn {
                     return createUserFromSingleRow(singleRow);
                 }
             } catch (NumberFormatException nfe) {
-                System.out.println("A id was not integer parseable. Please enter the database UserDB.csv and fix this issue.");
+                throw new RuntimeException(nfe);
             }
         }
         return null;

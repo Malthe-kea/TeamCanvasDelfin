@@ -19,7 +19,7 @@ public class UserInterface {
 
     public void startProgram() {
         boolean programRunning = true;
-        System.out.println(smallWindow("Velkommen", TextStyle.format("(Velkommen) til Delfin svømmeklubben"), "Log ind"));
+        smallWindow("Velkommen", TextStyle.format("(Velkommen) til Delfin svømmeklubben"), "Log ind");
 
         while (programRunning) {
             UserInstance userInstance = controller.getUserFromPassword(inputMenu("Log ind", "Indtast dit password"));
@@ -68,9 +68,9 @@ public class UserInterface {
                     String password = inputMenu(title, "Indast kodeord for medlemmet");
                     String firstName = inputMenu(title, "Indast fornavn for medlemmet");
                     String lastName = inputMenu(title, "Indast efternavn for medlemmet");
-                    boolean activePassiveInput = inputMenu(title, "Er medlemmet aktivt? (Ja/Nej)").toLowerCase().equals("ja");
+                    boolean activePassiveInput = yesNoMenu(title, "Er medlemmet aktivt eller passivt?");
                     String birthDate = inputMenu(title, "Indast fødselsdato for medlemmet format (DD/MM/YYYY)");
-                    boolean isCompetitiveInput = inputMenu(title, "Er medlemmet konkurrence svømmer? (Ja/Nej)").toLowerCase().equals("ja");
+                    boolean isCompetitiveInput = yesNoMenu(title, "Er medlemmet konkurrence svømmer?");
                     boolean isArrearsInput = false;
 
                     if (isCompetitiveInput) {
@@ -85,7 +85,7 @@ public class UserInterface {
                     String password = inputMenu(title, "Indast kodeord for træneren");
                     String firstName = inputMenu(title, "Indast fornavn for træneren");
                     String lastName = inputMenu(title, "Indast efternavn for træneren");
-                    boolean isSeniorTrainer = inputMenu(title, "Er træneren senior eller juniortræner? (Senior/Junior)").equalsIgnoreCase("senior");
+                    boolean isSeniorTrainer = yesNoMenu(title, "Er træneren junior træner tryk Ja. Tryk nej hvis junior?");
 
                     controller.createandAddTrainerToDB(password, firstName, lastName, isSeniorTrainer);
                 }
@@ -191,6 +191,17 @@ public class UserInterface {
                 JOptionPane.PLAIN_MESSAGE,
                 icon, null, null);
 
+    }
+
+    public boolean yesNoMenu(String title, String message) {
+        int choice = JOptionPane.showConfirmDialog(null,
+                TextStyle.format(message),
+                title,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                icon);
+
+        return choice == 0;
     }
 
 
