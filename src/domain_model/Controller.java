@@ -81,10 +81,10 @@ public class Controller implements Processor {
         superUserProcessor.editMember(userIDInput, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
     }
 
-    public void editTrainer() {
+    public void editTrainer(String userIDInput, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
-        superUserProcessor.editTrainer();
+        superUserProcessor.editTrainer(userIDInput,firstNameInput,lastNameInput,isSeniorTrainerInput);
     }
 
     public void editAdmin() {

@@ -38,7 +38,7 @@ public class SuperUserProcessor implements Processor {
                 "Se brugeroversigt"));
 
 
-        return new UIDisplayInfo("SuperUser Menu","Vælg en af følgende muligheder", DisplayType.MENU ,options);
+        return new UIDisplayInfo("SuperUser Menu", "Vælg en af følgende muligheder", DisplayType.MENU, options);
 
 
     }
@@ -61,13 +61,13 @@ public class SuperUserProcessor implements Processor {
             UserInstance userInstance = DelfinUtil.checkUserInstance(u);
             switch (userInstance) {
                 case MEMBER -> {
-                    userList.add(((Member)u).toString());
+                    userList.add(((Member) u).toString());
                 }
                 case COMPETITIVE -> {
-                    userList.add(((CompetitiveMember)u).toString());
+                    userList.add(((CompetitiveMember) u).toString());
                 }
                 case TRAINER -> {
-                    userList.add(((Trainer)u).toString());
+                    userList.add(((Trainer) u).toString());
                 }
                 case SUPER, TREASURER -> {
                     userList.add(u.toString());
@@ -119,11 +119,11 @@ public class SuperUserProcessor implements Processor {
         int userID = Integer.parseInt(userIDInput);
         Member userToEdit = (Member) dbController.getUserFromID(userID);
 
-        if(!firstNameInput.isBlank()) {
+        if (!firstNameInput.isBlank()) {
             userToEdit.setFirstName(firstNameInput);
         }
 
-        if(!lastNameInput.isBlank()) {
+        if (!lastNameInput.isBlank()) {
             userToEdit.setLastName(lastNameInput);
         }
 
@@ -132,13 +132,13 @@ public class SuperUserProcessor implements Processor {
 
         boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
 
-        if(isCompetitive != userToEdit.isCompetitive()) {
+        if (isCompetitive != userToEdit.isCompetitive()) {
             User convertedMember;
 
-            if(isCompetitive) {
-                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());
+            if (isCompetitive) {
+                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(), userToEdit.isArrears());
             } else {
-                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());
+                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(), userToEdit.isArrears());
             }
 
             String password = dbController.getPasswordFromID(userToEdit.getUserID());
@@ -150,8 +150,36 @@ public class SuperUserProcessor implements Processor {
 
     }
 
-    public void editTrainer() {
+    public void editTrainer(String userIDInput, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+        int userID = Integer.parseInt(userIDInput);
+        Member userToEdit = (Member) dbController.getUserFromID(userID);
+
+        if (!firstNameInput.isBlank()) {
+            userToEdit.setFirstName(firstNameInput);
+        }
+        if (!lastNameInput.isBlank()) {
+            userToEdit.setLastName(lastNameInput);
+        }
+        boolean isSenior = Boolean.parseBoolean(isSeniorTrainerInput);
+        userToEdit.setSenior(isSenior);
+
+        dbController.editUserInDB(userToEdit);
     }
+    public void editTreassurer(String userIDInput, String firstNameInput, String lastNameInput) {
+        int userID = Integer.parseInt(userIDInput);
+        Member userToEdit = (Member) dbController.getUserFromID(userID);
+
+        if (!firstNameInput.isBlank()) {
+            userToEdit.setFirstName(firstNameInput);
+        }
+        if (!lastNameInput.isBlank()) {
+            userToEdit.setLastName(lastNameInput);
+        }
+        dbController.editUserInDB(userToEdit);
+    }
+
+
+
 
     public void editAdmin() {
 
@@ -171,13 +199,13 @@ public class SuperUserProcessor implements Processor {
 
         switch (DelfinUtil.checkUserInstance(userForInfo)) {
             case MEMBER -> {
-                return ((Member)userForInfo).toString();
+                return ((Member) userForInfo).toString();
             }
             case COMPETITIVE -> {
-                return ((CompetitiveMember)userForInfo).toString();
+                return ((CompetitiveMember) userForInfo).toString();
             }
             case TRAINER -> {
-                return ((Trainer)userForInfo).toString();
+                return ((Trainer) userForInfo).toString();
             }
             case SUPER, TREASURER -> {
                 return userForInfo.toString();
@@ -224,17 +252,6 @@ public class SuperUserProcessor implements Processor {
                 }
             }
         return null;
-    }
-
-
-    public static int calculateAge(LocalDate dob) {
-        LocalDate curDate = LocalDate.now();
-
-        if ((dob != null) && (curDate != null)) {
-            return Period.between(dob, curDate).getYears();
-        } else {
-            return 0;
-        }
     }
 
     private void print(String s) {
