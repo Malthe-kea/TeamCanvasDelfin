@@ -82,9 +82,6 @@ public class SuperUserProcessor implements Processor {
         Boolean isActiveMember = activePassiveInput;
         Boolean isCompetitive = isCompetitiveInput;
         Boolean isArrears = isArrearsInput;
-        //LocalDate dob = LocalDate.parse(birthDate);
-
-        //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.
         User memberToAdd = new Member(dbController.getIDForNewUser(), firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(memberToAdd, password);
     }
@@ -100,11 +97,7 @@ public class SuperUserProcessor implements Processor {
         Boolean isActiveMember = isActiveMemberInput;
         Boolean isCompetitive = isCompetitiveInput;
         Boolean isArrears = isArrearsInput;
-        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.
-//        LocalDate dob = LocalDate.parse(birthDate);
 
-//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
         User competitiveMemberToAdd = new CompetitiveMember(dbController.getIDForNewUser(), firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(competitiveMemberToAdd, password);
     }
@@ -115,7 +108,14 @@ public class SuperUserProcessor implements Processor {
         dbController.addUserToDB(treasurerToAdd, password);
     }
 
-    public void editMember(String userIDInput, String firstNameInput, String lastNameInput, String isActiveMemberInput, String isCompetitiveInput, String isArrearsInput) {
+    public void editMember(
+            String userIDInput,
+            String firstNameInput,
+            String lastNameInput,
+            String isActiveMemberInput,
+            String isCompetitiveInput,
+            String isArrearsInput) {
+
         int userID = Integer.parseInt(userIDInput);
         Member userToEdit = (Member) dbController.getUserFromID(userID);
 
@@ -165,6 +165,7 @@ public class SuperUserProcessor implements Processor {
 
         dbController.editUserInDB(userToEdit);
     }
+
     public void editTreassurer(String userIDInput, String firstNameInput, String lastNameInput) {
         int userID = Integer.parseInt(userIDInput);
         Member userToEdit = (Member) dbController.getUserFromID(userID);
@@ -177,8 +178,6 @@ public class SuperUserProcessor implements Processor {
         }
         dbController.editUserInDB(userToEdit);
     }
-
-
 
 
     public void editAdmin() {
@@ -213,48 +212,5 @@ public class SuperUserProcessor implements Processor {
         }
         return "null";
     }
-
-
-    public Database getUserFromDB(int idToEdit) {
-        //TODO send DB return
-        String command = "1";
-        print("""
-                Hvilket brugeroversigt vil du gerne se?
-                1. Crawl
-                2. Rygcrawl
-                3. Brystsvømning
-                4. Butterfly
-                5. Aktive/Passive medlemmer
-                6. Juniorer/Seniorer
-                """);
-        while (programRunning)
-            switch (command) {
-                case "1" -> {
-                    print("Get XYZ-database");
-                }
-                case "2" -> {
-                    print("Get XYZ-database");
-                }
-                case "3" -> {
-                    print("Get XYZ-database");
-                }
-                case "4" -> {
-                    print("Get XYZ-database");
-                }
-                case "5" -> {
-                    print("Get XYZ-database");
-                }
-                case "6" -> {
-                    print("Get XYZ-database");
-                }
-                default -> {
-                    print("invalid input");
-                }
-            }
-        return null;
     }
 
-    private void print(String s) {
-        System.out.println(s);
-    }
-}
