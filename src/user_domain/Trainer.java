@@ -53,8 +53,13 @@ public class Trainer extends User {
 
     @Override
     public String toString() {
-        return super.toString() +"\n"+
-                "Er senior træner (ja/nej): " + isSeniorTrainer + "\n" +
-                "Liste over konkurrencesvømmere: " + competitiveMemberList;
+        String result = super.toString() + "\n";
+        if (isSeniorTrainer = true) {
+            result+= "Senior træner. " + "\n";
+        }
+        if (competitiveMemberList != null) {
+            result+= "Liste over konkurrencesvømmere: " + "\n";
+        }
+        return result;
     }
 }

@@ -21,12 +21,25 @@ public class CompetitiveMember extends Member {
     private Style butterflyPR;
     private ArrayList<Competition> competitionList;
 
-    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears, ArrayList<Competition> competitionList) {
+    public CompetitiveMember(int userID,
+                             String firstName,
+                             String lastName,
+                             boolean isActiveMember,
+                             boolean isCompetitive,
+                             String dateOfBirth,
+                             boolean isArrears,
+                             ArrayList<Competition> competitionList) {
         super(userID, firstName, lastName, isActiveMember, isCompetitive, dateOfBirth, isArrears);
         this.competitionList = competitionList;
     }
 
-    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears) {
+    public CompetitiveMember(int userID,
+                             String firstName,
+                             String lastName,
+                             boolean isActiveMember,
+                             boolean isCompetitive,
+                             String dateOfBirth,
+                             boolean isArrears) {
         super(userID, firstName, lastName, isActiveMember, isCompetitive, dateOfBirth, isArrears);
         this.competitionList = new ArrayList<>();
 
@@ -55,14 +68,6 @@ public class CompetitiveMember extends Member {
     private ArrayList<Competition> getCompetitionDB(){
         return null;
     }
-
-    //TODO
-    //Fremgangsmåden her vil være at sortere fra lavest til højest ;)
-
-    /*private void calculatePR(){
-        ArrayList<Competition> competitionList = getCompetitionDB();
-    }
-    */
 
     private ArrayList<SortExampleTest> sortingExample;
 
@@ -112,13 +117,21 @@ public class CompetitiveMember extends Member {
         competitionList.removeIf(comp -> id == comp.getID());
     }
 
-    @Override
     public String toString() {
-        return super.toString() +"\n"+
-                "Backstroke PR: " + backStrokePR + "\n" +
-                "Crawl PR: " + crawlPR + "\n" +
-                "Breaststroke PR: " + backStrokePR + "\n" +
-                "Butterfly PR: " + butterflyPR + "\n" +
-                "Konkurrence liste: " + "\n" + competitionList;
+        String result = super.toString() + "\n";
+        if (backStrokePR != null) {
+            result+= "Backstroke PR: " + "\n";
+        }
+        if (crawlPR != null) {
+            result+= "Crawl PR: " + "\n";
+        }
+        if (breastStrokePR != null) {
+            result+= "Breaststroke PR: " + "\n";
+        }
+        if (butterflyPR != null) {
+            result+= "Butterfly PR: " + "\n";
+        }
+        return result;
     }
+
 }
