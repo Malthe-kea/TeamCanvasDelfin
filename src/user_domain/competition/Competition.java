@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Competition {
     private int id;
     private String location;
-    private LocalDate date;
+    private final LocalDate date;
     private ArrayList<Style> styleList;
 
     public Competition(int id, String location, String date, ArrayList<Style> styleList) {
