@@ -13,7 +13,13 @@ public class Member extends User {
     private boolean isSenior;
     private final double yearlyMembershipFee;
 
-    public Member(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears) {
+    public Member(int userID,
+                  String firstName,
+                  String lastName,
+                  boolean isActiveMember,
+                  boolean isCompetitive,
+                  String dateOfBirth,
+                  boolean isArrears) {
         super(userID, firstName, lastName);
         this.dateOfBirth = LocalDate.parse(dateOfBirth, birthDateFormat);
         this.isActiveMember = isActiveMember;
@@ -22,6 +28,7 @@ public class Member extends User {
         this.isSenior = (getAge() >= 18);
         this.yearlyMembershipFee = calculateFee();
     }
+
     private double calculateFee() {
         if (!isActiveMember) {
             return 500;
@@ -79,22 +86,28 @@ public class Member extends User {
 
     @Override
     public String toString() {
-        String toStringMessage =
-                super.toString() +  "\n"+
-                "Fødselsdag: " + dateOfBirth.format(birthDateFormat)+ "\n" +
-                "Er aktiv (ja/nej): " + isActiveMember + "\n" +
-                "Er konkurrencesvømmer (ja/nej): " + isCompetitive + "\n" +
-                "Er i restance (ja/nej): " + isArrears + "\n" +
-                "Er senior (ja/nej): " + isSenior + "\n" +
-                "Kontingent: " + yearlyMembershipFee;;
-        if(!(this instanceof CompetitiveMember)) {
-            return "Kontotype: Motonist\n" + toStringMessage;
-        } else {
-            return toStringMessage;
+        String result = super.toString() + "\n";
+        result += "Fødselsdato: " + dateOfBirth + "\n";
+        result += "Kontingent: " + yearlyMembershipFee + "\n" ;
+
+        if (isActiveMember = true) {
+            result+= "Aktivt member. " + "\n";
+        }
+        if (isCompetitive = true) {
+            result+= "Member er konkurrencesvømmer." + "\n";
+        }
+        if (isArrears = true) {
+            result+= "Member er i restance." + "\n";
+        }
+        if (isSenior = true) {
+            result+= "Member er senior." + "\n";
         }
 
-
-
+        if(!(this instanceof CompetitiveMember)) {
+            return "Kontotype: Motonist\n" + result;
+        } else {
+            return result;
+        }
     }
 
 }

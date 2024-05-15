@@ -7,12 +7,12 @@ import user_domain.competition.Style;
 
 public class CompetitiveMember extends Member {
     //TODO
-    // 1. Inde i CompetitiveMember - Lav metode der læser igennem hver style for hvert stævne,
-    // og sætter PR for hver disciplin inde i CompetitiveMember klassen.
-    // 2. inde i TrainerProcessor. Når ovenstående er færdigt, lav top5 der sammenligner
+    // 1. Inde i CompetitiveMember - Lav metode der lÃ¦ser igennem hver style for hvert stÃ¦vne,
+    // og sÃ¦tter PR for hver disciplin inde i CompetitiveMember klassen.
+    // 2. inde i TrainerProcessor. NÃ¥r ovenstÃ¥ende er fÃ¦rdigt, lav top5 der sammenligner
     // forskellige competitivemember resultater. Dog opdelt i Junior og Senior!
-    // TOP 5 metoden skal returnere ArrayList<String>. Hver String er en række i menuen, og derfor skal
-    // den opsættes således.
+    // TOP 5 metoden skal returnere ArrayList<String>. Hver String er en rÃ¦kke i menuen, og derfor skal
+    // den opsÃ¦ttes sÃ¥ledes.
 
 
     private Style backStrokePR;
@@ -21,12 +21,25 @@ public class CompetitiveMember extends Member {
     private Style butterflyPR;
     private ArrayList<Competition> competitionList;
 
-    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears, ArrayList<Competition> competitionList) {
+    public CompetitiveMember(int userID,
+                             String firstName,
+                             String lastName,
+                             boolean isActiveMember,
+                             boolean isCompetitive,
+                             String dateOfBirth,
+                             boolean isArrears,
+                             ArrayList<Competition> competitionList) {
         super(userID, firstName, lastName, isActiveMember, isCompetitive, dateOfBirth, isArrears);
         this.competitionList = competitionList;
     }
 
-    public CompetitiveMember(int userID, String firstName, String lastName, boolean isActiveMember, boolean isCompetitive, String dateOfBirth, boolean isArrears) {
+    public CompetitiveMember(int userID,
+                             String firstName,
+                             String lastName,
+                             boolean isActiveMember,
+                             boolean isCompetitive,
+                             String dateOfBirth,
+                             boolean isArrears) {
         super(userID, firstName, lastName, isActiveMember, isCompetitive, dateOfBirth, isArrears);
         this.competitionList = new ArrayList<>();
 
@@ -51,13 +64,13 @@ public class CompetitiveMember extends Member {
     public Style getButterflyPR() {
         return butterflyPR;
     }
-    //Muligvis omdøbes.
+    //Muligvis omdÃ¸bes.
     private ArrayList<Competition> getCompetitionDB(){
         return null;
     }
 
     //TODO
-    //Fremgangsmåden her vil være at sortere fra lavest til højest ;)
+    //FremgangsmÃ¥den her vil vÃ¦re at sortere fra lavest til hÃ¸jest ;)
 
     /*private void calculatePR(){
         ArrayList<Competition> competitionList = getCompetitionDB();
@@ -114,12 +127,21 @@ public class CompetitiveMember extends Member {
 
     @Override
     public String toString() {
-        return "Kontotype: Konkurrencesvømmer\n"
-                + super.toString() +"\n"+
-                "Backstroke PR: " + backStrokePR + "\n" +
-                "Crawl PR: " + crawlPR + "\n" +
-                "Breaststroke PR: " + backStrokePR + "\n" +
-                "Butterfly PR: " + butterflyPR + "\n" +
-                "Konkurrence liste: " + "\n" + competitionList;
+        String result = 
+                "Kontotype: KonkurrencesvÃ¸mmer\n" +
+                super.toString() + "\n";
+        if (backStrokePR != null) {
+            result+= "Backstroke PR: " + "\n";
+        }
+        if (crawlPR != null) {
+            result+= "Crawl PR: " + "\n";
+        }
+        if (breastStrokePR != null) {
+            result+= "Breaststroke PR: " + "\n";
+        }
+        if (butterflyPR != null) {
+            result+= "Butterfly PR: " + "\n";
+        }
+        return result;
     }
 }
