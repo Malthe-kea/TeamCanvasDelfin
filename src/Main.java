@@ -1,26 +1,33 @@
 import database.DBController;
+import domain_model.Processors.TrainerProcessor;
 import domain_model.userInterface.UserInterface;
-import user_domain.competition.Competition;
+import user_domain.competition.StyleCategories;
 
 public class Main {
     public static void main(String[] args) {
+
+//        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
+//        System.out.println(trainerProcessor.getTopFive(StyleCategories.BACKSTROKE).toString());
+
 
         UserInterface UI = new UserInterface();
         UI.startProgram();
 
         /*TODO
-            1. SuperUserProcessor editMember skal laves og opsættes til UI.
-            2. SuperUserProcessor Brugeroversigt skal fixes med bug hvor kun superuser vises.
+            1. SuperUserProcessor editMember skal laves og opsættes til UI. - X
+            2. SuperUserProcessor Brugeroversigt skal fixes med bug hvor kun superuser vises. - X
             3. toString metoder for alle brugertyper skal laves. De skal kalde deres parent class toString,
-            og blot bygges videre på denne.
+            og blot bygges videre på denne. - X
             4. MemberProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String>
             5. TrainerProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String>
-            6. KassérProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String>
+            6. KassérProcessor skal laves. Ved metoder hvor der vises data, returnér ArrayList<String> - X
             7. Member, Trainer og Kassér processor metoder skal tilføjes til Controller.
-            8. UI skal have en cancel button ved login siden, som lukker programmet.
-            9. UI skal have "Ja/Nej" knapper istedet for input text.
+            8. UI skal have en cancel button ved login siden, som lukker programmet. - X
+            9. UI skal have "Ja/Nej" knapper istedet for input text. - X
             10. REFACTORING NÅR OVENSTÅENDE ER DONE.
+            11. Læg overstående i Trello
         */
+
 
 
     }

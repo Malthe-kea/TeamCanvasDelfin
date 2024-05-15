@@ -38,34 +38,46 @@ public class SuperUserProcessor implements Processor {
         return userList;
     }
 
-    public void CreateandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
+    public void CreateandAddMembertoDB(
+            String password,
+            String firstNames,
+            String lastNames,
+            boolean activePassiveInput,
+            String birthDate,
+            boolean isCompetitiveInput,
+            boolean isArrearsInput) {
 
         Boolean isActiveMember = activePassiveInput;
         Boolean isCompetitive = isCompetitiveInput;
         Boolean isArrears = isArrearsInput;
-        //LocalDate dob = LocalDate.parse(birthDate);
 
-        //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.
         User memberToAdd = new Member(dbController.getIDForNewUser(), firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(memberToAdd, password);
     }
 
-    public void CreateandAddTrainertoDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {
+    public void CreateandAddTrainertoDB(
+            String password,
+            String firstNames,
+            String lastNames,
+            boolean isSeniorTrainer) {
 
         User trainerToAdd = new Trainer(dbController.getIDForNewUser(), firstNames, lastNames, isSeniorTrainer);
         dbController.addUserToDB(trainerToAdd, password);
     }
 
-    public void CreateandAddCompetitiveMembertoDB(String password, String firstNames, String lastName, boolean isActiveMemberInput, boolean isCompetitiveInput, String birthDate, boolean isArrearsInput) {
+    public void CreateandAddCompetitiveMembertoDB(
+            String password,
+            String firstNames,
+            String lastName,
+            boolean isActiveMemberInput,
+            boolean isCompetitiveInput,
+            String birthDate,
+            boolean isArrearsInput) {
 
         Boolean isActiveMember = isActiveMemberInput;
         Boolean isCompetitive = isCompetitiveInput;
         Boolean isArrears = isArrearsInput;
-        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.
-//        LocalDate dob = LocalDate.parse(birthDate);
 
-//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
-        //testDB.add(new CompetitiveMember(3, "Susse", "Sonnegaard", true, true, calculateAge(dob), false));
         User competitiveMemberToAdd = new CompetitiveMember(dbController.getIDForNewUser(), firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(competitiveMemberToAdd, password);
     }
@@ -76,7 +88,13 @@ public class SuperUserProcessor implements Processor {
         dbController.addUserToDB(treasurerToAdd, password);
     }
 
-    public void editMember(int indexOfUser, String firstNameInput, String lastNameInput, String isActiveMemberInput, String isCompetitiveInput, String isArrearsInput) {
+    public void editMember(
+            int indexOfUser,
+            String firstNameInput,
+            String lastNameInput,
+            String isActiveMemberInput,
+            String isCompetitiveInput,
+            String isArrearsInput) {
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
 
         Member userToEdit = (Member) allUsers.get(indexOfUser);
@@ -105,9 +123,23 @@ public class SuperUserProcessor implements Processor {
             User convertedMember;
 
             if (isCompetitive) {
-                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(), userToEdit.isArrears());
+                convertedMember = new CompetitiveMember(
+                        userToEdit.getUserID(),
+                        userToEdit.getFirstName(),
+                        userToEdit.getLastName(),
+                        userToEdit.isActiveMember(),
+                        true,
+                        userToEdit.getDateOfBirth(),
+                        userToEdit.isArrears());
             } else {
-                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(), userToEdit.isArrears());
+                convertedMember = new Member(
+                        userToEdit.getUserID(),
+                        userToEdit.getFirstName(),
+                        userToEdit.getLastName(),
+                        userToEdit.isActiveMember(),
+                        true,
+                        userToEdit.getDateOfBirth(),
+                        userToEdit.isArrears());
             }
 
             String password = dbController.getPasswordFromID(userToEdit.getUserID());
@@ -119,7 +151,12 @@ public class SuperUserProcessor implements Processor {
 
     }
 
-    public void editTrainer(int indexOfUser, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+    public void editTrainer(
+            int indexOfUser,
+            String firstNameInput,
+            String lastNameInput,
+            String isSeniorTrainerInput) {
+
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
 
         Trainer userToEdit = (Trainer) allUsers.get(indexOfUser);

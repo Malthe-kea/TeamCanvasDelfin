@@ -2,6 +2,7 @@ package domain_model;
 
 import database.DBController;
 import domain_model.Processors.*;
+import user_domain.Trainer;
 import user_domain.User;
 
 import java.util.ArrayList;
@@ -119,6 +120,10 @@ public class Controller implements Processor {
     public ArrayList<String> getMembersInArrears() {
         TreasurerProcessor treasurerProcessor = (TreasurerProcessor) processor;
         return treasurerProcessor.getMembersInArrears();
+    }
+    public ArrayList<String> getListOfTeams(Trainer trainer){
+        TrainerProcessor trainerProcessor = (TrainerProcessor) processor;
+        return trainerProcessor.getListOfTeams(trainer);
     }
 
 

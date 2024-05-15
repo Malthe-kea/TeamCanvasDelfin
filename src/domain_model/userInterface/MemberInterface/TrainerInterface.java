@@ -39,7 +39,7 @@ public class TrainerInterface {
                     UserInterface.smallWindow("Din profil", userLoggingIn.toString(), "Tilbage");
                 }
                 case 1 -> {
-                    //TODO Implementer holdvisning fra TrainerProcessor
+                    UserInterface.showList("Dit hold", controller.getListOfTeams(userLoggingIn));
                 }
                 case 2 -> {
                     //TODO Implementer TOP 5 - Brystsvømning fra TrainerProcessor

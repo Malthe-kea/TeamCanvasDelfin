@@ -39,16 +39,6 @@ public class MemberInterface {
                 case 0 -> {
                     UserInterface.smallWindow("Din profil", userLoggingIn.toString(), "Tilbage");
                 }
-                case 1 -> {
-
-                    int competitionChoice = -2;
-                    while(competitionChoice != -1) {
-                        competitionChoice = UserInterface.drawMenu("Dine stævner","Tryk på det stævne du gerne vil se", "Tilbage", new ArrayList<String>());
-
-                        //TODO: Implementer stævnevisning fra MemberProcessor
-
-                    }
-                }
                 case -1 -> {
                     loggedIn = false;
                 }
