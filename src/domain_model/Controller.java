@@ -4,6 +4,7 @@ import database.DBController;
 import domain_model.Processors.*;
 import user_domain.Trainer;
 import user_domain.User;
+import user_domain.competition.StyleCategories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,5 +132,9 @@ public class Controller implements Processor {
         return superUserProcessor.getUserInfoForEdit(indexToShow);
     }
 
+    public ArrayList<String> getTopFive(StyleCategories styleCategory) {
+        TrainerProcessor trainerProcessor = (TrainerProcessor) processor;
+        return trainerProcessor.getTopFive(styleCategory);
+    }
 
 }

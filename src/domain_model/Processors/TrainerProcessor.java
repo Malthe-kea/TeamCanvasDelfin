@@ -11,6 +11,7 @@ import user_domain.competition.StyleCategories;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class TrainerProcessor implements Processor {
 
@@ -31,11 +32,14 @@ public class TrainerProcessor implements Processor {
         }
         tempCompMemberArr.removeIf(member -> member.getCompetitionList().isEmpty());
 
+        HashMap<Style, Competition> tempStyleCompMap = new HashMap<>();
+
         for (CompetitiveMember member : tempCompMemberArr) {
             for (Competition c : member.getCompetitionList()) {
                 for (Style s : c.getStyleList()) {
                     if (s.getStyleCategory() == styleCategory) {
                         tempStyleArr.add(s);
+                        tempStyleCompMap.put(s, c);
                     }
                 }
             }
@@ -51,11 +55,17 @@ public class TrainerProcessor implements Processor {
                     break;
                 }
             }
-            if (isIdenticalUser == false) {
+            if (!isIdenticalUser) {
                 User user = dbController.getUserFromID(s.getUserID());
                 topFiveStyles.add(s);
+                Competition c = tempStyleCompMap.get(s);
+                String styleString =
+                        user.getFirstName() + " " + user.getLastName() + "\n" +
+                        "Stævne: " + c.getLocation() + "\n" +
+                        "Dato: " + c.getDate() + "\n" +
+                        s.toString();
 
-                topFiveStylesToString.add(user.getFirstName() + " " + user.getLastName() + "\n" + s.toString());
+                topFiveStylesToString.add(styleString);
 
                 if (topFiveStyles.size() == 5) {
                     return topFiveStylesToString;
