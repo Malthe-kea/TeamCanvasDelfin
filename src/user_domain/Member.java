@@ -87,7 +87,7 @@ public class Member extends User {
     @Override
     public String toString() {
         String result = super.toString() + "\n";
-        result += "Fødselsdato: " + dateOfBirth + "\n";
+        result += "Fødselsdato: " + dateOfBirth.format(birthDateFormat) + "\n";
         result += "Kontingent: " + yearlyMembershipFee + "\n" ;
 
         if (isActiveMember) {

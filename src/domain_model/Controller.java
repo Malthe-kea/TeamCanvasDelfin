@@ -121,5 +121,10 @@ public class Controller implements Processor {
         return treasurerProcessor.getMembersInArrears();
     }
 
+    public ArrayList<String> getUserInfoForEdit(int indexToShow) {
+        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
+        return superUserProcessor.getUserInfoForEdit(indexToShow);
+    }
+
 
 }

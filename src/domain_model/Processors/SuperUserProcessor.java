@@ -45,7 +45,7 @@ public class SuperUserProcessor implements Processor {
         Boolean isArrears = isArrearsInput;
         //LocalDate dob = LocalDate.parse(birthDate);
 
-        //TODO new member tager imod dateOfBirth som en string, det skal vÃ¦re LocalDate.
+        //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.
         User memberToAdd = new Member(dbController.getIDForNewUser(), firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);
         dbController.addUserToDB(memberToAdd, password);
     }
@@ -61,7 +61,7 @@ public class SuperUserProcessor implements Processor {
         Boolean isActiveMember = isActiveMemberInput;
         Boolean isCompetitive = isCompetitiveInput;
         Boolean isArrears = isArrearsInput;
-        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal vÃ¦re LocalDate.
+        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.
 //        LocalDate dob = LocalDate.parse(birthDate);
 
 //Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.
@@ -165,6 +165,33 @@ public class SuperUserProcessor implements Processor {
         String userString = userForInfo.toString();
         userInfo = new ArrayList<>(List.of(userString.split("\n")));
         //userInfo.remove(0);
+
+        return userInfo;
+    }
+
+    public ArrayList<String> getUserInfoForEdit(int indexToShow) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        User userForInfo = allUsers.get(indexToShow);
+        ArrayList<String> userInfo =new ArrayList<>();
+        String firstName = "Fornavn: " + userForInfo.getFirstName();
+        String lastName = "Efternavn: " + userForInfo.getLastName();
+        userInfo.add(firstName);
+        userInfo.add(lastName);
+
+        switch (DelfinUtil.checkUserInstance(userForInfo)) {
+            case MEMBER -> {
+                String activePassive = "Aktiv/Passiv: " + ( ((Member) userForInfo).isActiveMember() ? "Aktiv" : "Passiv");
+                userInfo.add(activePassive);
+                String competitiveRecreational = "Aktivitetsstatus: " + (((Member) userForInfo).isCompetitive() ? "Konkurrence" : "Motonist");
+                userInfo.add(competitiveRecreational);
+                String arrears = "Restance: " + (((Member) userForInfo).isArrears() ? "Ja" : "Nej");
+                userInfo.add(arrears);
+            }
+            case TRAINER -> {
+                String SeniorTrainer = "Trænertype: " + (((Trainer) userForInfo).isSeniorTrainer() ? "Senior" : "Junior");
+                userInfo.add(SeniorTrainer);
+            }
+        }
 
         return userInfo;
     }
