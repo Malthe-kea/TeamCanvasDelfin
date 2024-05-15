@@ -90,17 +90,25 @@ public class Member extends User {
         result += "Fødselsdato: " + dateOfBirth + "\n";
         result += "Kontingent: " + yearlyMembershipFee + "\n" ;
 
-        if (isActiveMember = true) {
+        if (isActiveMember) {
             result+= "Aktivt member. " + "\n";
+        } else {
+            result+= "Inaktivt member. " + "\n";
         }
-        if (isCompetitive = true) {
+        if (isCompetitive) {
             result+= "Member er konkurrencesvømmer." + "\n";
+        } else {
+            result+= "Member er motionist." + "\n";
         }
-        if (isArrears = true) {
+        if (isArrears) {
             result+= "Member er i restance." + "\n";
+        } else {
+            result+= "Member er ikke i restance." + "\n";
         }
-        if (isSenior = true) {
+        if (isSenior) {
             result+= "Member er senior." + "\n";
+        } else {
+            result+= "Member er junior." + "\n";
         }
 
         if(!(this instanceof CompetitiveMember)) {
