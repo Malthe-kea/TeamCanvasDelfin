@@ -127,7 +127,7 @@ public class CompetitiveMember extends Member {
 
     @Override
     public String toString() {
-        String result = 
+        String result =
                 "Kontotype: Konkurrencesvømmer\n" +
                 super.toString() + "\n";
         if (backStrokePR != null) {
