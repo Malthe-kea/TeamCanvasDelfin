@@ -2,7 +2,9 @@ package user_domain.competition;
 
 import java.text.SimpleDateFormat;
 
-public class Style {
+public class Style implements Comparable<Style>{
+
+
     private int id;
     private int userID;
     private int competitionID;
@@ -57,5 +59,16 @@ public class Style {
 
     public void setCompetitionID(int competitionID) {
         this.competitionID = competitionID;
+    }
+    @Override
+    public int compareTo(Style o) {
+        return Long.compare(time.getDurationInSeconds(),o.getTime().getDurationInSeconds());
+    }
+
+    @Override
+    public String toString() {
+        return  "Svømmedisciplin: " + styleCategory.styleName+ "\n" +
+                "Placering: " + placement+"\n" +
+                "Tid: " + time.getDisplayTime()+"\n";
     }
 }

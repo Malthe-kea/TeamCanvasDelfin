@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Made Member work">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="getTopFive() tilføjet til TrainerProcessor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/TrainerDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/TrainerDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user_domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/MemberInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/MemberInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/competition/StyleCategories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/competition/StyleCategories.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +56,7 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2gP4mbDgwo4EpaHgs20Pyo1fxOI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -127,7 +128,6 @@
       <workItem from="1715691029267" duration="100000" />
       <workItem from="1715691143350" duration="156000" />
       <workItem from="1715756623396" duration="519000" />
-      <workItem from="1715773510908" duration="1030000" />
     </task>
     <task id="LOCAL-00001" summary="Removed Esra Userinterface">
       <option name="closed" value="true" />
@@ -177,23 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715757470074</updated>
     </task>
-    <task id="LOCAL-00007" summary="Made Member work">
+    <task id="LOCAL-00007" summary="getTopFive() tilføjet til TrainerProcessor">
       <option name="closed" value="true" />
-      <created>1715757596493</created>
+      <created>1715762579018</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1715757596493</updated>
+      <updated>1715762579018</updated>
     </task>
-    <task id="LOCAL-00008" summary="Made Member work">
-      <option name="closed" value="true" />
-      <created>1715757605162</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1715757605162</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,8 +211,9 @@
     <MESSAGE value="Made interface for all classes. Finished superuser interface." />
     <MESSAGE value="OK" />
     <MESSAGE value="Competitive member merge" />
-    <MESSAGE value="Made Member work" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made Member work" />
+    <MESSAGE value="Jaa fed" />
+    <MESSAGE value="getTopFive() tilføjet til TrainerProcessor" />
+    <option name="LAST_COMMIT_MESSAGE" value="getTopFive() tilføjet til TrainerProcessor" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
