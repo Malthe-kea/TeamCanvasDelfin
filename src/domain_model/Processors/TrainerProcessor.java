@@ -94,5 +94,6 @@ public class TrainerProcessor implements Processor {
         return finalListOfTeams;
     }
 
-    //TODO træner skal kunne oprette stævner til member.
+    //TODO træner skal kunne oprette stævner.
+    //TODO træner skal kunne registrere stævneresultater.
 }
