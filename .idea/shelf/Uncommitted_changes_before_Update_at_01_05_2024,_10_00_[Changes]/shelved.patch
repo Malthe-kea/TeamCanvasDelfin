@@ -1,0 +1,142 @@
+Index: src/user_domain/SuperUser.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\n\npublic class SuperUser extends User {\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/user_domain/SuperUser.java b/src/user_domain/SuperUser.java
+--- a/src/user_domain/SuperUser.java	(revision e6f130f7c12e5c0a9890f84d6bc81766576beda5)
++++ b/src/user_domain/SuperUser.java	(date 1714550284619)
+@@ -1,4 +1,7 @@
+ package user_domain;
+ 
+ public class SuperUser extends User {
++    public SuperUser(String firstName, String lastName, int userID) {
++        super(firstName, lastName, userID);
++    }
+ }
+Index: src/user_domain/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\n\npublic abstract class User {\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/user_domain/User.java b/src/user_domain/User.java
+--- a/src/user_domain/User.java	(revision e6f130f7c12e5c0a9890f84d6bc81766576beda5)
++++ b/src/user_domain/User.java	(date 1714550180804)
+@@ -1,4 +1,37 @@
+ package user_domain;
+ 
+ public abstract class User {
+-}
++    private String firstName;
++    private String lastName;
++    private int userID;
++
++    public User(String firstName, String lastName, int userID) {
++        this.firstName = firstName;
++        this.lastName = lastName;
++        this.userID = userID;
++    }
++
++    public String getFirstName() {
++        return firstName;
++    }
++
++    public void setFirstName(String firstName) {
++        this.firstName = firstName;
++    }
++
++    public String getLastName() {
++        return lastName;
++    }
++
++    public void setLastName(String lastName) {
++        this.lastName = lastName;
++    }
++
++    public int getUserID() {
++        return userID;
++    }
++
++    public void setUserID(int userID) {
++        this.userID = userID;
++    }
++}
+\ No newline at end of file
+Index: src/user_domain/CompetitiveMember.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\n\n\npublic class CompetitiveMember extends Member {\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/user_domain/CompetitiveMember.java b/src/user_domain/CompetitiveMember.java
+--- a/src/user_domain/CompetitiveMember.java	(revision e6f130f7c12e5c0a9890f84d6bc81766576beda5)
++++ b/src/user_domain/CompetitiveMember.java	(date 1714550284636)
+@@ -2,6 +2,7 @@
+ 
+ 
+ public class CompetitiveMember extends Member {
+-
+-
++    public CompetitiveMember(String firstName, String lastName, int userID) {
++        super(firstName, lastName, userID);
++    }
+ }
+Index: src/user_domain/Member.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\n\npublic class Member extends User {\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/user_domain/Member.java b/src/user_domain/Member.java
+--- a/src/user_domain/Member.java	(revision e6f130f7c12e5c0a9890f84d6bc81766576beda5)
++++ b/src/user_domain/Member.java	(date 1714550284631)
+@@ -1,4 +1,7 @@
+ package user_domain;
+ 
+ public class Member extends User {
++    public Member(String firstName, String lastName, int userID) {
++        super(firstName, lastName, userID);
++    }
+ }
+Index: src/user_domain/Treasurer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\n\npublic class Treasurer extends User {\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/user_domain/Treasurer.java b/src/user_domain/Treasurer.java
+--- a/src/user_domain/Treasurer.java	(revision e6f130f7c12e5c0a9890f84d6bc81766576beda5)
++++ b/src/user_domain/Treasurer.java	(date 1714550284623)
+@@ -1,4 +1,7 @@
+ package user_domain;
+ 
+ public class Treasurer extends User {
++    public Treasurer(String firstName, String lastName, int userID) {
++        super(firstName, lastName, userID);
++    }
+ }
+Index: src/user_domain/Trainer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\n\npublic class Trainer extends User {\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/user_domain/Trainer.java b/src/user_domain/Trainer.java
+--- a/src/user_domain/Trainer.java	(revision e6f130f7c12e5c0a9890f84d6bc81766576beda5)
++++ b/src/user_domain/Trainer.java	(date 1714550284627)
+@@ -1,4 +1,7 @@
+ package user_domain;
+ 
+ public class Trainer extends User {
++    public Trainer(String firstName, String lastName, int userID) {
++        super(firstName, lastName, userID);
++    }
+ }
