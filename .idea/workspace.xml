@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="lavet createCompetition() - den virker">
+    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Kom til at refactor i main! Det er fikset nu med ny branch!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/Processor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ESRA-MALTHE-TrainerProcessor-" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -79,7 +79,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "MALTHE-Refactor2.0",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -211,7 +211,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715764883866</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Kom til at refactor i main! Det er fikset nu med ny branch!">
+      <option name="closed" value="true" />
+      <created>1715864623634</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715864623634</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,7 +249,8 @@
     <MESSAGE value="getTopFive() tilføjet til TrainerProcessor" />
     <MESSAGE value="Pair-programming" />
     <MESSAGE value="lavet createCompetition() - den virker" />
-    <option name="LAST_COMMIT_MESSAGE" value="lavet createCompetition() - den virker" />
+    <MESSAGE value="Kom til at refactor i main! Det er fikset nu med ny branch!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kom til at refactor i main! Det er fikset nu med ny branch!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
