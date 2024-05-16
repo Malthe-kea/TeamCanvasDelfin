@@ -2,8 +2,10 @@ package database;
 
 import database.competition_style_DB.CompetitionDB;
 import database.competition_style_DB.StyleDB;
+import database.userDB.CompetitiveMemberDB;
 import database.userDB.MemberDB;
 import database.userDB.UserDB;
+import user_domain.CompetitiveMember;
 import user_domain.Member;
 import user_domain.User;
 import user_domain.competition.Competition;
@@ -16,12 +18,14 @@ public class DBController {
     private CompetitionDB compDB;
     private StyleDB styleDB;
     private MemberDB memberDB;
+    private CompetitiveMemberDB competitiveMemberDB;
 
     public DBController() {
         userDB = new UserDB();
         compDB = new CompetitionDB();
         styleDB = new StyleDB();
         memberDB = new MemberDB();
+        competitiveMemberDB = new CompetitiveMemberDB();
     }
 
 
@@ -76,13 +80,16 @@ public class DBController {
     /**GET LIST OF MEMBERS*/
     public ArrayList<Member> getListOfMembers() {
         ArrayList<Member> memberList = new ArrayList<>();
-        memberDB.getListOfUsers().forEach(user -> {
-            if (user instanceof Member member) {
-                memberList.add(member);
-            }
-        });
+        memberDB.getListOfUsers().forEach(user -> memberList.add((Member) user));
         return memberList;
     }
+
+    public ArrayList<CompetitiveMember> getListOfCompetitiveMembers() {
+        ArrayList<CompetitiveMember> memberList = new ArrayList<>();
+        competitiveMemberDB.getListOfUsers().forEach(user -> memberList.add((CompetitiveMember) user));
+        return memberList;
+    }
+
 
     //COMPETITIONDB METHODS
     /**GET LIST OF COMPETITION WITH EMPTY STYLE LIST*/

@@ -1,7 +1,10 @@
 import database.DBController;
 import domain_model.Processors.TrainerProcessor;
 import domain_model.userInterface.UserInterface;
+import user_domain.Member;
 import user_domain.competition.StyleCategories;
+
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,6 +12,13 @@ public class Main {
 //        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
 //        System.out.println(trainerProcessor.getTopFive(StyleCategories.BACKSTROKE).toString());
 
+
+        DBController dbController = new DBController();
+
+
+        for (Member member : dbController.getListOfMembers()) {
+            System.out.println(member.toString());
+        }
 
         UserInterface UI = new UserInterface();
         UI.startProgram();

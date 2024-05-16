@@ -27,6 +27,7 @@ public class TrainerInterface {
             ArrayList<String> options = new ArrayList<>(List.of(
                     "Se din profil",
                     "Se dit hold",
+                    "Se stævner",
                     "Opret stævne",
                     "Registre stævneresultater",
                     "Se TOP 5 - Brystsvømning",
@@ -45,21 +46,24 @@ public class TrainerInterface {
                     UserInterface.showList("Dit hold", controller.getListOfTeams(userLoggingIn));
                 }
                 case 2 -> {
-                    //TODO OPRET STÆVNE
+
                 }
                 case 3 -> {
-                    //TODO REGISTRER STÆVNERESULTATER
+                    //TODO OPRET STÆVNE
                 }
                 case 4 -> {
-                    UserInterface.showList("TOP 5 - Brystsvømning", controller.getTopFive(StyleCategories.BREASTSTROKE));
+                    //TODO REGISTRER STÆVNERESULTATER
                 }
                 case 5 -> {
-                    UserInterface.showList("TOP 5 - Crawl", controller.getTopFive(StyleCategories.CRAWL));
+                    UserInterface.showList("TOP 5 - Brystsvømning", controller.getTopFive(StyleCategories.BREASTSTROKE));
                 }
                 case 6 -> {
-                    UserInterface.showList("TOP 5 - Butterfly", controller.getTopFive(StyleCategories.BUTTERFLY));
+                    UserInterface.showList("TOP 5 - Crawl", controller.getTopFive(StyleCategories.CRAWL));
                 }
                 case 7 -> {
+                    UserInterface.showList("TOP 5 - Butterfly", controller.getTopFive(StyleCategories.BUTTERFLY));
+                }
+                case 8 -> {
                     UserInterface.showList("TOP 5 - Rygcrawl", controller.getTopFive(StyleCategories.BACKSTROKE));
                 }
                 case -1 -> {
