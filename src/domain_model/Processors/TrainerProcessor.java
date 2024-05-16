@@ -9,6 +9,7 @@ import user_domain.competition.Competition;
 import user_domain.competition.Style;
 import user_domain.competition.StyleCategories;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -55,9 +56,9 @@ public class TrainerProcessor implements Processor {
                 Competition c = tempStyleCompMap.get(s);
                 String styleString =
                         user.getFirstName() + " " + user.getLastName() + "\n" +
-                        "Stævne: " + c.getLocation() + "\n" +
-                        "Dato: " + c.getDate() + "\n" +
-                        s.toString();
+                                "Stævne: " + c.getLocation() + "\n" +
+                                "Dato: " + c.getDate() + "\n" +
+                                s.toString();
 
                 topFiveStylesToString.add(styleString);
 
@@ -77,11 +78,33 @@ public class TrainerProcessor implements Processor {
         } else {
             tempCompMemberArr.removeIf(member -> member.isSenior());
         }
-            ArrayList<String> finalListOfTeams = new ArrayList<>();
-        tempCompMemberArr.forEach(member -> finalListOfTeams.add(member.toString()) );
+        ArrayList<String> finalListOfTeams = new ArrayList<>();
+        tempCompMemberArr.forEach(member -> finalListOfTeams.add(member.toString()));
         return finalListOfTeams;
     }
 
     //TODO træner skal kunne oprette stævner.
     //TODO træner skal kunne registrere stævneresultater.
+
+    public void addStyleToMember(int indexOfMember, int indexOfCompetetion, StyleCategories styleType,
+                                 long seconds, int placement) {
+        CompetitiveMember thisMemberToEdit = dbController.getListOfCompetitiveMembers().get(indexOfMember);
+        Competition thisCompToAdd = dbController.getListOfCompetitions().get(indexOfCompetetion);
+        Style styleToAdd = new Style(dbController.getIDForNewStyle(), thisMemberToEdit.getUserID(),
+                thisCompToAdd.getID(), styleType, placement, seconds);
+        ArrayList<Competition> thisMembersCompetitionList = thisMemberToEdit.getCompetitionList();
+
+        for (Competition comp : thisMembersCompetitionList) {
+            if (comp.getID() == thisCompToAdd.getID()) {
+                thisMemberToEdit.removeCompetitionFromID(comp.getID());
+                break;
+            }
+        }
+
+        thisCompToAdd.addStyle(styleToAdd);
+        thisMemberToEdit.addCompetition(thisCompToAdd);
+
+
+        dbController.editUserInDB(thisMemberToEdit);
+    }
 }

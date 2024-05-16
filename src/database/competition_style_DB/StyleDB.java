@@ -51,9 +51,9 @@ public class StyleDB extends Database {
                 singleRow[getIndexOfRowName(StyleDBRowNames.USER_ID)] = String.valueOf(styleToEdit.getUserID());
                 singleRow[getIndexOfRowName(StyleDBRowNames.COMPETITION_ID)] = String.valueOf(styleToEdit.getCompetitionID());
                 return super.insertListToDB(allRows);
+
             }
         }
-
         return false;
     }
 

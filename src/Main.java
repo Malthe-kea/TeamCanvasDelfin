@@ -1,9 +1,13 @@
 import database.DBController;
 import domain_model.Processors.TrainerProcessor;
 import domain_model.userInterface.UserInterface;
+import user_domain.CompetitiveMember;
 import user_domain.Member;
+import user_domain.competition.Competition;
+import user_domain.competition.Style;
 import user_domain.competition.StyleCategories;
 
+import java.security.spec.RSAOtherPrimeInfo;
 import java.time.LocalDate;
 
 public class Main {
@@ -14,14 +18,18 @@ public class Main {
 
 
         DBController dbController = new DBController();
+        TrainerProcessor tP = new TrainerProcessor(dbController);
 
+        tP.addStyleToMember(0, 1, StyleCategories.BACKSTROKE, 500, 1);
 
-        for (Member member : dbController.getListOfMembers()) {
-            System.out.println(member.toString());
+        CompetitiveMember member = ((CompetitiveMember)dbController.getUserFromID(2));
+
+        for (Competition comp : member.getCompetitionList()) {
+            for(Style style : comp.getStyleList()) {
+                System.out.println(comp.getLocation());
+                System.out.println(style.toString());
+            }
         }
-
-        UserInterface UI = new UserInterface();
-        UI.startProgram();
 
         /*TODO
             1. SuperUserProcessor editMember skal laves og opsættes til UI. - X

@@ -16,6 +16,13 @@ public class Competition {
         this.styleList = styleList;
     }
 
+    public Competition(int id, String location, String date) {
+        this.id = id;
+        this.location = location;
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.styleList = new ArrayList<>();
+    }
+
     public String getLocation() {
         return location;
     }
@@ -26,6 +33,11 @@ public class Competition {
 
     public ArrayList<Style> getStyleList() {
         return styleList;
+    }
+
+    public void addStyle(Style style) {
+        styleList.add(style);
+
     }
 
     public void setLocation(String location) {

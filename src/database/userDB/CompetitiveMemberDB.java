@@ -80,6 +80,7 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
         if(userIDFromMemberDB != -1) {
             String compEntriesAsString = singleRow[getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST)];
             compEntriesAsString = compEntriesAsString.substring(1,compEntriesAsString.length()-1);
+            compEntriesAsString = compEntriesAsString.replace(" ","");
             String[] compEntries = compEntriesAsString.split(",");
             ArrayList<Competition> compList = new ArrayList<>();
 

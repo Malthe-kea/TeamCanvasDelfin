@@ -10,9 +10,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024__12_54__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024__12_54__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024__13_55__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024__13_55__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/StyleDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/StyleDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/competition_style_DB/CompetitionDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/competition_style_DB/CompetitionDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/competition/Competition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/competition/Competition.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +54,9 @@
     &quot;accountId&quot;: &quot;ff92d121-2d01-4191-9b2f-515e0f38f5e9&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -60,28 +70,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TreasurerProcessorTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Debug",
+    "JUnit.TreasurerProcessorTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.notifications",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -223,6 +233,32 @@
     <MESSAGE value="getTopFive() tilføjet til TrainerProcessor" />
     <MESSAGE value="Made it so you can see the competition a top 5 was made." />
     <option name="LAST_COMMIT_MESSAGE" value="Made it so you can see the competition a top 5 was made." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/database/competition_style_DB/CompetitionDB.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java</url>
+          <line>126</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Main.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
