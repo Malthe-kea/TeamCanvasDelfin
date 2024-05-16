@@ -42,6 +42,7 @@ public class StyleDB extends Database {
     public boolean editStyleInDB(Style styleToEdit) {
         int styleID = styleToEdit.getID();
         ArrayList<String[]> allRows = getRows();
+
         for (String[] singleRow : allRows) {
             int styleIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(StyleDBRowNames.STYLE_ID)]);
             if (styleIDFromDB == styleID) {
@@ -51,9 +52,9 @@ public class StyleDB extends Database {
                 singleRow[getIndexOfRowName(StyleDBRowNames.USER_ID)] = String.valueOf(styleToEdit.getUserID());
                 singleRow[getIndexOfRowName(StyleDBRowNames.COMPETITION_ID)] = String.valueOf(styleToEdit.getCompetitionID());
                 return super.insertListToDB(allRows);
+
             }
         }
-
         return false;
     }
 
@@ -77,7 +78,7 @@ public class StyleDB extends Database {
         }
 
         if (styles.isEmpty()) {
-            return null;
+            return new ArrayList<>();
         } else {
             return styles;
         }

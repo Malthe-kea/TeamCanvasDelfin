@@ -20,7 +20,7 @@ public class Competition {
         this.id = id;
         this.location = location;
         this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        styleList = new ArrayList<>();
+        this.styleList = new ArrayList<>();
     }
 
     public String getLocation() {
@@ -33,6 +33,11 @@ public class Competition {
 
     public ArrayList<Style> getStyleList() {
         return styleList;
+    }
+
+    public void addStyle(Style style) {
+        styleList.add(style);
+
     }
 
     public void setLocation(String location) {

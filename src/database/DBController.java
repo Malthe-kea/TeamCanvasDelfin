@@ -86,8 +86,14 @@ public class DBController {
 
     public ArrayList<CompetitiveMember> getListOfCompetitiveMembers() {
         ArrayList<CompetitiveMember> memberList = new ArrayList<>();
-        competitiveMemberDB.getListOfUsers().forEach(user -> memberList.add((CompetitiveMember) user));
+        memberDB.getListOfUsers().forEach(member -> {
+            if(((Member) member) instanceof CompetitiveMember) {
+                memberList.add((CompetitiveMember) member);
+            }
+        });
+
         return memberList;
+
     }
 
 

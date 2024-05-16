@@ -106,6 +106,7 @@ public class CompetitionDB extends Database {
             if (locationToSearch.equalsIgnoreCase(location)) {
                 competitionID = Integer.parseInt(singleRow[competitiveIDIndex]);
                 ArrayList<Style> styles;
+
                 if(userID == -1) {
                     styles = new ArrayList<>();
                 } else {

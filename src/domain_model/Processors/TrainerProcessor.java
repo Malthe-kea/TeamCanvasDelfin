@@ -108,4 +108,16 @@ public class TrainerProcessor implements Processor {
         }
         return null;
     }
+    //TODO træner skal kunne oprette stævner.
+    //TODO træner skal kunne registrere stævneresultater.
+
+    public void addStyleToMember(int indexOfMember, int indexOfCompetetion, StyleCategories styleType,
+                                 long seconds, int placement) {
+        CompetitiveMember thisMemberToEdit = dbController.getListOfCompetitiveMembers().get(indexOfMember);
+        Competition thisCompToAdd = dbController.getListOfCompetitions().get(indexOfCompetetion);
+        Style styleToAdd = new Style(dbController.getIDForNewStyle(), thisMemberToEdit.getUserID(),
+                thisCompToAdd.getID(), styleType, placement, seconds);
+
+        dbController.addStyleToDB(styleToAdd);
+    }
 }
