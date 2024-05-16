@@ -1,6 +1,7 @@
 package domain_model.Processors;
 
 import database.DBController;
+import database.competition_style_DB.CompetitionDB;
 import user_domain.CompetitiveMember;
 import user_domain.Member;
 import user_domain.Trainer;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 public class TrainerProcessor implements Processor {
 
     DBController dbController;
+
 
     public TrainerProcessor(DBController dbController) {
         this.dbController = dbController;

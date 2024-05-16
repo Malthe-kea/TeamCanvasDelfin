@@ -9,8 +9,9 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 
-//        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
-//        System.out.println(trainerProcessor.getTopFive(StyleCategories.BACKSTROKE).toString());
+        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
+       trainerProcessor.createCompetition("Horsens","11/11/1911");
+        System.out.println(trainerProcessor.getCompetitionList());
 
 
         DBController dbController = new DBController();
@@ -22,6 +23,8 @@ public class Main {
 
         UserInterface UI = new UserInterface();
         UI.startProgram();
+//        UserInterface UI = new UserInterface();
+//        UI.startProgram();
 
         /*TODO
             1. SuperUserProcessor editMember skal laves og opsættes til UI. - X
