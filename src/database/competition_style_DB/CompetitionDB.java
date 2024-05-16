@@ -69,10 +69,6 @@ public class CompetitionDB extends Database {
                 } else {
                     styles = styleDB.getUserCompetitionStyles(competitionID, userID);
                 }
-
-                if(styles == null) {
-                    styles = new ArrayList<>();
-                }
                 return new Competition(competitionID, location, date , styles);
             }
         }

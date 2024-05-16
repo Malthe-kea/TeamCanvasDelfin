@@ -92,19 +92,7 @@ public class TrainerProcessor implements Processor {
         Competition thisCompToAdd = dbController.getListOfCompetitions().get(indexOfCompetetion);
         Style styleToAdd = new Style(dbController.getIDForNewStyle(), thisMemberToEdit.getUserID(),
                 thisCompToAdd.getID(), styleType, placement, seconds);
-        ArrayList<Competition> thisMembersCompetitionList = thisMemberToEdit.getCompetitionList();
 
-        for (Competition comp : thisMembersCompetitionList) {
-            if (comp.getID() == thisCompToAdd.getID()) {
-                thisMemberToEdit.removeCompetitionFromID(comp.getID());
-                break;
-            }
-        }
-
-        thisCompToAdd.addStyle(styleToAdd);
-        thisMemberToEdit.addCompetition(thisCompToAdd);
-
-
-        dbController.editUserInDB(thisMemberToEdit);
+        dbController.addStyleToDB(styleToAdd);
     }
 }
