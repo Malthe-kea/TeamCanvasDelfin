@@ -91,11 +91,25 @@ public class TrainerProcessor implements Processor {
         if (!dbController.getListOfCompetitions().contains(competition.getID()))
             dbController.addCompToDB(competition);
         else {
-            doubleCompInDBError(competition);
+            doubleCompInDBError(competition.toString());
         }
     }
 
-    public String doubleCompInDBError(Competition c) {
-        return c + " Findes allerede.";
+    public String doubleCompInDBError(String c) {
+        return c.toString() + " Findes allerede.";
     }
+
+    public ArrayList<String> getCompetitionList() {
+        boolean isNotFull = true;
+        ArrayList<Competition> tempComp = dbController.getListOfCompetitions();
+        ArrayList<String> returnCompList = new ArrayList<>();
+        while (isNotFull) {
+            for (int i = 0; i < tempComp.size(); i++) {
+            for (Competition c : tempComp)
+                returnCompList.add(c.toString());
+                return returnCompList;
+        }
+    }
+        return null;
+}
 }

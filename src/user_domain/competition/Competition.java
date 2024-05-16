@@ -46,4 +46,11 @@ public class Competition {
     public String getDate() {
         return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
+
+    @Override
+    public String toString() {
+        return
+                "Lokation: " + location + "\n" +
+                "Dato: " + date +"\n";
+    }
 }

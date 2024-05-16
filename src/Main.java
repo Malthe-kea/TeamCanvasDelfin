@@ -7,7 +7,8 @@ public class Main {
     public static void main(String[] args) {
 
         TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
-        trainerProcessor.createCompetition("Horsens","11/11/1911");
+       trainerProcessor.createCompetition("Horsens","11/11/1911");
+        System.out.println(trainerProcessor.getCompetitionList());
 
 
 //        UserInterface UI = new UserInterface();
