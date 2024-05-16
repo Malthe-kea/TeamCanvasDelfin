@@ -136,5 +136,15 @@ public class Controller implements Processor {
         TrainerProcessor trainerProcessor = (TrainerProcessor) processor;
         return trainerProcessor.getTopFive(styleCategory);
     }
+    public ArrayList<String> getCompetitionList(){
+        TrainerProcessor trainerProcessor = (TrainerProcessor) processor;
+        return trainerProcessor.getCompetitionList();
+    }
+
+    public void createCompetition(String location, String date){
+        TrainerProcessor trainerProcessor = (TrainerProcessor) processor;
+        trainerProcessor.createCompetition(location,date);
+    }
+
 
 }
