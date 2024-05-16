@@ -84,6 +84,7 @@ public class TrainerProcessor implements Processor {
 
     public void createCompetition(String location, String date) {
         Competition competition = new Competition(dbController.getIDForNewCompetition(), location, date);
+        //NEDENSTÅENDE VIL ALTID VÆRE TRUE. DER SAMMENLIGNES OBJEKTER AF COMPETITIONS MED INTEGERS. DERFOR VIL DE ALDRIG VÆRE ENS.
         if (!dbController.getListOfCompetitions().contains(competition.getID()))
             dbController.addCompToDB(competition);
         else {
@@ -96,17 +97,13 @@ public class TrainerProcessor implements Processor {
     }
 
     public ArrayList<String> getCompetitionList() {
-        boolean isNotFull = true;
         ArrayList<Competition> tempComp = dbController.getListOfCompetitions();
         ArrayList<String> returnCompList = new ArrayList<>();
-        while (isNotFull) {
-            for (int i = 0; i < tempComp.size(); i++) {
-                for (Competition c : tempComp)
-                    returnCompList.add(c.toString());
-                return returnCompList;
-            }
+
+        for (Competition c : tempComp) {
+            returnCompList.add(c.toString());
         }
-        return null;
+        return returnCompList;
     }
     //TODO træner skal kunne oprette stævner.
     //TODO træner skal kunne registrere stævneresultater.

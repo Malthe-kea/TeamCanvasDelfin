@@ -49,10 +49,8 @@ public class TrainerInterface {
 
                 }
                 case 3 -> {
-                    //TODO OPRET STÆVNE
                 }
                 case 4 -> {
-                    //TODO REGISTRER STÆVNERESULTATER
                 }
                 case 5 -> {
                     UserInterface.showList("TOP 5 - Brystsvømning", controller.getTopFive(StyleCategories.BREASTSTROKE));
