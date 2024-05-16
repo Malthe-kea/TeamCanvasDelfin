@@ -165,6 +165,7 @@ public class CompetitionDB extends Database {
             String[] newRow = new String[CompetitionDBRowNames.values().length];
             newRow[getIndexOfRowName(CompetitionDBRowNames.COMPETITIVE_ID)] = String.valueOf(comp.getID());
             newRow[getIndexOfRowName(CompetitionDBRowNames.LOCATION)] = comp.getLocation();
+            newRow[getIndexOfRowName(CompetitionDBRowNames.DATE)] = comp.getDate();
             allRows.add(newRow);
             return super.insertListToDB(allRows);
         }

@@ -77,11 +77,21 @@ public class TrainerProcessor implements Processor {
         } else {
             tempCompMemberArr.removeIf(member -> member.isSenior());
         }
-            ArrayList<String> finalListOfTeams = new ArrayList<>();
-        tempCompMemberArr.forEach(member -> finalListOfTeams.add(member.toString()) );
+        ArrayList<String> finalListOfTeams = new ArrayList<>();
+        tempCompMemberArr.forEach(member -> finalListOfTeams.add(member.toString()));
         return finalListOfTeams;
     }
 
-    //TODO træner skal kunne oprette stævner.
-    //TODO træner skal kunne registrere stævneresultater.
+    public void createCompetition(String location, String date) {
+        Competition competition = new Competition(dbController.getIDForNewCompetition(), location, date);
+        if (!dbController.getListOfCompetitions().contains(competition.getID()))
+            dbController.addCompToDB(competition);
+        else {
+            doubleCompInDBError(competition);
+        }
+    }
+
+    public String doubleCompInDBError(Competition c) {
+        return c + " Findes allerede.";
+    }
 }
