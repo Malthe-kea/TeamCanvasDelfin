@@ -91,7 +91,6 @@ public class TrainerProcessor implements Processor {
             doubleCompInDBError(competition.toString());
         }
     }
-
     public String doubleCompInDBError(String c) {
         return c.toString() + " Findes allerede.";
     }

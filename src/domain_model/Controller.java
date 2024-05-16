@@ -42,19 +42,39 @@ public class Controller implements Processor {
     }
 
 
-    public void createandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
+    public void createandAddMembertoDB(
+            String password,
+            String firstNames,
+            String lastNames,
+            boolean activePassiveInput,
+            String birthDate,
+            boolean isCompetitiveInput,
+            boolean isArrearsInput) {
+
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         superUserProcessor.CreateandAddMembertoDB(password, firstNames, lastNames, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);
     }
 
-    public void createandAddTrainerToDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {
+    public void createandAddTrainerToDB(
+            String password,
+            String firstNames,
+            String lastNames,
+            boolean isSeniorTrainer) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         superUserProcessor.CreateandAddTrainertoDB(password, firstNames, lastNames, isSeniorTrainer);
     }
 
-    public void createandAddCompetitiveMembertoDB(String password, String firstNames, String lastNames, boolean isActiveMemberInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {
+    public void createandAddCompetitiveMembertoDB(
+            String password,
+            String firstNames,
+            String lastNames,
+            boolean isActiveMemberInput,
+            String birthDate,
+            boolean isCompetitiveInput,
+            boolean isArrearsInput) {
+
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
         superUserProcessor.CreateandAddCompetitiveMembertoDB(password, firstNames, lastNames, isActiveMemberInput, isCompetitiveInput, birthDate, isArrearsInput);
     }
@@ -78,7 +98,11 @@ public class Controller implements Processor {
         superUserProcessor.editMember(indexOfUser, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
     }
 
-    public void editTrainer(int indexOfUser, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+    public void editTrainer(
+            int indexOfUser,
+            String firstNameInput,
+            String lastNameInput,
+            String isSeniorTrainerInput) {
         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
 
         superUserProcessor.editTrainer(indexOfUser,firstNameInput,lastNameInput,isSeniorTrainerInput);
