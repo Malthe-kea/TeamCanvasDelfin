@@ -206,10 +206,11 @@ public class SuperUserProcessor implements Processor {
         return userInfo;
     }
 
+
     public ArrayList<String> getUserInfoForEdit(int indexToShow) {
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
         User userForInfo = allUsers.get(indexToShow);
-        ArrayList<String> userInfo =new ArrayList<>();
+        ArrayList<String> userInfo = new ArrayList<>();
         String firstName = "Fornavn: " + userForInfo.getFirstName();
         String lastName = "Efternavn: " + userForInfo.getLastName();
         userInfo.add(firstName);
@@ -217,7 +218,7 @@ public class SuperUserProcessor implements Processor {
 
         switch (DelfinUtil.checkUserInstance(userForInfo)) {
             case MEMBER -> {
-                String activePassive = "Aktiv/Passiv: " + ( ((Member) userForInfo).isActiveMember() ? "Aktiv" : "Passiv");
+                String activePassive = "Aktiv/Passiv: " + (((Member) userForInfo).isActiveMember() ? "Aktiv" : "Passiv");
                 userInfo.add(activePassive);
                 String competitiveRecreational = "Aktivitetsstatus: " + (((Member) userForInfo).isCompetitive() ? "Konkurrence" : "Motonist");
                 userInfo.add(competitiveRecreational);
@@ -229,7 +230,6 @@ public class SuperUserProcessor implements Processor {
                 userInfo.add(SeniorTrainer);
             }
         }
-
         return userInfo;
     }
 

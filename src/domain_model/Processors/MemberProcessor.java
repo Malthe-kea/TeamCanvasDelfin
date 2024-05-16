@@ -11,13 +11,11 @@ public class MemberProcessor implements Processor {
         this.dbController = dbController;
     }
 
-    // Metode til at vise tr?ningsresultat og dato for hver disciplin
     public void displayTrainingResultsForEachDiscipline() {
         System.out.println("Results: ");
 
     }
 
-    // Metode til at vise alle registrerede konkurrenceresultater
     public void displayCompetitionResults(int userID) {
         if (member.isCompetitive()) {
             dbController.getListOfCompetitions(userID);

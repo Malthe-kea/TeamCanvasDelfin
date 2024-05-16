@@ -55,9 +55,9 @@ public class TrainerProcessor implements Processor {
                 Competition c = tempStyleCompMap.get(s);
                 String styleString =
                         user.getFirstName() + " " + user.getLastName() + "\n" +
-                        "Stævne: " + c.getLocation() + "\n" +
-                        "Dato: " + c.getDate() + "\n" +
-                        s.toString();
+                                "Stævne: " + c.getLocation() + "\n" +
+                                "Dato: " + c.getDate() + "\n" +
+                                s.toString();
 
                 topFiveStylesToString.add(styleString);
 
@@ -101,11 +101,11 @@ public class TrainerProcessor implements Processor {
         ArrayList<String> returnCompList = new ArrayList<>();
         while (isNotFull) {
             for (int i = 0; i < tempComp.size(); i++) {
-            for (Competition c : tempComp)
-                returnCompList.add(c.toString());
+                for (Competition c : tempComp)
+                    returnCompList.add(c.toString());
                 return returnCompList;
+            }
         }
-    }
         return null;
-}
+    }
 }
