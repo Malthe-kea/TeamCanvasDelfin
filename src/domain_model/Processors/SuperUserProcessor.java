@@ -206,6 +206,33 @@ public class SuperUserProcessor implements Processor {
         return userInfo;
     }
 
+    public ArrayList<String> getUserInfoForEdit(int indexToShow) {
+        ArrayList<User> allUsers = dbController.getListOfAllUsers();
+        User userForInfo = allUsers.get(indexToShow);
+        ArrayList<String> userInfo =new ArrayList<>();
+        String firstName = "Fornavn: " + userForInfo.getFirstName();
+        String lastName = "Efternavn: " + userForInfo.getLastName();
+        userInfo.add(firstName);
+        userInfo.add(lastName);
+
+        switch (DelfinUtil.checkUserInstance(userForInfo)) {
+            case MEMBER -> {
+                String activePassive = "Aktiv/Passiv: " + ( ((Member) userForInfo).isActiveMember() ? "Aktiv" : "Passiv");
+                userInfo.add(activePassive);
+                String competitiveRecreational = "Aktivitetsstatus: " + (((Member) userForInfo).isCompetitive() ? "Konkurrence" : "Motonist");
+                userInfo.add(competitiveRecreational);
+                String arrears = "Restance: " + (((Member) userForInfo).isArrears() ? "Ja" : "Nej");
+                userInfo.add(arrears);
+            }
+            case TRAINER -> {
+                String SeniorTrainer = "Trænertype: " + (((Trainer) userForInfo).isSeniorTrainer() ? "Senior" : "Junior");
+                userInfo.add(SeniorTrainer);
+            }
+        }
+
+        return userInfo;
+    }
+
     public UserInstance getUserType(int indexOfUser) {
         ArrayList<User> allUsers = dbController.getListOfAllUsers();
         User user = allUsers.get(indexOfUser);

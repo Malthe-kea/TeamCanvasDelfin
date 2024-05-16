@@ -5,6 +5,7 @@ import domain_model.userInterface.UserInterface;
 import user_domain.SuperUser;
 import user_domain.Trainer;
 import user_domain.User;
+import user_domain.competition.StyleCategories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class TrainerInterface {
             ArrayList<String> options = new ArrayList<>(List.of(
                     "Se din profil",
                     "Se dit hold",
+                    "Se stævner",
+                    "Opret stævne",
+                    "Registre stævneresultater",
                     "Se TOP 5 - Brystsvømning",
                     "Se TOP 5 - Crawl",
                     "Se TOP 5 - Butterfly",
@@ -42,16 +46,25 @@ public class TrainerInterface {
                     UserInterface.showList("Dit hold", controller.getListOfTeams(userLoggingIn));
                 }
                 case 2 -> {
-                    //TODO Implementer TOP 5 - Brystsvømning fra TrainerProcessor
+
                 }
                 case 3 -> {
-                    //TODO Implementer TOP 5 - Crawl fra TrainerProcessor
+                    //TODO OPRET STÆVNE
                 }
                 case 4 -> {
-                    //TODO Implementer TOP 5 - Butterfly fra TrainerProcessor
+                    //TODO REGISTRER STÆVNERESULTATER
                 }
                 case 5 -> {
-                    //TODO Implementer TOP 5 - Rygcrawl fra TrainerProcessor
+                    UserInterface.showList("TOP 5 - Brystsvømning", controller.getTopFive(StyleCategories.BREASTSTROKE));
+                }
+                case 6 -> {
+                    UserInterface.showList("TOP 5 - Crawl", controller.getTopFive(StyleCategories.CRAWL));
+                }
+                case 7 -> {
+                    UserInterface.showList("TOP 5 - Butterfly", controller.getTopFive(StyleCategories.BUTTERFLY));
+                }
+                case 8 -> {
+                    UserInterface.showList("TOP 5 - Rygcrawl", controller.getTopFive(StyleCategories.BACKSTROKE));
                 }
                 case -1 -> {
                     loggedIn = false;

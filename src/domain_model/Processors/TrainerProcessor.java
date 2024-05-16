@@ -11,6 +11,7 @@ import user_domain.competition.StyleCategories;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class TrainerProcessor implements Processor {
 
@@ -22,20 +23,17 @@ public class TrainerProcessor implements Processor {
 
     public ArrayList<String> getTopFive(StyleCategories styleCategory) {
         ArrayList<Style> tempStyleArr = new ArrayList<>();
-        ArrayList<Member> tempMemberArr = dbController.getListOfMembers();
-        tempMemberArr.removeIf(member -> !(member instanceof CompetitiveMember));
-        ArrayList<CompetitiveMember> tempCompMemberArr = new ArrayList<>();
-
-        for (Member m : tempMemberArr) {
-            tempCompMemberArr.add((CompetitiveMember) m);
-        }
+        ArrayList<CompetitiveMember> tempCompMemberArr = dbController.getListOfCompetitiveMembers();
         tempCompMemberArr.removeIf(member -> member.getCompetitionList().isEmpty());
+
+        HashMap<Style, Competition> tempStyleCompMap = new HashMap<>();
 
         for (CompetitiveMember member : tempCompMemberArr) {
             for (Competition c : member.getCompetitionList()) {
                 for (Style s : c.getStyleList()) {
                     if (s.getStyleCategory() == styleCategory) {
                         tempStyleArr.add(s);
+                        tempStyleCompMap.put(s, c);
                     }
                 }
             }
@@ -51,11 +49,17 @@ public class TrainerProcessor implements Processor {
                     break;
                 }
             }
-            if (isIdenticalUser == false) {
+            if (!isIdenticalUser) {
                 User user = dbController.getUserFromID(s.getUserID());
                 topFiveStyles.add(s);
+                Competition c = tempStyleCompMap.get(s);
+                String styleString =
+                        user.getFirstName() + " " + user.getLastName() + "\n" +
+                        "Stævne: " + c.getLocation() + "\n" +
+                        "Dato: " + c.getDate() + "\n" +
+                        s.toString();
 
-                topFiveStylesToString.add(user.getFirstName() + " " + user.getLastName() + "\n" + s.toString());
+                topFiveStylesToString.add(styleString);
 
                 if (topFiveStyles.size() == 5) {
                     return topFiveStylesToString;
@@ -67,13 +71,7 @@ public class TrainerProcessor implements Processor {
 
     public ArrayList<String> getListOfTeams(Trainer trainer) {
 
-        ArrayList<Member> tempMemberArr = dbController.getListOfMembers();
-        tempMemberArr.removeIf(member -> !(member instanceof CompetitiveMember));
-        ArrayList<CompetitiveMember> tempCompMemberArr = new ArrayList<>();
-
-        for (Member m : tempMemberArr) {
-            tempCompMemberArr.add((CompetitiveMember) m);
-        }
+        ArrayList<CompetitiveMember> tempCompMemberArr = dbController.getListOfCompetitiveMembers();
         if (trainer.isSeniorTrainer()) {
             tempCompMemberArr.removeIf(member -> !(member.isSenior()));
         } else {
@@ -84,5 +82,6 @@ public class TrainerProcessor implements Processor {
         return finalListOfTeams;
     }
 
-    //TODO træner skal kunne oprette stævner til member.
+    //TODO træner skal kunne oprette stævner.
+    //TODO træner skal kunne registrere stævneresultater.
 }

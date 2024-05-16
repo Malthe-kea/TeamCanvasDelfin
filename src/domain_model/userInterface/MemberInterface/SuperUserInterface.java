@@ -67,9 +67,17 @@ public class SuperUserInterface {
         String firstName;
         String lastName;
         String birthDate;
-
+        User userExists = null;
         try {
-            password = inputForAddUser(title, "Indtast kodeord for medlemmet", "Næste", "Annullér");
+            do {
+                password = inputForAddUser(title, "Indtast kodeord for medlemmet", "Næste", "Annullér", true);
+                userExists = controller.getUserFromPassword(password);
+
+                if(userExists != null) {
+                    UserInterface.smallWindow("Fejl", "Der findes allerede en bruger med dette kodeord", "OK");
+                }
+
+            }while(userExists != null);
             firstName = inputForAddUser(title, "Indtast fornavn for medlemmet", "Næste", "Annullér");
             lastName = inputForAddUser(title, "Indtast efternavn for medlemmet", "Næste", "Annullér");
             birthDate = inputForAddUser(title, "Indtast fødselsdato for medlemmet format (DD/MM/YYYY)", "Næste", "Annullér");
@@ -94,9 +102,17 @@ public class SuperUserInterface {
         String password;
         String firstName;
         String lastName;
-
+        User userExists = null;
         try {
-            password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste", "Annullér");
+            do {
+                password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste", "Annullér", true);
+                userExists = controller.getUserFromPassword(password);
+
+                if(userExists != null) {
+                    UserInterface.smallWindow("Fejl", "Der findes allerede en bruger med dette kodeord", "OK");
+                }
+
+            }while(userExists != null);
             firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste", "Annullér");
             lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste", "Annullér");
         } catch (IllegalArgumentException e) {
@@ -113,10 +129,19 @@ public class SuperUserInterface {
         String password;
         String firstName;
         String lastName;
+        User userExists = null;
         try {
-            password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste", "Annullér");
-            firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste", "Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste", "Annullér");
+            do {
+                password = inputForAddUser(title, "Indtast kodeord for kasséren", "Næste", "Annullér", true);
+                userExists = controller.getUserFromPassword(password);
+
+                if(userExists != null) {
+                    UserInterface.smallWindow("Fejl", "Der findes allerede en bruger med dette kodeord", "OK");
+                }
+
+            }while(userExists != null);
+            firstName = inputForAddUser(title, "Indtast fornavn for kasséren", "Næste", "Annullér");
+            lastName = inputForAddUser(title, "Indtast efternavn for kasséren", "Næste", "Annullér");
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -133,24 +158,8 @@ public class SuperUserInterface {
 
 
             if (indexToEdit != -1) {
-                ArrayList<String> userInfo = controller.getUserInfo(indexToEdit);
+                ArrayList<String> userInfo = controller.getUserInfoForEdit(indexToEdit);
                 UserInstance userType = controller.getUserType(indexToEdit);
-
-                if (userType == UserInstance.COMPETITIVE) { //If the user is a member the list is longer than 7
-                    userInfo.subList(7, userInfo.size()).clear();
-                }
-
-                if (userType == UserInstance.MEMBER || userType == UserInstance.COMPETITIVE) {
-                    userInfo.remove(4); //Removes birthdate from editing list.
-                }
-
-                if (userType == UserInstance.TRAINER) {
-                    userInfo.remove(5);
-                }
-
-                userInfo.remove(1); //Removes ID from editing list.
-                userInfo.remove(0); //Removes user type from editing list.
-
 
                 /*
                 INDEX SPACES MEMBER:
@@ -267,11 +276,15 @@ public class SuperUserInterface {
     }
 
 
-    private String inputForAddUser(String title, String message, String okButtonText, String cancelButtonText) {
-        String input = UserInterface.inputMenu(title, message, okButtonText, cancelButtonText);
+    private String inputForAddUser(String title, String message, String okButtonText, String cancelButtonText, boolean isPassword) {
+        String input = UserInterface.inputMenu(title, message, okButtonText, cancelButtonText, isPassword);
         if (input == null) {
             throw new IllegalArgumentException();
         }
         return input;
+    }
+
+    private String inputForAddUser(String title, String message, String okButtonText, String cancelButtonText) {
+        return inputForAddUser(title, message, okButtonText, cancelButtonText, false);
     }
 }
