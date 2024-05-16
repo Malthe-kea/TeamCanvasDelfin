@@ -23,13 +23,7 @@ public class TrainerProcessor implements Processor {
 
     public ArrayList<String> getTopFive(StyleCategories styleCategory) {
         ArrayList<Style> tempStyleArr = new ArrayList<>();
-        ArrayList<Member> tempMemberArr = dbController.getListOfMembers();
-        tempMemberArr.removeIf(member -> !(member instanceof CompetitiveMember));
-        ArrayList<CompetitiveMember> tempCompMemberArr = new ArrayList<>();
-
-        for (Member m : tempMemberArr) {
-            tempCompMemberArr.add((CompetitiveMember) m);
-        }
+        ArrayList<CompetitiveMember> tempCompMemberArr = dbController.getListOfCompetitiveMembers();
         tempCompMemberArr.removeIf(member -> member.getCompetitionList().isEmpty());
 
         HashMap<Style, Competition> tempStyleCompMap = new HashMap<>();
@@ -77,13 +71,7 @@ public class TrainerProcessor implements Processor {
 
     public ArrayList<String> getListOfTeams(Trainer trainer) {
 
-        ArrayList<Member> tempMemberArr = dbController.getListOfMembers();
-        tempMemberArr.removeIf(member -> !(member instanceof CompetitiveMember));
-        ArrayList<CompetitiveMember> tempCompMemberArr = new ArrayList<>();
-
-        for (Member m : tempMemberArr) {
-            tempCompMemberArr.add((CompetitiveMember) m);
-        }
+        ArrayList<CompetitiveMember> tempCompMemberArr = dbController.getListOfCompetitiveMembers();
         if (trainer.isSeniorTrainer()) {
             tempCompMemberArr.removeIf(member -> !(member.isSenior()));
         } else {
