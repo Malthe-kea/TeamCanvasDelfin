@@ -6,12 +6,12 @@ import user_domain.competition.StyleCategories;
 public class Main {
     public static void main(String[] args) {
 
-//        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
-//        System.out.println(trainerProcessor.getTopFive(StyleCategories.BACKSTROKE).toString());
+        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
+        trainerProcessor.createCompetition("Horsens","11/11/1911");
 
 
-        UserInterface UI = new UserInterface();
-        UI.startProgram();
+//        UserInterface UI = new UserInterface();
+//        UI.startProgram();
 
         /*TODO
             1. SuperUserProcessor editMember skal laves og opsættes til UI. - X

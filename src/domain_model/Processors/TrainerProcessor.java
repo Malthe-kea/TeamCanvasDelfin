@@ -1,6 +1,7 @@
 package domain_model.Processors;
 
 import database.DBController;
+import database.competition_style_DB.CompetitionDB;
 import user_domain.CompetitiveMember;
 import user_domain.Member;
 import user_domain.Trainer;
@@ -15,6 +16,7 @@ import java.util.Comparator;
 public class TrainerProcessor implements Processor {
 
     DBController dbController;
+
 
     public TrainerProcessor(DBController dbController) {
         this.dbController = dbController;
@@ -79,10 +81,21 @@ public class TrainerProcessor implements Processor {
         } else {
             tempCompMemberArr.removeIf(member -> member.isSenior());
         }
-            ArrayList<String> finalListOfTeams = new ArrayList<>();
-        tempCompMemberArr.forEach(member -> finalListOfTeams.add(member.toString()) );
+        ArrayList<String> finalListOfTeams = new ArrayList<>();
+        tempCompMemberArr.forEach(member -> finalListOfTeams.add(member.toString()));
         return finalListOfTeams;
     }
 
-    //TODO træner skal kunne oprette stævner til member.
+    public void createCompetition(String location, String date) {
+        Competition competition = new Competition(dbController.getIDForNewCompetition(), location, date);
+        if (!dbController.getListOfCompetitions().contains(competition.getID()))
+            dbController.addCompToDB(competition);
+        else {
+            doubleCompInDBError(competition);
+        }
+    }
+
+    public String doubleCompInDBError(Competition c) {
+        return c + " Findes allerede.";
+    }
 }
