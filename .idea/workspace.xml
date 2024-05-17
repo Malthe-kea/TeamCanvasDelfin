@@ -4,22 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="REFACTOR TRAINER PROCESSOR + COMMENTED">
+    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Refactor stuff">
+      <change beforePath="$PROJECT_DIR$/.idea/TeamCanvasDelfin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TeamCanvasDelfin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/StyleDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/StyleDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/SortExampleTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user_domain/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Trainer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,10 +49,12 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Main.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/database/DBController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/domain_model/Controller.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/domain_model/Processors/MemberProcessor.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" root0="FORCE_HIGHLIGHTING" />
@@ -66,7 +62,7 @@
     <setting file="file://$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/user_domain/Member.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/user_domain/SuperUser.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/user_domain/Trainer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/user_domain/Trainer.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/user_domain/User.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/user_domain/competition/Competition.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/user_domain/competition/Style.java" root0="SKIP_INSPECTION" />
@@ -87,7 +83,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
     "JUnit.TreasurerProcessorTest.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -124,6 +124,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-53826d6a" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -152,6 +159,7 @@
       <workItem from="1715843671989" duration="2000" />
       <workItem from="1715843713731" duration="4262000" />
       <workItem from="1715895030965" duration="8754000" />
+      <workItem from="1715931138189" duration="1815000" />
     </task>
     <task id="LOCAL-00001" summary="Removed Esra Userinterface">
       <option name="closed" value="true" />

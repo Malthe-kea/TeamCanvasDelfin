@@ -26,6 +26,7 @@ public class Controller implements Processor {
         treasurerProcessor = new TreasurerProcessor(DBCONTROLLER);
 
     }
+
     public User getUserFromPassword(String password) {
         User userLoggingIn = DBCONTROLLER.getUserFromPassword(password);
 
@@ -62,7 +63,6 @@ public class Controller implements Processor {
             boolean isCompetitiveInput,
             boolean isArrearsInput) {
 
-        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
         superUserProcessor.CreateandAddCompetitiveMembertoDB(password, firstNames, lastNames, isActiveMemberInput, isCompetitiveInput, birthDate, isArrearsInput);
     }
 
@@ -76,8 +76,7 @@ public class Controller implements Processor {
             String lastNameInput,
             String isActiveMemberInput,
             String isCompetitiveInput,
-            String isArrearsInput)
-    {
+            String isArrearsInput) {
         superUserProcessor.editMember(indexOfUser, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
     }
 
@@ -87,7 +86,7 @@ public class Controller implements Processor {
             String lastNameInput,
             String isSeniorTrainerInput) {
 
-        superUserProcessor.editTrainer(indexOfUser,firstNameInput,lastNameInput,isSeniorTrainerInput);
+        superUserProcessor.editTrainer(indexOfUser, firstNameInput, lastNameInput, isSeniorTrainerInput);
     }
 
     public void editAdmin(int indexOfUser, String firstNameInput, String lastNameInput) {
@@ -117,7 +116,8 @@ public class Controller implements Processor {
     public ArrayList<String> getMembersInArrears() {
         return treasurerProcessor.getMembersInArrears();
     }
-    public ArrayList<String> getListOfTeams(Trainer trainer){
+
+    public ArrayList<String> getListOfTeams(Trainer trainer) {
         return trainerProcessor.getListOfTeams(trainer);
     }
 
@@ -128,16 +128,17 @@ public class Controller implements Processor {
     public ArrayList<String> getTopFive(StyleCategories styleCategory) {
         return trainerProcessor.getTopFive(styleCategory);
     }
-    public ArrayList<String> getCompetitionList(){
+
+    public ArrayList<String> getCompetitionList() {
         return trainerProcessor.getCompetitionList();
     }
 
-    public String createCompetition(String location, String date){
-        return trainerProcessor.createCompetition(location,date);
+    public String createCompetition(String location, String date) {
+        return trainerProcessor.createCompetition(location, date);
     }
 
     public void addStyleToMember(int indexOfMember, int indexOfCompetetion, StyleCategories styleType,
-                                 long seconds, int placement){
+                                 long seconds, int placement) {
         trainerProcessor.addStyleToMember(indexOfMember, indexOfCompetetion, styleType, seconds, placement);
     }
 
@@ -148,6 +149,4 @@ public class Controller implements Processor {
     public ArrayList<String> getListOfCompetitiveMembersForUIButton() {
         return trainerProcessor.getListOfCompetitiveMembersForUIButton();
     }
-
-
 }

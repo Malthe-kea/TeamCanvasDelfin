@@ -149,7 +149,6 @@ public abstract class Database {
                 break;
             }
         }
-
         return newID;
     }
 
