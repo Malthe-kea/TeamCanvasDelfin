@@ -93,7 +93,6 @@ public class TrainerProcessor implements Processor {
         return competition.toString() + " er blevet oprettet.";
 
     }
-
     public String doubleCompInDBError(String c) {
         return c.toString() + " Findes allerede.";
     }
