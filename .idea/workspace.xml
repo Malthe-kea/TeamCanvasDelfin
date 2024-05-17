@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Refactor stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/TeamCanvasDelfin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TeamCanvasDelfin.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain_model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/CompetitiveMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user_domain/SortExampleTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user_domain/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_domain/Trainer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +86,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/noah8/Desktop/Ny mappe (2)",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
