@@ -6,7 +6,8 @@ import domain_model.userInterface.UserInterface;
 import user_domain.SuperUser;
 import user_domain.User;
 
-import java.lang.reflect.Array;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class SuperUserInterface {
         User userExists = null;
         try {
             do {
-                password = inputForAddUser(title, "Indtast kodeord for medlemmet", "Næste", "Annullér", true);
+                password = UserInterface.getInputCheckNull(title, "Indtast kodeord for medlemmet", "Næste", "Annullér", true);
                 userExists = controller.getUserFromPassword(password);
 
                 if(userExists != null) {
@@ -78,10 +79,17 @@ public class SuperUserInterface {
                 }
 
             }while(userExists != null);
-            firstName = inputForAddUser(title, "Indtast fornavn for medlemmet", "Næste", "Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for medlemmet", "Næste", "Annullér");
-            birthDate = inputForAddUser(title, "Indtast fødselsdato for medlemmet format (DD/MM/YYYY)", "Næste", "Annullér");
+            firstName = UserInterface.getInputCheckNull(title, "Indtast fornavn for medlemmet", "Næste", "Annullér");
+            lastName = UserInterface.getInputCheckNull(title, "Indtast efternavn for medlemmet", "Næste", "Annullér");
+            birthDate = UserInterface.getInputCheckNull(title, "Indtast fødselsdato for medlemmet format (DD/MM/YYYY)", "Næste", "Annullér");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            formatter.parse(birthDate);
+
+
         } catch (IllegalArgumentException e) {
+            return;
+        } catch(DateTimeParseException DTPE) {
+            UserInterface.showErrorMessage("FEJL", "Datoen er ikke i korrekt format. Prøv igen.");
             return;
         }
 
@@ -102,10 +110,10 @@ public class SuperUserInterface {
         String password;
         String firstName;
         String lastName;
-        User userExists = null;
+        User userExists;
         try {
             do {
-                password = inputForAddUser(title, "Indtast kodeord for træneren", "Næste", "Annullér", true);
+                password = UserInterface.getInputCheckNull(title, "Indtast kodeord for træneren", "Næste", "Annullér", true);
                 userExists = controller.getUserFromPassword(password);
 
                 if(userExists != null) {
@@ -113,8 +121,8 @@ public class SuperUserInterface {
                 }
 
             }while(userExists != null);
-            firstName = inputForAddUser(title, "Indtast fornavn for træneren", "Næste", "Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for træneren", "Næste", "Annullér");
+            firstName = UserInterface.getInputCheckNull(title, "Indtast fornavn for træneren", "Næste", "Annullér");
+            lastName = UserInterface.getInputCheckNull(title, "Indtast efternavn for træneren", "Næste", "Annullér");
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -129,10 +137,10 @@ public class SuperUserInterface {
         String password;
         String firstName;
         String lastName;
-        User userExists = null;
+        User userExists;
         try {
             do {
-                password = inputForAddUser(title, "Indtast kodeord for kasséren", "Næste", "Annullér", true);
+                password = UserInterface.getInputCheckNull(title, "Indtast kodeord for kasséren", "Næste", "Annullér", true);
                 userExists = controller.getUserFromPassword(password);
 
                 if(userExists != null) {
@@ -140,8 +148,8 @@ public class SuperUserInterface {
                 }
 
             }while(userExists != null);
-            firstName = inputForAddUser(title, "Indtast fornavn for kasséren", "Næste", "Annullér");
-            lastName = inputForAddUser(title, "Indtast efternavn for kasséren", "Næste", "Annullér");
+            firstName = UserInterface.getInputCheckNull(title, "Indtast fornavn for kasséren", "Næste", "Annullér");
+            lastName = UserInterface.getInputCheckNull(title, "Indtast efternavn for kasséren", "Næste", "Annullér");
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -276,15 +284,5 @@ public class SuperUserInterface {
     }
 
 
-    private String inputForAddUser(String title, String message, String okButtonText, String cancelButtonText, boolean isPassword) {
-        String input = UserInterface.inputMenu(title, message, okButtonText, cancelButtonText, isPassword);
-        if (input == null) {
-            throw new IllegalArgumentException();
-        }
-        return input;
-    }
 
-    private String inputForAddUser(String title, String message, String okButtonText, String cancelButtonText) {
-        return inputForAddUser(title, message, okButtonText, cancelButtonText, false);
-    }
 }

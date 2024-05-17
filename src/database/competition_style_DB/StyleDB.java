@@ -78,7 +78,7 @@ public class StyleDB extends Database {
         }
 
         if (styles.isEmpty()) {
-            return new ArrayList<>();
+            return null;
         } else {
             return styles;
         }

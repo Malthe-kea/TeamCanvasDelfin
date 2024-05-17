@@ -188,4 +188,8 @@ public class DBController {
     public String getPasswordFromID(int idInput) {
         return userDB.getPasswordFromID(idInput);
     }
+
+    public void addCompetitionToCompetitiveMember(int indexOfMember, int indexOfCompetition) {
+        competitiveMemberDB.addCompetitionToCompetitiveMember(indexOfMember, indexOfCompetition);
+    }
 }

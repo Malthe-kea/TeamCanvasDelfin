@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="lavet createCompetition() - den virker">
+    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="REFACTOR TRAINER PROCESSOR + COMMENTED">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/StyleDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/StyleDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/MemberDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/SuperUserInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/MemberInterface/TrainerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain_model/userInterface/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,28 +84,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TreasurerProcessorTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.TreasurerProcessorTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.notifications",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -110,13 +123,6 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-53826d6a" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -145,6 +151,7 @@
       <workItem from="1715843646030" duration="24000" />
       <workItem from="1715843671989" duration="2000" />
       <workItem from="1715843713731" duration="4262000" />
+      <workItem from="1715895030965" duration="8754000" />
     </task>
     <task id="LOCAL-00001" summary="Removed Esra Userinterface">
       <option name="closed" value="true" />
@@ -210,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715764883866</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="REFACTOR TRAINER PROCESSOR + COMMENTED">
+      <option name="closed" value="true" />
+      <created>1715887112216</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715887112216</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,9 +255,29 @@
     <MESSAGE value="getTopFive() tilføjet til TrainerProcessor" />
     <MESSAGE value="Pair-programming" />
     <MESSAGE value="lavet createCompetition() - den virker" />
-    <option name="LAST_COMMIT_MESSAGE" value="lavet createCompetition() - den virker" />
+    <MESSAGE value="REFACTOR TRAINER PROCESSOR + COMMENTED" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR TRAINER PROCESSOR + COMMENTED" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/database/userDB/UserReturn.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="user_domain.competition.Competition" memberName="styleList" />

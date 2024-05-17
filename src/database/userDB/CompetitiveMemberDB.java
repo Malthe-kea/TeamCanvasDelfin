@@ -13,6 +13,7 @@ import user_domain.competition.Competition;
 import user_domain.competition.Style;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CompetitiveMemberDB extends Database implements UserReturn {
     private int userIDFromMemberDB;
@@ -230,5 +231,29 @@ public class CompetitiveMemberDB extends Database implements UserReturn {
             return true;
         }
         return false;
+    }
+
+
+    public void addCompetitionToCompetitiveMember(int indexOfMember, int idOfCompetition) {
+        ArrayList<String[]> compMemberList = getRows();
+        String[] row = compMemberList.get(indexOfMember);
+        int indexOfCompetitionList = getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST);
+        String compEntriesAsString = row[indexOfCompetitionList];
+        compEntriesAsString = compEntriesAsString.substring(1,compEntriesAsString.length()-1);
+        compEntriesAsString = compEntriesAsString.replace(" ","");
+        String[] compEntries = compEntriesAsString.split(",");
+        ArrayList<String> compEntriesList = new ArrayList<>(List.of(compEntries));
+        compEntriesList.add(String.valueOf(idOfCompetition));
+
+
+        if(compEntriesList.get(0).isBlank()) {
+            compEntriesList.remove(0);
+        }
+        row[indexOfCompetitionList] = compEntriesList.toString();
+        System.out.println(row[indexOfCompetitionList]);
+
+        compMemberList.set(indexOfMember, row);
+        insertListToDB(compMemberList);
+
     }
 }

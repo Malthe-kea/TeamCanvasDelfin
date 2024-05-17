@@ -7,7 +7,10 @@ import user_domain.Trainer;
 import user_domain.User;
 import user_domain.competition.StyleCategories;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class TrainerInterface {
@@ -46,11 +49,13 @@ public class TrainerInterface {
                     UserInterface.showList("Dit hold", controller.getListOfTeams(userLoggingIn));
                 }
                 case 2 -> {
-
+                    UserInterface.showList("Stævner", controller.getCompetitionList());
                 }
                 case 3 -> {
+                    createCompetitionUI();
                 }
                 case 4 -> {
+                    registerCompetitionResults();
                 }
                 case 5 -> {
                     UserInterface.showList("TOP 5 - Brystsvømning", controller.getTopFive(StyleCategories.BREASTSTROKE));
@@ -69,6 +74,67 @@ public class TrainerInterface {
                 }
             }
         }
+    }
+
+
+    public void createCompetitionUI() {
+        String location = UserInterface.inputMenu("Opret stævne", "Indtast stævnets navn","Næste", "Annuller");
+        if(location == null) {
+            return;
+        }
+        String date = UserInterface.inputMenu("Opret stævne", "Indtast stævnets dato (DD/MM/YYYY)", "Opret", "Annuller");
+        if(date == null) {
+            return;
+        }
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            formatter.parse(date);
+            return;
+        } catch(DateTimeParseException DTPE) {
+            UserInterface.showErrorMessage("FEJL", "Datoen er ikke i korrekt format. Prøv igen.");
+        }
+
+        controller.createCompetition(location, date);
+
+    }
+
+    public void registerCompetitionResults() {
+        int userIDToEdit = UserInterface.drawMenu("Registrer stævneresultater", "Vælg bruger at tilføje resultat til", "Annuller", controller.getListOfCompetitiveMembersForUIButton());
+        if(userIDToEdit == -1) {
+            return;
+        }
+        int competitionID = UserInterface.drawMenu("Registrer stævneresultater", "Vælg stævne at tilføje til", "Annuller", controller.getUIButtonCompetitionList());
+        if(competitionID == -1) {
+            return;
+        }
+
+        int styleChoice = UserInterface.drawMenu("Registrer stævneresultater", "Vælg stilart", "Annuller",
+                new ArrayList<>(List.of("Brystsvømning", "Crawl", "Butterfly", "Rygcrawl")));
+        StyleCategories style = switch (styleChoice) {
+            case 0 -> StyleCategories.BREASTSTROKE;
+            case 1 -> StyleCategories.CRAWL;
+            case 2 -> StyleCategories.BUTTERFLY;
+            case 3 -> StyleCategories.BACKSTROKE;
+            default -> null;
+        };
+        long totalSeconds = 0;
+        int placement = 0;
+
+        try {
+            Long minutes = 60*(Long.parseLong(UserInterface.getInputCheckNull("Registrer stævneresultater", "Indtast minutter", "Næste", "Annuller")));
+            Long seconds = Long.parseLong(UserInterface.getInputCheckNull("Registrer stævneresultater", "Indtast sekunder", "Næste", "Annuller"));
+            totalSeconds = minutes + seconds;
+
+            placement = Integer.parseInt(UserInterface.getInputCheckNull("Registrer stævneresultater", "Indtast placering", "Registrer", "Annuller"));
+
+        } catch (NumberFormatException NFE) {
+            UserInterface.showErrorMessage("FEJL", "Indtast venligst et tal.");
+        } catch(IllegalArgumentException IAE) {
+            return;
+        }
+
+        controller.addStyleToMember(userIDToEdit, competitionID, style, totalSeconds, placement);
+
     }
 
 }

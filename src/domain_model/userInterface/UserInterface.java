@@ -1,6 +1,5 @@
 package domain_model.userInterface;
 
-import database.DBController;
 import domain_model.Controller;
 import domain_model.DelfinUtil;
 import domain_model.UserInstance;
@@ -15,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserInterface {
 
@@ -80,7 +78,7 @@ public class UserInterface {
         JScrollPane scrollPane = new JScrollPane(textArea);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        scrollPane.setPreferredSize(new Dimension(800, 800));
+        scrollPane.setPreferredSize(new Dimension(800, 500));
 
         JOptionPane.showMessageDialog(null, scrollPane, title, JOptionPane.PLAIN_MESSAGE, icon);
 
@@ -232,6 +230,18 @@ public class UserInterface {
         dialog.setVisible(true); //Viser vinduet.
 
         return chosenOption[0]; //Returnere den valgte menu mulighed.
+    }
+
+    public static String getInputCheckNull(String title, String message, String okButtonText, String cancelButtonText, boolean isPassword) {
+        String input = UserInterface.inputMenu(title, message, okButtonText, cancelButtonText, isPassword);
+        if (input == null) {
+            throw new IllegalArgumentException();
+        }
+        return input;
+    }
+
+    public static String getInputCheckNull(String title, String message, String okButtonText, String cancelButtonText) {
+        return getInputCheckNull(title, message, okButtonText, cancelButtonText, false);
     }
 
 }

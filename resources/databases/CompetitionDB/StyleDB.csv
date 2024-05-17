@@ -1,4 +1,5 @@
 id;userID;competitionID;styleCategory;placement;timeInSeconds
-1;2;2;BACKSTROKE;1;500
-2;2;2;BACKSTROKE;1;500
-3;2;2;BACKSTROKE;1;500
+1;2;1;CRAWL;1;61
+2;2;2;CRAWL;1;61
+3;2;1;BREASTSTROKE;1;61
+4;3;3;CRAWL;1;61

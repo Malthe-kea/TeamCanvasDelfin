@@ -9,27 +9,12 @@ import user_domain.competition.StyleCategories;
 
 import java.security.spec.RSAOtherPrimeInfo;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-
-//        TrainerProcessor trainerProcessor = new TrainerProcessor(new DBController());
-//        System.out.println(trainerProcessor.getTopFive(StyleCategories.BACKSTROKE).toString());
-
-
-        DBController dbController = new DBController();
-        TrainerProcessor tP = new TrainerProcessor(dbController);
-
-        tP.addStyleToMember(0, 1, StyleCategories.BACKSTROKE, 500, 1);
-
-        CompetitiveMember member = ((CompetitiveMember)dbController.getUserFromID(2));
-
-        for (Competition comp : member.getCompetitionList()) {
-            for(Style style : comp.getStyleList()) {
-                System.out.println(comp.getLocation());
-                System.out.println(style.toString());
-            }
-        }
+        UserInterface UI = new UserInterface();
+        UI.startProgram();
 
         /*TODO
             1. SuperUserProcessor editMember skal laves og opsættes til UI. - X
@@ -47,9 +32,7 @@ public class Main {
         */
 
 
-
     }
-
 
 
 //    static void printCompetitiveMember(CompetitiveMember member) {

@@ -82,14 +82,16 @@ public class TrainerProcessor implements Processor {
         return finalListOfTeams;
     }
 
-    public void createCompetition(String location, String date) {
+    public String createCompetition(String location, String date) {
         Competition competition = new Competition(dbController.getIDForNewCompetition(), location, date);
-        //NEDENSTÅENDE VIL ALTID VÆRE TRUE. DER SAMMENLIGNES OBJEKTER AF COMPETITIONS MED INTEGERS. DERFOR VIL DE ALDRIG VÆRE ENS.
-        if (!dbController.getListOfCompetitions().contains(competition.getID()))
-            dbController.addCompToDB(competition);
-        else {
-            doubleCompInDBError(competition.toString());
+        for(Competition comp : dbController.getListOfCompetitions()) {
+            if(comp.getLocation().equalsIgnoreCase(location) && comp.getDate().equalsIgnoreCase(date)) {
+                return doubleCompInDBError(competition.toString());
+            }
         }
+        dbController.addCompToDB(competition);
+        return competition.toString() + " er blevet oprettet.";
+
     }
 
     public String doubleCompInDBError(String c) {
@@ -105,8 +107,7 @@ public class TrainerProcessor implements Processor {
         }
         return returnCompList;
     }
-    //TODO træner skal kunne oprette stævner.
-    //TODO træner skal kunne registrere stævneresultater.
+
 
     public void addStyleToMember(int indexOfMember, int indexOfCompetetion, StyleCategories styleType,
                                  long seconds, int placement) {
@@ -114,7 +115,42 @@ public class TrainerProcessor implements Processor {
         Competition thisCompToAdd = dbController.getListOfCompetitions().get(indexOfCompetetion);
         Style styleToAdd = new Style(dbController.getIDForNewStyle(), thisMemberToEdit.getUserID(),
                 thisCompToAdd.getID(), styleType, placement, seconds);
+        boolean compExists = false;
+        for (Competition comp : thisMemberToEdit.getCompetitionList()) {
+            if (comp.getID() == thisCompToAdd.getID()) {
+                compExists = true;
+                break;
+            }
+        }
+
+        if(!compExists) {
+            thisMemberToEdit.addCompetition(thisCompToAdd);
+            dbController.addCompetitionToCompetitiveMember(indexOfMember, thisCompToAdd.getID());
+        }
 
         dbController.addStyleToDB(styleToAdd);
+
+    }
+
+    public ArrayList<String> getUIButtonCompetitionList() {
+        ArrayList<Competition> compList = dbController.getListOfCompetitions();
+        ArrayList<String> compListAsString = new ArrayList<>();
+
+        for(Competition c : compList) {
+            compListAsString.add(c.getLocation() + ": " + c.getDate());
+        }
+
+        return compListAsString;
+    }
+
+    public ArrayList<String> getListOfCompetitiveMembersForUIButton() {
+        ArrayList<CompetitiveMember> compMemberList = dbController.getListOfCompetitiveMembers();
+        ArrayList<String> compMemberListFormatted = new ArrayList<>();
+
+        for(CompetitiveMember cm : compMemberList) {
+            compMemberListFormatted.add(cm.getUserID() + ": " + cm.getFirstName() + " " + cm.getLastName());
+        }
+
+        return compMemberListFormatted;
     }
 }
