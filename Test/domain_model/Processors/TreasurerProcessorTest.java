@@ -1,19 +1,13 @@
 package domain_model.Processors;
-
-import database.DBController;
-import database.userDB.UserDB;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import user_domain.Member;
 import user_domain.User;
-
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TreasurerProcessorTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getExpectedIncomeOfFiveMembers() {
         ArrayList<Member> dbController = new ArrayList<>();
 
@@ -40,11 +34,11 @@ class TreasurerProcessorTest {
         }
 
         //ASSERT
-        Assertions.assertEquals(expectedResults, actualResults);
+        Assert.assertEquals(expectedResults, actualResults);
     }
 
-    @org.junit.jupiter.api.Test
-    void geMembersInArrears() {
+    @Test
+    void getMembersInArrears() {
         //ARRANGE
         boolean isRunning = true;
         ArrayList<Member> dbController = new ArrayList<>();
@@ -72,6 +66,6 @@ class TreasurerProcessorTest {
             double actualResults = membersInArrears.size();
 
             //ASSERT
-            Assertions.assertEquals(expectedResults, actualResults);
+            Assert.assertEquals(expectedResults, actualResults);
         }
     }
