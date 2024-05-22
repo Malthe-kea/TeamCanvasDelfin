@@ -26,7 +26,7 @@ public class TreasurerInterface {
                     "Se total indtægt",
                     "Se medlemmer i restance"));
 
-            int choice = UserInterface.drawMenu("Trainer Menu", "Vælg en af følgende muligheder", "Afslut", options);
+            int choice = UserInterface.drawMenu("Kassér Menu", "Vælg en af følgende muligheder", "Afslut", options);
 
             switch (choice) {
                 case 0 -> {

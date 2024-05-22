@@ -33,11 +33,14 @@ public class MemberInterface {
 
 
 
-            int choice = UserInterface.drawMenu("Trainer Menu", "Vælg en af følgende muligheder", "Afslut", options);
+            int choice = UserInterface.drawMenu("Member Menu", "Vælg en af følgende muligheder", "Afslut", options);
 
             switch (choice) {
                 case 0 -> {
                     UserInterface.smallWindow("Din profil", userLoggingIn.toString(), "Tilbage");
+                }
+                case 1 -> {
+                        UserInterface.showList("Dine konkurrenceresultater", new ArrayList<>(List.of(((CompetitiveMember) userLoggingIn).getCompetitiveResults())));
                 }
                 case -1 -> {
                     loggedIn = false;

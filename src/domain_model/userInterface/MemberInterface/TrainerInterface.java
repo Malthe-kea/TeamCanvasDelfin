@@ -89,9 +89,9 @@ public class TrainerInterface {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             formatter.parse(date);
-            return;
         } catch(DateTimeParseException DTPE) {
             UserInterface.showErrorMessage("FEJL", "Datoen er ikke i korrekt format. Prøv igen.");
+            return;
         }
 
         controller.createCompetition(location, date);

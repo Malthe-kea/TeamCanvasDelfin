@@ -1,0 +1,703 @@
+Index: resources/databases/UserDB/UserDB.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>id;permissionLevel;password;firstName;lastName\r\n1;1;testPassword;Noah;SUPER\r\n2;4;hej123;Laura;Bøjden\r\n3;4;hej432;Mikkel;Hansen\r\n4;3;træner123;hallo;hallo123\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/resources/databases/UserDB/UserDB.csv b/resources/databases/UserDB/UserDB.csv
+--- a/resources/databases/UserDB/UserDB.csv	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/resources/databases/UserDB/UserDB.csv	(date 1716360223169)
+@@ -1,5 +1,6 @@
+ id;permissionLevel;password;firstName;lastName
+-1;1;testPassword;Noah;SUPER
+-2;4;hej123;Laura;Bøjden
+-3;4;hej432;Mikkel;Hansen
+-4;3;træner123;hallo;hallo123
++1;1;testPassword;SUPER;SUPER
++2;4;test999;Laura;Bøjden
++3;4;hej123;Mikkel;Hansen
++4;3;træner123;Peter;hallo123
++5;2;kasser123;Kasser;Kasser
+Index: src/database/userDB/MemberDB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package database.userDB;\r\n\r\nimport database.Database;\r\nimport database.rowNameEnum.DBRowNames;\r\nimport database.rowNameEnum.MemberDBRowNames;\r\nimport database.rowNameEnum.UserDBRowNames;\r\nimport domain_model.DelfinUtil;\r\nimport user_domain.CompetitiveMember;\r\nimport user_domain.Member;\r\nimport user_domain.User;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class MemberDB extends Database implements UserReturn {\r\n    public MemberDB() {\r\n        //Sets the filepath of the specific csv file to be used when calling this DB class.\r\n        super(UserReturn.getFolderPath() + \"MemberDB.csv\");\r\n    }\r\n\r\n    //Method for retreiving a Member instance based on data from database, where the search criteria is that the\r\n    //Member retrieved needs to match the inserted id of the member.\r\n    @Override\r\n    public User getUserFromID(int id) {\r\n        return searchAndCreateUser(MemberDBRowNames.USER_ID, String.valueOf(id));\r\n    }\r\n\r\n    //Method for retreiving a Member instance based on data from Member, where the search criteria is that the\r\n    //Member retrieved needs to match the inserted last name of the member.\r\n    @Override\r\n    public User getUserFromLastName(String name) {\r\n        return searchAndCreateUser(MemberDBRowNames.LAST_NAME, name);\r\n    }\r\n\r\n    //Retrieves list of member instances from all users based on database.\r\n    public ArrayList<User> getListOfUsers() {\r\n        //Gets list of rows from the database class getRows method.\r\n        //Inserts the rows from this specific database class into the UserReturn default method for getting users.\r\n        return UserReturn.super.getListOfUsers(super.getRows());\r\n    }\r\n\r\n    //Calls the default method in User Return, inserting the rows and index of column to be searched through.\r\n    public User searchAndCreateUser(DBRowNames catToFindBy, String searchValue) {\r\n        //Gets the index number of the column that was wished to be searched for.\r\n        int indexToSearchBy = super.getIndexOfRowName(catToFindBy);\r\n        //Calls the default method in User Return, inserting the rows and index of column to be searched through.\r\n        return UserReturn.super.searchAndCreateUser(searchValue, indexToSearchBy, super.getRows());\r\n    }\r\n\r\n    //Method for creating a member Instance from a single row. A Single row represents one members data.\r\n    public User createUserFromSingleRow(String[] singleRow) {\r\n        //Gets the member id from the row.\r\n        int userid = Integer.parseInt(singleRow[getIndexOfRowName(MemberDBRowNames.USER_ID)]);\r\n        //Gets first and last name from the member.\r\n        String firstName = singleRow[getIndexOfRowName(MemberDBRowNames.FIRST_NAME)];\r\n        String lastName = singleRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)];\r\n        //Gets and converts the competitive status of the member (if normal member or competittive member) to boolean.\r\n        boolean isCompetitive = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)]);\r\n        //Gets and converts the activity status (passive/active) to boolean.\r\n        boolean isActiveMember = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)]);\r\n        //Gets and converts the age of the member.\r\n        String dateOfBirth = singleRow[getIndexOfRowName(MemberDBRowNames.DATE_OF_BIRTH)];\r\n        //Gets and converts the arrears status (is not in debt/is in debt) to boolean.\r\n        boolean isArrears = Boolean.parseBoolean(singleRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)]);\r\n        //Checks if the user is a Competitive member.\r\n        //Both Member and competitiveMember are created in MemberDB, as their constructor parameters are identical.\r\n        if (isCompetitive) {\r\n            //Returns a new Competitive Member instance.\r\n            CompetitiveMemberDB competitiveMemberDB = new CompetitiveMemberDB();\r\n            //Passes the already known Member values to the CompetitiveMemberDB for instancing a CompetitiveMember.\r\n            competitiveMemberDB.setMemberAttributes(userid, firstName, lastName, isActiveMember, dateOfBirth, isArrears);\r\n            return competitiveMemberDB.getUserFromID(userid);\r\n        } else {\r\n            //Returns a new Member instance.\r\n            return new Member(userid, firstName, lastName, isActiveMember, false, dateOfBirth, isArrears);\r\n        }\r\n    }\r\n\r\n    //Method for getting the string formats of the column names, which is stores inside the enum class of each\r\n    //database row name enums. See package rowNameEnum.\r\n    @Override\r\n    public DBRowNames[] getEnumRowNames() {\r\n        return MemberDBRowNames.values();\r\n    }\r\n\r\n    //Method for editing a member in the MemberDB csv file. Returns true if edit was successfull.\r\n    //The method takes in a user instance. This user instance is the EDITED version of the user instance,\r\n    // which has been edited and processed inside the SuperUserProcessor.\r\n    @Override\r\n    public boolean editUserInDB(User user) {\r\n        //Checks of the user instance is indeed an instance of Member.\r\n        if (user instanceof Member member) {\r\n            //Gets list of all member instances from DB.\r\n            ArrayList<User> allUsers = getListOfUsers();\r\n            //Gets list of all members as formatted DB String from DB.\r\n            ArrayList<String[]> allRows = super.getRows();\r\n            //Creates new String[] array with length corresponding to amount of columns in DB.\r\n            String[] newRow = new String[MemberDBRowNames.values().length];\r\n            //Gets the id, first name, last name as a String;\r\n            newRow[getIndexOfRowName(MemberDBRowNames.USER_ID)] = String.valueOf(member.getUserID());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.FIRST_NAME)] = member.getFirstName();\r\n            newRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)] = member.getLastName();\r\n            //Gets the activity status, competitive status, age, arrears status and yearly membership fee as Strings.\r\n            newRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)] = String.valueOf(member.isActiveMember());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)] = String.valueOf(member.isCompetitive());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.DATE_OF_BIRTH)] = member.getDateOfBirth();\r\n            newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());\r\n\r\n            //Loops through list of member instances.\r\n            for (int i = 0; i < allUsers.size(); i++) {\r\n                //If the userid in allusers equals the member id of the wished edited member,\r\n                // it means we now know the index place of the wished member in the database,\r\n                // and we can now replace this index.\r\n                if (allUsers.get(i).getUserID() == member.getUserID()) {\r\n                    //We replace the old member with the new edited member with equal id.\r\n                    allRows.set(i, newRow);\r\n                    break;\r\n                }\r\n            }\r\n\r\n            //We call the function that inserts a list of formatted rows into the db. If it returns false,\r\n            //It was not successfull in inserting data into the database.\r\n            if(!insertListToDB(allRows)) {\r\n                return false;\r\n            }\r\n\r\n            if(user instanceof CompetitiveMember compMember) {\r\n                CompetitiveMemberDB compMemberDB = new CompetitiveMemberDB();\r\n                return compMemberDB.editUserInDB(compMember);\r\n            }\r\n        }\r\n        return true;\r\n    }\r\n\r\n    public int getIDForNewUser() {\r\n        return getIDForNewEntry(UserDBRowNames.USER_ID, super.getRows());\r\n    }\r\n\r\n    public boolean addUserInDB(User user) {\r\n        if(!(user instanceof Member member)) {\r\n            return false;\r\n        } else {\r\n            ArrayList<String[]> allRows = getRows();\r\n\r\n            String[] newRow = new String[MemberDBRowNames.values().length];\r\n            newRow[getIndexOfRowName(MemberDBRowNames.USER_ID)] = String.valueOf(member.getUserID());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.FIRST_NAME)] = member.getFirstName();\r\n            newRow[getIndexOfRowName(MemberDBRowNames.LAST_NAME)] = member.getLastName();\r\n            newRow[getIndexOfRowName(MemberDBRowNames.IS_ACTIVE_MEMBER)] = String.valueOf(member.isActiveMember());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.IS_COMPETITIVE)] = String.valueOf(member.isCompetitive());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.DATE_OF_BIRTH)] = member.getDateOfBirth();\r\n            newRow[getIndexOfRowName(MemberDBRowNames.IS_ARREARS)] = String.valueOf(member.isArrears());\r\n            newRow[getIndexOfRowName(MemberDBRowNames.YEARLY_MEMBERSHIP_FEE)] = String.valueOf(member.getYearlyMembershipFee());\r\n\r\n            allRows.add(newRow);\r\n\r\n            if(!insertListToDB(allRows)) {\r\n                return false;\r\n            }\r\n\r\n            if(member instanceof CompetitiveMember compMember) {\r\n                CompetitiveMemberDB compMemberDB = new CompetitiveMemberDB();\r\n                return compMemberDB.addUserInDB(compMember);\r\n\r\n            } else {\r\n                return true;\r\n            }\r\n\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public boolean removeUserFromDB(User user) {\r\n        if(user instanceof Member member) {\r\n            ArrayList<String[]> allRows = getRows();\r\n\r\n            for(String[] singleRow : allRows) {\r\n                int userIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(MemberDBRowNames.USER_ID)]);\r\n                if(userIDFromDB == member.getUserID()) {\r\n                    allRows.remove(singleRow);\r\n                    break;\r\n                }\r\n            }\r\n\r\n            if(!insertListToDB(allRows)) {\r\n                return false;\r\n            }\r\n\r\n            if(member instanceof CompetitiveMember) {\r\n                CompetitiveMemberDB compDB = new CompetitiveMemberDB();\r\n                return compDB.removeUserFromDB(member);\r\n            } else {\r\n                return true;\r\n            }\r\n        }\r\n\r\n        return false;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/database/userDB/MemberDB.java b/src/database/userDB/MemberDB.java
+--- a/src/database/userDB/MemberDB.java	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/src/database/userDB/MemberDB.java	(date 1716361034529)
+@@ -67,7 +67,6 @@
+             //Returns a new Competitive Member instance.
+             CompetitiveMemberDB competitiveMemberDB = new CompetitiveMemberDB();
+             //Passes the already known Member values to the CompetitiveMemberDB for instancing a CompetitiveMember.
+-            competitiveMemberDB.setMemberAttributes(userid, firstName, lastName, isActiveMember, dateOfBirth, isArrears);
+             return competitiveMemberDB.getUserFromID(userid);
+         } else {
+             //Returns a new Member instance.
+Index: src/database/userDB/CompetitiveMemberDB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package database.userDB;\r\n\r\nimport database.Database;\r\nimport database.competition_style_DB.CompetitionDB;\r\nimport database.competition_style_DB.StyleDB;\r\nimport database.rowNameEnum.CompetitionDBRowNames;\r\nimport database.rowNameEnum.CompetitiveMemberDBRowNames;\r\nimport database.rowNameEnum.DBRowNames;\r\nimport database.rowNameEnum.UserDBRowNames;\r\nimport user_domain.CompetitiveMember;\r\nimport user_domain.User;\r\nimport user_domain.competition.Competition;\r\nimport user_domain.competition.Style;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class CompetitiveMemberDB extends Database implements UserReturn {\r\n    private int userIDFromMemberDB;\r\n    private String firstNameFromMemberDB;\r\n    private String lastNameFromMemberDB;\r\n    private boolean isActiveMemberFromMemberDB;\r\n    private final boolean isCompetitiveFromMemberDB;\r\n    private String dateOfBirthFromMemberDB;\r\n    private boolean isArrearsFromMemberDB;\r\n\r\n\r\n\r\n    //userid, firstName, lastName, isActiveMember, true, age, isArrears\r\n\r\n    public CompetitiveMemberDB() {\r\n        super(UserReturn.getFolderPath()+\"CompetitiveMemberDB.csv\");\r\n        //As this DB only gets called when the member is a Competitive member, this boolean is always true. Therefor final\r\n        isCompetitiveFromMemberDB = true;\r\n        userIDFromMemberDB = -1;\r\n        firstNameFromMemberDB = null;\r\n        lastNameFromMemberDB = null;\r\n        isActiveMemberFromMemberDB = false;\r\n        dateOfBirthFromMemberDB = \"\";\r\n        isArrearsFromMemberDB = false;\r\n    }\r\n\r\n    public void setMemberAttributes(int userIDFromMemberDB, String firstNameFromMemberDB, String lastNameFromMemberDB,\r\n                                    boolean isActiveMemberFromMemberDB, String dateOfBirthFromMemberDB, boolean isArrearsFromMemberDB) {\r\n        this.userIDFromMemberDB = userIDFromMemberDB;\r\n        this.firstNameFromMemberDB = firstNameFromMemberDB;\r\n        this.lastNameFromMemberDB = lastNameFromMemberDB;\r\n        this.isActiveMemberFromMemberDB = isActiveMemberFromMemberDB;\r\n        this.dateOfBirthFromMemberDB = dateOfBirthFromMemberDB;\r\n        this.isArrearsFromMemberDB = isArrearsFromMemberDB;\r\n    }\r\n\r\n    @Override\r\n    public DBRowNames[] getEnumRowNames() {\r\n        return CompetitiveMemberDBRowNames.values();\r\n    }\r\n\r\n    @Override\r\n    public User getUserFromID(int id) {\r\n        return searchAndCreateUser(CompetitiveMemberDBRowNames.USER_ID, String.valueOf(id));\r\n    }\r\n\r\n    @Override\r\n    public User getUserFromLastName(String name) {\r\n        return searchAndCreateUser(CompetitiveMemberDBRowNames.LAST_NAME, name);\r\n    }\r\n\r\n    public ArrayList<User> getListOfUsers() {\r\n        return UserReturn.super.getListOfUsers(super.getRows());\r\n    }\r\n\r\n    public User searchAndCreateUser(CompetitiveMemberDBRowNames catToFindBy, String searchValue) {\r\n        //Gets the index number of the column that was wished to be searched for.\r\n        int indexToSearchBy = super.getIndexOfRowName(catToFindBy);\r\n        //Calls the default method in User Return, inserting the rows and index of column to be searched through.\r\n        return UserReturn.super.searchAndCreateUser(searchValue, indexToSearchBy, super.getRows());\r\n    }\r\n\r\n    @Override\r\n    public User createUserFromSingleRow(String[] singleRow) {\r\n        if(userIDFromMemberDB != -1) {\r\n            String compEntriesAsString = singleRow[getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST)];\r\n            compEntriesAsString = compEntriesAsString.substring(1,compEntriesAsString.length()-1);\r\n            compEntriesAsString = compEntriesAsString.replace(\" \",\"\");\r\n            String[] compEntries = compEntriesAsString.split(\",\");\r\n            ArrayList<Competition> compList = new ArrayList<>();\r\n\r\n\r\n            if(!(compEntries.length == 1 && compEntries[0].isBlank())) {\r\n                CompetitionDB compDB = new CompetitionDB();\r\n                for (String idAsString : compEntries) {\r\n                    compList.add(compDB.getCompetitionFromID(Integer.parseInt(idAsString), userIDFromMemberDB));\r\n                }\r\n            }\r\n\r\n\r\n            return new CompetitiveMember(userIDFromMemberDB, firstNameFromMemberDB, lastNameFromMemberDB, isActiveMemberFromMemberDB,\r\n                    isCompetitiveFromMemberDB, dateOfBirthFromMemberDB, isArrearsFromMemberDB, compList);\r\n        }\r\n\r\n\r\n\r\n        return null;\r\n    }\r\n\r\n    @Override\r\n    public boolean editUserInDB(User user) {\r\n        //Checks of the user instance is indeed an instance of Member.\r\n        if (user instanceof CompetitiveMember compMember) {\r\n            userIDFromMemberDB = compMember.getUserID();\r\n            firstNameFromMemberDB = compMember.getFirstName();\r\n            lastNameFromMemberDB = compMember.getLastName();\r\n            isActiveMemberFromMemberDB = compMember.isActiveMember();\r\n            dateOfBirthFromMemberDB = compMember.getDateOfBirth();\r\n            isArrearsFromMemberDB = compMember.isArrears();\r\n\r\n            //Gets list of all member instances from DB.\r\n            ArrayList<User> allUsers = getListOfUsers();\r\n            //Gets list of all members as formatted DB String from DB.\r\n            ArrayList<String[]> allRows = super.getRows();\r\n            //Creates new String[] array with length corresponding to amount of columns in DB.\r\n            String[] newRow = new String[CompetitiveMemberDBRowNames.values().length];\r\n            //Gets the id, first name, last name as a String;\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)] = String.valueOf(compMember.getUserID());\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.FIRST_NAME)] = compMember.getFirstName();\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.LAST_NAME)] = compMember.getLastName();\r\n            //Gets the activity status, competitive status, age, arrears status and yearly membership fee as Strings.\r\n            ArrayList<Competition> compList = compMember.getCompetitionList();\r\n            ArrayList<Integer> compIDList = new ArrayList<>();\r\n            compList.forEach(comp -> compIDList.add(comp.getID()));\r\n\r\n\r\n\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST)] = compIDList.toString();\r\n\r\n            //Loops through list of member instances.\r\n            for (int i = 0; i < allUsers.size(); i++) {\r\n                //If the userid in allusers equals the member id of the wished edited member,\r\n                // it means we now know the index place of the wished member in the database,\r\n                // and we can now replace this index.\r\n                if (allUsers.get(i).getUserID() == compMember.getUserID()) {\r\n                    //We replace the old member with the new edited member with equal id.\r\n                    allRows.set(i, newRow);\r\n                    break;\r\n                }\r\n            }\r\n            //We insert the edited row into the database.\r\n            if(!insertListToDB(allRows)) {\r\n                return false;\r\n            }\r\n\r\n            if(!compList.isEmpty()) {\r\n                ArrayList<Boolean> compErrorReturns = new ArrayList<>();\r\n                CompetitionDB compDB = new CompetitionDB();\r\n                for (Competition singleComp : compList) {\r\n                    compErrorReturns.add(compDB.editCompInDB(singleComp));\r\n                }\r\n\r\n                return !compErrorReturns.contains(false);\r\n            }\r\n            return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n    public int getIDForNewUser() {\r\n        return getIDForNewEntry(UserDBRowNames.USER_ID, super.getRows());\r\n    }\r\n\r\n\r\n    public boolean addUserInDB(User user) {\r\n        if(!(user instanceof CompetitiveMember compMember)) {\r\n            return false;\r\n        } else {\r\n            ArrayList<String[]> allRows = getRows();\r\n\r\n            String[] newRow = new String[CompetitiveMemberDBRowNames.values().length];\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)] = String.valueOf(compMember.getUserID());\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.FIRST_NAME)] = compMember.getFirstName();\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.LAST_NAME)] = compMember.getLastName();\r\n\r\n            ArrayList<Competition> compList = compMember.getCompetitionList();\r\n            ArrayList<Integer> compIDList = new ArrayList<>();\r\n            compList.forEach(comp -> compIDList.add(comp.getID()));\r\n\r\n            newRow[getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST)] = compIDList.toString();\r\n\r\n\r\n            allRows.add(newRow);\r\n\r\n            if(!insertListToDB(allRows)) {\r\n                return false;\r\n            }\r\n\r\n            if(!compList.isEmpty()) {\r\n                CompetitionDB compDB = new CompetitionDB();\r\n                for (Competition singleComp : compList) {\r\n                    compDB.addCompetitionToDB(singleComp);\r\n                }\r\n            }\r\n            return true;\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public boolean removeUserFromDB(User user) {\r\n        if(user instanceof CompetitiveMember compMember) {\r\n            ArrayList<String[]> allRows = getRows();\r\n\r\n            for(String[] singleRow : allRows) {\r\n                int userIDFromDB = Integer.parseInt(singleRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)]);\r\n                if(userIDFromDB == compMember.getUserID()) {\r\n                    allRows.remove(singleRow);\r\n                    break;\r\n                }\r\n            }\r\n\r\n            ArrayList<Competition> compList = compMember.getCompetitionList();\r\n\r\n            if(!insertListToDB(allRows)) {\r\n                return false;\r\n            }\r\n            StyleDB styleDB = new StyleDB();\r\n            for(Competition comp : compList) {\r\n                for(Style style : comp.getStyleList()) {\r\n                    if(!styleDB.removeStyleFromDB(style)) {\r\n                        return false;\r\n                    }\r\n                }\r\n            }\r\n            return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n\r\n    public void addCompetitionToCompetitiveMember(int indexOfMember, int idOfCompetition) {\r\n        ArrayList<String[]> compMemberList = getRows();\r\n        String[] row = compMemberList.get(indexOfMember);\r\n        int indexOfCompetitionList = getIndexOfRowName(CompetitiveMemberDBRowNames.COMPETITION_LIST);\r\n        String compEntriesAsString = row[indexOfCompetitionList];\r\n        compEntriesAsString = compEntriesAsString.substring(1,compEntriesAsString.length()-1);\r\n        compEntriesAsString = compEntriesAsString.replace(\" \",\"\");\r\n        String[] compEntries = compEntriesAsString.split(\",\");\r\n        ArrayList<String> compEntriesList = new ArrayList<>(List.of(compEntries));\r\n        compEntriesList.add(String.valueOf(idOfCompetition));\r\n\r\n\r\n        if(compEntriesList.get(0).isBlank()) {\r\n            compEntriesList.remove(0);\r\n        }\r\n        row[indexOfCompetitionList] = compEntriesList.toString();\r\n        System.out.println(row[indexOfCompetitionList]);\r\n\r\n        compMemberList.set(indexOfMember, row);\r\n        insertListToDB(compMemberList);\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/database/userDB/CompetitiveMemberDB.java b/src/database/userDB/CompetitiveMemberDB.java
+--- a/src/database/userDB/CompetitiveMemberDB.java	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/src/database/userDB/CompetitiveMemberDB.java	(date 1716361270306)
+@@ -8,6 +8,7 @@
+ import database.rowNameEnum.DBRowNames;
+ import database.rowNameEnum.UserDBRowNames;
+ import user_domain.CompetitiveMember;
++import user_domain.Member;
+ import user_domain.User;
+ import user_domain.competition.Competition;
+ import user_domain.competition.Style;
+@@ -83,9 +84,9 @@
+             compEntriesAsString = compEntriesAsString.substring(1,compEntriesAsString.length()-1);
+             compEntriesAsString = compEntriesAsString.replace(" ","");
+             String[] compEntries = compEntriesAsString.split(",");
++            int id = Integer.parseInt(singleRow[getIndexOfRowName(CompetitiveMemberDBRowNames.USER_ID)]);
+             ArrayList<Competition> compList = new ArrayList<>();
+ 
+-
+             if(!(compEntries.length == 1 && compEntries[0].isBlank())) {
+                 CompetitionDB compDB = new CompetitionDB();
+                 for (String idAsString : compEntries) {
+@@ -93,6 +94,11 @@
+                 }
+             }
+ 
++            MemberDB memberDB = new MemberDB();
++            ArrayList<User> memberList = memberDB.getListOfUsers();
++
++
++
+ 
+             return new CompetitiveMember(userIDFromMemberDB, firstNameFromMemberDB, lastNameFromMemberDB, isActiveMemberFromMemberDB,
+                     isCompetitiveFromMemberDB, dateOfBirthFromMemberDB, isArrearsFromMemberDB, compList);
+@@ -256,4 +262,5 @@
+         insertListToDB(compMemberList);
+ 
+     }
++
+ }
+Index: resources/databases/UserDB/CompetitiveMemberDB.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>id;firstName;lastName;competitionList\r\n2;Laura;Bøjden;[1, 2]\r\n3;Mikkel;Hansen;[3]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/resources/databases/UserDB/CompetitiveMemberDB.csv b/resources/databases/UserDB/CompetitiveMemberDB.csv
+--- a/resources/databases/UserDB/CompetitiveMemberDB.csv	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/resources/databases/UserDB/CompetitiveMemberDB.csv	(date 1716361114309)
+@@ -1,3 +1,3 @@
+ id;firstName;lastName;competitionList
+-2;Laura;Bøjden;[1, 2]
++3;Laura;Bøjden;[3]
+ 3;Mikkel;Hansen;[3]
+\ No newline at end of file
+Index: resources/databases/UserDB/TrainerDB.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>id;firstName;lastName;isSeniorTrainer\r\n4;Peter;hallo123;true
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/resources/databases/UserDB/TrainerDB.csv b/resources/databases/UserDB/TrainerDB.csv
+--- a/resources/databases/UserDB/TrainerDB.csv	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/resources/databases/UserDB/TrainerDB.csv	(date 1716359824083)
+@@ -1,2 +1,2 @@
+ id;firstName;lastName;isSeniorTrainer
+-4;Peter;hallo123;true
+\ No newline at end of file
++4;Peter;hallo123;false
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024,_13_55_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024,_13_55_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024,_13_55_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024,_13_55_[Changes]/shelved.patch	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ /dev/null	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
+@@ -1,231 +0,0 @@
+-Index: src/domain_model/Processors/SuperUserProcessor.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package domain_model.Processors;\n\nimport database.Database;\nimport database.DBController;\nimport domain_model.*;\nimport database.userDB.UserDB;\nimport user_domain.*;\n\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.Scanner;\nimport java.time.LocalDate;\nimport java.time.Period;\n\npublic class SuperUserProcessor implements Processor {\n    private Scanner userInput;\n    DBController dbController;\n    private ArrayList<User> userListArr;\n    boolean programRunning = true;\n\n    public SuperUserProcessor(DBController dbController) {\n        this.dbController = dbController;\n        userInput = new Scanner(System.in);\n    }\n\n    @Override\n    public UIDisplayInfo getMainMenu() {\n\n\n        ArrayList<String> options = new ArrayList<>(List.of(\n                \"Tilføj medlem\",\n                \"Tilføj træner\",\n                \"Tilføj konkurrence-medlem\",\n                \"Tilføj kasserer\",\n                \"Ændre medlemsoplysninger\",\n                \"Slet medlem\",\n                \"Se brugeroversigt\"));\n\n\n        return new UIDisplayInfo(\"SuperUser Menu\",\"Vælg en af følgende muligheder\", DisplayType.MENU ,options);\n\n\n    }\n\n    @Override\n    public UIDisplayInfo processMainMenuOption(int option) {\n        return null;\n    }\n\n    public ArrayList createSuperUser() {\n        ArrayList<SuperUser> superUser = new ArrayList<>();\n        superUser.add(new SuperUser(1, \"flemming\", \"Rasmussen\"));\n        return superUser;\n    }\n\n    public ArrayList<String> getUserList() {\n        ArrayList<String> userList = new ArrayList<>();\n        ArrayList<User> allUsers = dbController.getListOfAllUsers();\n        for (User u : allUsers) {\n            UserInstance userInstance = DelfinUtil.checkUserInstance(u);\n            switch (userInstance) {\n                case MEMBER -> {\n                    userList.add(((Member)u).toString());\n                }\n                case COMPETITIVE -> {\n                    userList.add(((CompetitiveMember)u).toString());\n                }\n                case TRAINER -> {\n                    userList.add(((Trainer)u).toString());\n                }\n                case SUPER, TREASURER -> {\n                    userList.add(u.toString());\n                }\n            }\n        }\n        return userList;\n    }\n\n    public void CreateandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {\n\n        Boolean isActiveMember = activePassiveInput;\n        Boolean isCompetitive = isCompetitiveInput;\n        Boolean isArrears = isArrearsInput;\n        //LocalDate dob = LocalDate.parse(birthDate);\n\n        //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.\n        User memberToAdd = new Member(dbController.getIDForNewUser(), firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);\n        dbController.addUserToDB(memberToAdd, password);\n    }\n\n    public void CreateandAddTrainertoDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {\n\n        User trainerToAdd = new Trainer(dbController.getIDForNewUser(), firstNames, lastNames, isSeniorTrainer);\n        dbController.addUserToDB(trainerToAdd, password);\n    }\n\n    public void CreateandAddCompetitiveMembertoDB(String password, String firstNames, String lastName, boolean isActiveMemberInput, boolean isCompetitiveInput, String birthDate, boolean isArrearsInput) {\n\n        Boolean isActiveMember = isActiveMemberInput;\n        Boolean isCompetitive = isCompetitiveInput;\n        Boolean isArrears = isArrearsInput;\n        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.\n//        LocalDate dob = LocalDate.parse(birthDate);\n\n//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.\n        //testDB.add(new CompetitiveMember(3, \"Susse\", \"Sonnegaard\", true, true, calculateAge(dob), false));\n        User competitiveMemberToAdd = new CompetitiveMember(dbController.getIDForNewUser(), firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears);\n        dbController.addUserToDB(competitiveMemberToAdd, password);\n    }\n\n    public void CreateAndAddTreasurertoDB(String password, String firstNames, String lastNames) {\n\n        User treasurerToAdd = new Treasurer(dbController.getIDForNewUser(), firstNames, lastNames);\n        dbController.addUserToDB(treasurerToAdd, password);\n    }\n\n    public void editMember(String userIDInput, String firstNameInput, String lastNameInput, String isActiveMemberInput, String isCompetitiveInput, String isArrearsInput) {\n        int userID = Integer.parseInt(userIDInput);\n        Member userToEdit = (Member) dbController.getUserFromID(userID);\n\n        if(!firstNameInput.isBlank()) {\n            userToEdit.setFirstName(firstNameInput);\n        }\n\n        if(!lastNameInput.isBlank()) {\n            userToEdit.setLastName(lastNameInput);\n        }\n\n        userToEdit.setActiveMember(Boolean.parseBoolean(isActiveMemberInput));\n        userToEdit.setArrears(Boolean.parseBoolean(isArrearsInput));\n\n        boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);\n\n        if(isCompetitive != userToEdit.isCompetitive()) {\n            User convertedMember;\n\n            if(isCompetitive) {\n                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());\n            } else {\n                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());\n            }\n\n            String password = dbController.getPasswordFromID(userToEdit.getUserID());\n            dbController.removeUserFromDB(userID);\n            dbController.addUserToDB(convertedMember, password);\n        } else {\n            dbController.editUserInDB(userToEdit);\n        }\n\n    }\n\n    public void editTrainer() {\n    }\n\n    public void editAdmin() {\n\n    }\n\n    public void deleteUserFromDB(int indexInList) {\n\n        ArrayList<User> allUsers = dbController.getListOfAllUsers();\n        User userToDelete = allUsers.get(indexInList);\n        dbController.removeUserFromDB(userToDelete);\n\n    }\n\n    public String getUserInfo(int indexToEdit) {\n        ArrayList<User> allUsers = dbController.getListOfAllUsers();\n        User userForInfo = allUsers.get(indexToEdit);\n\n        switch (DelfinUtil.checkUserInstance(userForInfo)) {\n            case MEMBER -> {\n                return ((Member)userForInfo).toString();\n            }\n            case COMPETITIVE -> {\n                return ((CompetitiveMember)userForInfo).toString();\n            }\n            case TRAINER -> {\n                return ((Trainer)userForInfo).toString();\n            }\n            case SUPER, TREASURER -> {\n                return userForInfo.toString();\n            }\n        }\n        return \"null\";\n    }\n\n\n    public Database getUserFromDB(int idToEdit) {\n        //TODO send DB return\n        String command = \"1\";\n        print(\"\"\"\n                Hvilket brugeroversigt vil du gerne se?\n                1. Crawl\n                2. Rygcrawl\n                3. Brystsvømning\n                4. Butterfly\n                5. Aktive/Passive medlemmer\n                6. Juniorer/Seniorer\n                \"\"\");\n        while (programRunning)\n            switch (command) {\n                case \"1\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"2\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"3\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"4\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"5\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"6\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                default -> {\n                    print(\"invalid input\");\n                }\n            }\n        return null;\n    }\n\n\n    public static int calculateAge(LocalDate dob) {\n        LocalDate curDate = LocalDate.now();\n\n        if ((dob != null) && (curDate != null)) {\n            return Period.between(dob, curDate).getYears();\n        } else {\n            return 0;\n        }\n    }\n\n    private void print(String s) {\n        System.out.println(s);\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/src/domain_model/Processors/SuperUserProcessor.java b/src/domain_model/Processors/SuperUserProcessor.java
+---- a/src/domain_model/Processors/SuperUserProcessor.java	(revision c2178a885039a1a69af9b36662da23369025a9a1)
+-+++ b/src/domain_model/Processors/SuperUserProcessor.java	(date 1715687388957)
+-@@ -38,7 +38,7 @@
+-                 "Se brugeroversigt"));
+- 
+- 
+--        return new UIDisplayInfo("SuperUser Menu","Vælg en af følgende muligheder", DisplayType.MENU ,options);
+-+        return new UIDisplayInfo("SuperUser Menu", "Vælg en af følgende muligheder", DisplayType.MENU, options);
+- 
+- 
+-     }
+-@@ -61,13 +61,13 @@
+-             UserInstance userInstance = DelfinUtil.checkUserInstance(u);
+-             switch (userInstance) {
+-                 case MEMBER -> {
+--                    userList.add(((Member)u).toString());
+-+                    userList.add(((Member) u).toString());
+-                 }
+-                 case COMPETITIVE -> {
+--                    userList.add(((CompetitiveMember)u).toString());
+-+                    userList.add(((CompetitiveMember) u).toString());
+-                 }
+-                 case TRAINER -> {
+--                    userList.add(((Trainer)u).toString());
+-+                    userList.add(((Trainer) u).toString());
+-                 }
+-                 case SUPER, TREASURER -> {
+-                     userList.add(u.toString());
+-@@ -119,11 +119,11 @@
+-         int userID = Integer.parseInt(userIDInput);
+-         Member userToEdit = (Member) dbController.getUserFromID(userID);
+- 
+--        if(!firstNameInput.isBlank()) {
+-+        if (!firstNameInput.isBlank()) {
+-             userToEdit.setFirstName(firstNameInput);
+-         }
+- 
+--        if(!lastNameInput.isBlank()) {
+-+        if (!lastNameInput.isBlank()) {
+-             userToEdit.setLastName(lastNameInput);
+-         }
+- 
+-@@ -132,13 +132,13 @@
+- 
+-         boolean isCompetitive = Boolean.parseBoolean(isCompetitiveInput);
+- 
+--        if(isCompetitive != userToEdit.isCompetitive()) {
+-+        if (isCompetitive != userToEdit.isCompetitive()) {
+-             User convertedMember;
+- 
+--            if(isCompetitive) {
+--                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());
+-+            if (isCompetitive) {
+-+                convertedMember = new CompetitiveMember(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(), userToEdit.isArrears());
+-             } else {
+--                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(),userToEdit.isArrears());
+-+                convertedMember = new Member(userToEdit.getUserID(), userToEdit.getFirstName(), userToEdit.getLastName(), userToEdit.isActiveMember(), true, userToEdit.getDateOfBirth(), userToEdit.isArrears());
+-             }
+- 
+-             String password = dbController.getPasswordFromID(userToEdit.getUserID());
+-@@ -150,8 +150,36 @@
+- 
+-     }
+- 
+--    public void editTrainer() {
+-+    public void editTrainer(String userIDInput, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+-+        int userID = Integer.parseInt(userIDInput);
+-+        Member userToEdit = (Member) dbController.getUserFromID(userID);
+-+
+-+        if (!firstNameInput.isBlank()) {
+-+            userToEdit.setFirstName(firstNameInput);
+-+        }
+-+        if (!lastNameInput.isBlank()) {
+-+            userToEdit.setLastName(lastNameInput);
+-+        }
+-+        boolean isSenior = Boolean.parseBoolean(isSeniorTrainerInput);
+-+        userToEdit.setSenior(isSenior);
+-+
+-+        dbController.editUserInDB(userToEdit);
+-     }
+-+    public void editTreassurer(String userIDInput, String firstNameInput, String lastNameInput) {
+-+        int userID = Integer.parseInt(userIDInput);
+-+        Member userToEdit = (Member) dbController.getUserFromID(userID);
+-+
+-+        if (!firstNameInput.isBlank()) {
+-+            userToEdit.setFirstName(firstNameInput);
+-+        }
+-+        if (!lastNameInput.isBlank()) {
+-+            userToEdit.setLastName(lastNameInput);
+-+        }
+-+        dbController.editUserInDB(userToEdit);
+-+    }
+-+
+-+
+-+
+- 
+-     public void editAdmin() {
+- 
+-@@ -171,13 +199,13 @@
+- 
+-         switch (DelfinUtil.checkUserInstance(userForInfo)) {
+-             case MEMBER -> {
+--                return ((Member)userForInfo).toString();
+-+                return ((Member) userForInfo).toString();
+-             }
+-             case COMPETITIVE -> {
+--                return ((CompetitiveMember)userForInfo).toString();
+-+                return ((CompetitiveMember) userForInfo).toString();
+-             }
+-             case TRAINER -> {
+--                return ((Trainer)userForInfo).toString();
+-+                return ((Trainer) userForInfo).toString();
+-             }
+-             case SUPER, TREASURER -> {
+-                 return userForInfo.toString();
+-@@ -226,17 +254,6 @@
+-         return null;
+-     }
+- 
+--
+--    public static int calculateAge(LocalDate dob) {
+--        LocalDate curDate = LocalDate.now();
+--
+--        if ((dob != null) && (curDate != null)) {
+--            return Period.between(dob, curDate).getYears();
+--        } else {
+--            return 0;
+--        }
+--    }
+--
+-     private void print(String s) {
+-         System.out.println(s);
+-     }
+-Index: src/domain_model/Controller.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package domain_model;\n\nimport database.DBController;\nimport domain_model.Processors.*;\nimport user_domain.User;\n\nimport java.util.ArrayList;\n\npublic class Controller implements Processor {\n\n    private final DBController DBCONTROLLER;\n\n    private Processor processor;\n    private UserInstance userInstance;\n\n    public Controller() {\n        DBCONTROLLER = new DBController();\n\n    }\n\n    public UIDisplayInfo getMainMenu() {\n        return processor.getMainMenu();\n    }\n\n    public UserInstance getUserFromPassword(String password) {\n        User userLoggingIn = DBCONTROLLER.getUserFromPassword(password);\n        userInstance = DelfinUtil.checkUserInstance(userLoggingIn);\n\n        switch (userInstance) {\n            case MEMBER, COMPETITIVE -> {\n                processor = new MemberProcessor(DBCONTROLLER);\n            }\n            case TRAINER -> {\n                processor = new TrainerProcessor(DBCONTROLLER);\n            }\n            case SUPER -> {\n                processor = new SuperUserProcessor(DBCONTROLLER);\n            }\n            case TREASURER -> {\n                processor = new TreasurerProcessor(DBCONTROLLER);\n            }\n        }\n\n        return userInstance;\n    }\n\n\n    public void createandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.CreateandAddMembertoDB(password, firstNames, lastNames, activePassiveInput, birthDate, isCompetitiveInput, isArrearsInput);\n    }\n\n    public void createandAddTrainerToDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.CreateandAddTrainertoDB(password, firstNames, lastNames, isSeniorTrainer);\n    }\n\n    public void createandAddCompetitiveMembertoDB(String password, String firstNames, String lastNames, boolean isActiveMemberInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n        superUserProcessor.CreateandAddCompetitiveMembertoDB(password, firstNames, lastNames, isActiveMemberInput, isCompetitiveInput, birthDate, isArrearsInput);\n    }\n\n    public void createandAddTreasurertoDB(String password, String firstNames, String lastNames) {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.CreateAndAddTreasurertoDB(password, firstNames, lastNames);\n    }\n\n    public void editMember(\n            String userIDInput,\n            String firstNameInput,\n            String lastNameInput,\n            String isActiveMemberInput,\n            String isCompetitiveInput,\n            String isArrearsInput)\n    {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.editMember(userIDInput, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);\n    }\n\n    public void editTrainer() {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.editTrainer();\n    }\n\n    public void editAdmin() {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.editAdmin();\n    }\n\n    public void deleteUserFromDB(int indexInList) {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        superUserProcessor.deleteUserFromDB(indexInList);\n    }\n\n    public ArrayList<String> getUserList() {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        return superUserProcessor.getUserList();\n    }\n\n    public String getUserInfo(int indexOfList) {\n        SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;\n\n        return superUserProcessor.getUserInfo(indexOfList);\n    }\n\n\n    @Override\n    public UIDisplayInfo processMainMenuOption(int option) {\n        return processor.processMainMenuOption(option);\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>ISO-8859-1
+-===================================================================
+-diff --git a/src/domain_model/Controller.java b/src/domain_model/Controller.java
+---- a/src/domain_model/Controller.java	(revision c2178a885039a1a69af9b36662da23369025a9a1)
+-+++ b/src/domain_model/Controller.java	(date 1715687388966)
+-@@ -81,10 +81,10 @@
+-         superUserProcessor.editMember(userIDInput, firstNameInput, lastNameInput, isActiveMemberInput, isCompetitiveInput, isArrearsInput);
+-     }
+- 
+--    public void editTrainer() {
+-+    public void editTrainer(String userIDInput, String firstNameInput, String lastNameInput, String isSeniorTrainerInput) {
+-         SuperUserProcessor superUserProcessor = (SuperUserProcessor) processor;
+- 
+--        superUserProcessor.editTrainer();
+-+        superUserProcessor.editTrainer(userIDInput,firstNameInput,lastNameInput,isSeniorTrainerInput);
+-     }
+- 
+-     public void editAdmin() {
+-Index: src/domain_model/Processors/MemberProcessor.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package domain_model.Processors;\n\nimport database.DBController;\nimport domain_model.UIDisplayInfo;\nimport user_domain.Member;\n\npublic class MemberProcessor implements Processor {\n    private DBController dbController;\n    private Member member;\n\n    public MemberProcessor(DBController dbController) {\n        this.dbController = dbController;\n    }\n\n//    public void MemberInfoMenu(String command) {\n//        System.out.println(\"Menu options: \");\n//        switch (command) {\n//            case \"1\" -> {\n//                displayMemberOverview();\n//            }\n//            case \"2\" -> {\n//                displayTrainingResultsForEachDiscipline();\n//            }\n//            case \"3\" -> {\n//                displayCompetitionResults();\n//            }\n//\n//        }\n//    }\n\n    public void displayMemberOverview() {\n        System.out.println(\"Member profile:\");\n        System.out.println(\"Is active/passive: \" + member.isActiveMember());\n        System.out.println(\"Is a competitive member: \" + member.isCompetitive());\n        System.out.println(\"Restance: \" + member.isArrears());\n        System.out.println(\"Yearly membership fee: \" + member.getYearlyMembershipFee());\n    }\n\n    @Override\n    public UIDisplayInfo getMainMenu() {\n        return null;\n    }\n\n    @Override\n    public UIDisplayInfo processMainMenuOption(int option) {\n        return null;\n    }\n\n    // Metode til at vise tr?ningsresultat og dato for hver disciplin\n    public void displayTrainingResultsForEachDiscipline() {\n        System.out.println(\"Results: \");\n\n    }\n\n    // Metode til at vise alle registrerede konkurrenceresultater\n    public void displayCompetitionResults() {\n        if (member.isCompetitive()) {\n        //return CompetitiveMember.getCompetitionDB();\n        //return UserDB.getPR(); //eller noget til at f? pr for hver disciplin\n\n        }\n\n    }\n\n    }\n\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>ISO-8859-1
+-===================================================================
+-diff --git a/src/domain_model/Processors/MemberProcessor.java b/src/domain_model/Processors/MemberProcessor.java
+---- a/src/domain_model/Processors/MemberProcessor.java	(revision c2178a885039a1a69af9b36662da23369025a9a1)
+-+++ b/src/domain_model/Processors/MemberProcessor.java	(date 1715677441611)
+-@@ -1,6 +1,7 @@
+- package domain_model.Processors;
+- 
+- import database.DBController;
+-+import database.userDB.UserDB;
+- import domain_model.UIDisplayInfo;
+- import user_domain.Member;
+- 
+-@@ -12,30 +13,6 @@
+-         this.dbController = dbController;
+-     }
+- 
+--//    public void MemberInfoMenu(String command) {
+--//        System.out.println("Menu options: ");
+--//        switch (command) {
+--//            case "1" -> {
+--//                displayMemberOverview();
+--//            }
+--//            case "2" -> {
+--//                displayTrainingResultsForEachDiscipline();
+--//            }
+--//            case "3" -> {
+--//                displayCompetitionResults();
+--//            }
+--//
+--//        }
+--//    }
+--
+--    public void displayMemberOverview() {
+--        System.out.println("Member profile:");
+--        System.out.println("Is active/passive: " + member.isActiveMember());
+--        System.out.println("Is a competitive member: " + member.isCompetitive());
+--        System.out.println("Restance: " + member.isArrears());
+--        System.out.println("Yearly membership fee: " + member.getYearlyMembershipFee());
+--    }
+--
+-     @Override
+-     public UIDisplayInfo getMainMenu() {
+-         return null;
+-@@ -53,14 +30,9 @@
+-     }
+- 
+-     // Metode til at vise alle registrerede konkurrenceresultater
+--    public void displayCompetitionResults() {
+-+    public void displayCompetitionResults(int userID) {
+-         if (member.isCompetitive()) {
+--        //return CompetitiveMember.getCompetitionDB();
+--        //return UserDB.getPR(); //eller noget til at f? pr for hver disciplin
+--
+-+            dbController.getListOfCompetitions(userID);
+-         }
+--
+-     }
+--
+--    }
+--
+-+}
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]/shelved.patch	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ /dev/null	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
+@@ -1,98 +0,0 @@
+-Index: src/domain_model/Processors/SuperUserProcessor.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package domain_model.Processors;\n\nimport database.Database;\nimport database.DBController;\nimport domain_model.*;\nimport database.userDB.UserDB;\nimport user_domain.*;\n\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\nimport java.time.LocalDate;\nimport java.time.Period;\n\npublic class SuperUserProcessor implements Processor {\n    private Scanner userInput;\n    DBController dbController;\n    private ArrayList<User> userListArr;\n    boolean programRunning = true;\n\n    public SuperUserProcessor(DBController dbController) {\n        this.dbController = dbController;\n        userInput = new Scanner(System.in);\n    }\n\n    @Override\n    public UIDisplayInfo getMainMenu() {\n\n\n        ArrayList<String> options = new ArrayList<>(List.of(\n                \"Tilføj medlem\",\n                \"Tilføj træner\",\n                \"Tilføj konkurrence-medlem\",\n                \"Tilføj kasserer\",\n                \"Ændre medlemsoplysninger\",\n                \"Slet medlem\",\n                \"Se brugeroversigt\"));\n\n\n        return new UIDisplayInfo(\"SuperUser Menu\",\"Vælg en af følgende muligheder\", DisplayType.MENU ,options);\n\n\n    }\n\n    @Override\n    public UIDisplayInfo processMainMenuOption(int option) {\n        return null;\n    }\n\n    public ArrayList createSuperUser() {\n        ArrayList<SuperUser> superUser = new ArrayList<>();\n        superUser.add(new SuperUser(1, \"flemming\", \"Rasmussen\"));\n        return superUser;\n    }\n\n    public ArrayList<String> getUserList() {\n        ArrayList<String> userList = new ArrayList<>();\n        ArrayList<User> allUsers = dbController.getListOfAllUsers();\n        for (User u : allUsers) {\n            UserInstance userInstance = DelfinUtil.checkUserInstance(u);\n            switch (userInstance) {\n                case MEMBER -> {\n                    userList.add(((Member)u).toString());\n                }\n                case COMPETITIVE -> {\n                    userList.add(((CompetitiveMember)u).toString());\n                }\n                case TRAINER -> {\n                    userList.add(((Trainer)u).toString());\n                }\n                case SUPER, TREASURER -> {\n                    userList.add(u.toString());\n                }\n            }\n        }\n        return userList;\n    }\n\n    public void CreateandAddMembertoDB(String password, String firstNames, String lastNames, boolean activePassiveInput, String birthDate, boolean isCompetitiveInput, boolean isArrearsInput) {\n\n        Boolean isActiveMember = activePassiveInput;\n        Boolean isCompetitive = isCompetitiveInput;\n        Boolean isArrears = isArrearsInput;\n        //LocalDate dob = LocalDate.parse(birthDate);\n\n        //TODO new member tager imod dateOfBirth som en string, det skal være LocalDate.\n        User memberToAdd = new Member(dbController.getIDForNewUser(), firstNames, lastNames, isActiveMember, isCompetitive, birthDate, isArrears);\n        dbController.addUserToDB(memberToAdd, password);\n    }\n\n    public void CreateandAddTrainertoDB(String password, String firstNames, String lastNames, boolean isSeniorTrainer) {\n\n        User trainerToAdd = new Trainer(dbController.getIDForNewUser(), firstNames, lastNames, isSeniorTrainer);\n        dbController.addUserToDB(trainerToAdd, password);\n    }\n\n    public void CreateandAddCompetitiveMembertoDB(String password, String firstNames, String lastName, boolean isActiveMemberInput, boolean isCompetitiveInput, String birthDate, boolean isArrearsInput) {\n\n        Boolean isActiveMember = isActiveMemberInput;\n        Boolean isCompetitive = isCompetitiveInput;\n        Boolean isArrears = isArrearsInput;\n        //TODO new competitiveMember tager imod dateOfBirth som en string, det skal være LocalDate.\n//        LocalDate dob = LocalDate.parse(birthDate);\n\n//Her skal laves en metode, der tager seneste userID fra DB'en og incrementer den med 1.\n        //testDB.add(new CompetitiveMember(3, \"Susse\", \"Sonnegaard\", true, true, calculateAge(dob), false));\n        User competitiveMemberToAdd = new CompetitiveMember(dbController.getIDForNewUser(), firstNames, lastName, isActiveMember, isCompetitive, birthDate, isArrears);\n        dbController.addUserToDB(competitiveMemberToAdd, password);\n    }\n\n    public void CreateAndAddTreasurertoDB(String password, String firstNames, String lastNames) {\n\n        User treasurerToAdd = new Treasurer(dbController.getIDForNewUser(), firstNames, lastNames);\n        dbController.addUserToDB(treasurerToAdd, password);\n    }\n\n    //TODO fiks den her metode, så den ikke returnerer noget.\n    public void editUserFromDB(int idToEdit, String firstName) {\n        UserDB db = new UserDB();\n        User userToEdit = db.getUserFromID(idToEdit);\n\n        if (userToEdit.getFirstName().equalsIgnoreCase(firstName)) {\n\n            String command = userInput.nextLine().toLowerCase();\n            String commandPrompt = userInput.nextLine().toLowerCase();\n            switch (DelfinUtil.checkUserInstance(userToEdit)) {\n\n                case SUPER, TREASURER -> {\n                    print(\"\"\"\n                            1. Rediger fornavn\n                            2. Rediger efternavn\n                            \"\"\");\n                    commandPrompt = userInput.nextLine().toLowerCase();\n                    userToEdit.setFirstName(commandPrompt);\n                }\n                case MEMBER, COMPETITIVE -> {\n                    print(\"\"\"\n                            1. Rediger fornavn\n                                 2. Rediger efternavn\n                                     3. Rediger aktivitetsstatus\n                            4. Konkurrence/Motionist\n                            5. Restancestatus.\n                            \"\"\");\n                    if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE) {\n                        //TODO når Style.class er oprettet kan vi tilføje discipliner herunder.\n                        print(\"\"\"\n                                6. \n                                \"\"\");\n                    }\n                    commandPrompt = userInput.nextLine().toLowerCase();\n                    userToEdit.setLastName(commandPrompt);\n                }\n                case TRAINER -> {\n                    commandPrompt = userInput.nextLine().toLowerCase();\n                    Trainer trainer = (Trainer) userToEdit;\n\n                    print(\"\"\"\n                            1. Rediger fornavn\n                            2. Rediger efternavn\n                            3. Senior/Junior\n                            \"\"\");\n                    //TODO lav switchcase, der passer til menuen.\n\n                    boolean seniorOrNot = (commandPrompt.equalsIgnoreCase(\"senior\")) ? true : false;\n                    trainer.setSeniorTrainer(seniorOrNot);\n\n                }\n                default -> {\n                    print(\"invalid input\");\n                }\n\n            }\n            db.editUserInDB(userToEdit);\n        }\n\n    }\n\n    public void deleteUserFromDB(int indexInList) {\n\n        ArrayList<User> allUsers = dbController.getListOfAllUsers();\n        User userToDelete = allUsers.get(indexInList);\n        dbController.removeUserFromDB(userToDelete);\n\n    }\n\n    public String getUserInfo(int indexToEdit) {\n        ArrayList<User> allUsers = dbController.getListOfAllUsers();\n        User userForInfo = allUsers.get(indexToEdit);\n\n        switch (DelfinUtil.checkUserInstance(userForInfo)) {\n            case MEMBER -> {\n                return ((Member)userForInfo).toString();\n            }\n            case COMPETITIVE -> {\n                return ((CompetitiveMember)userForInfo).toString();\n            }\n            case TRAINER -> {\n                return ((Trainer)userForInfo).toString();\n            }\n            case SUPER, TREASURER -> {\n                return userForInfo.toString();\n            }\n        }\n        return \"null\";\n    }\n\n\n    public Database getUserFromDB(int idToEdit) {\n        //TODO send DB return\n        String command = \"1\";\n        print(\"\"\"\n                Hvilket brugeroversigt vil du gerne se?\n                1. Crawl\n                2. Rygcrawl\n                3. Brystsvømning\n                4. Butterfly\n                5. Aktive/Passive medlemmer\n                6. Juniorer/Seniorer\n                \"\"\");\n        while (programRunning)\n            switch (command) {\n                case \"1\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"2\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"3\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"4\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"5\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                case \"6\" -> {\n                    print(\"Get XYZ-database\");\n                }\n                default -> {\n                    print(\"invalid input\");\n                }\n            }\n        return null;\n    }\n\n\n    public static int calculateAge(LocalDate dob) {\n        LocalDate curDate = LocalDate.now();\n\n        if ((dob != null) && (curDate != null)) {\n            return Period.between(dob, curDate).getYears();\n        } else {\n            return 0;\n        }\n    }\n\n    private void print(String s) {\n        UserInterfaceEsra.print(s);\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/src/domain_model/Processors/SuperUserProcessor.java b/src/domain_model/Processors/SuperUserProcessor.java
+---- a/src/domain_model/Processors/SuperUserProcessor.java	(revision 407b6d7d54e92f9ed337d12895cae9e5e5c86f17)
+-+++ b/src/domain_model/Processors/SuperUserProcessor.java	(date 1715589809660)
+-@@ -113,68 +113,8 @@
+-         User treasurerToAdd = new Treasurer(dbController.getIDForNewUser(), firstNames, lastNames);
+-         dbController.addUserToDB(treasurerToAdd, password);
+-     }
+--
+--    //TODO fiks den her metode, så den ikke returnerer noget.
+--    public void editUserFromDB(int idToEdit, String firstName) {
+--        UserDB db = new UserDB();
+--        User userToEdit = db.getUserFromID(idToEdit);
+-+    
+- 
+--        if (userToEdit.getFirstName().equalsIgnoreCase(firstName)) {
+--
+--            String command = userInput.nextLine().toLowerCase();
+--            String commandPrompt = userInput.nextLine().toLowerCase();
+--            switch (DelfinUtil.checkUserInstance(userToEdit)) {
+--
+--                case SUPER, TREASURER -> {
+--                    print("""
+--                            1. Rediger fornavn
+--                            2. Rediger efternavn
+--                            """);
+--                    commandPrompt = userInput.nextLine().toLowerCase();
+--                    userToEdit.setFirstName(commandPrompt);
+--                }
+--                case MEMBER, COMPETITIVE -> {
+--                    print("""
+--                            1. Rediger fornavn
+--                                 2. Rediger efternavn
+--                                     3. Rediger aktivitetsstatus
+--                            4. Konkurrence/Motionist
+--                            5. Restancestatus.
+--                            """);
+--                    if (DelfinUtil.checkUserInstance(userToEdit) == UserInstance.COMPETITIVE) {
+--                        //TODO når Style.class er oprettet kan vi tilføje discipliner herunder.
+--                        print("""
+--                                6. 
+--                                """);
+--                    }
+--                    commandPrompt = userInput.nextLine().toLowerCase();
+--                    userToEdit.setLastName(commandPrompt);
+--                }
+--                case TRAINER -> {
+--                    commandPrompt = userInput.nextLine().toLowerCase();
+--                    Trainer trainer = (Trainer) userToEdit;
+--
+--                    print("""
+--                            1. Rediger fornavn
+--                            2. Rediger efternavn
+--                            3. Senior/Junior
+--                            """);
+--                    //TODO lav switchcase, der passer til menuen.
+--
+--                    boolean seniorOrNot = (commandPrompt.equalsIgnoreCase("senior")) ? true : false;
+--                    trainer.setSeniorTrainer(seniorOrNot);
+--
+--                }
+--                default -> {
+--                    print("invalid input");
+--                }
+--
+--            }
+--            db.editUserInDB(userToEdit);
+--        }
+--
+--    }
+--
+-     public void deleteUserFromDB(int indexInList) {
+- 
+-         ArrayList<User> allUsers = dbController.getListOfAllUsers();
+-@@ -244,17 +184,6 @@
+-         return null;
+-     }
+- 
+--
+--    public static int calculateAge(LocalDate dob) {
+--        LocalDate curDate = LocalDate.now();
+--
+--        if ((dob != null) && (curDate != null)) {
+--            return Period.between(dob, curDate).getYears();
+--        } else {
+--            return 0;
+--        }
+--    }
+--
+-     private void print(String s) {
+-         UserInterfaceEsra.print(s);
+-     }
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024__13_55__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024__13_55__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024__13_55__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024__13_55__Changes_.xml	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ /dev/null	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_14_05_2024,_13_55_[Changes]" date="1715687726748" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_05_2024,_13_55_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 14/05/2024, 13.55 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024__12_54__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024__12_54__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024__12_54__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024__12_54__Changes_.xml	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ /dev/null	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]" date="1715597721929" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 13/05/2024, 12.54 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"05948840-9df0-4e86-a63a-cdd638f9b919\" name=\"Changes\" comment=\"Refactor stuff\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"ESRA-MALTHE-TrainerProcessor-\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"MIXED\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Noah8282&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Malthe-kea/TeamCanvasDelfin.git&quot;,\r\n    &quot;accountId&quot;: &quot;ff92d121-2d01-4191-9b2f-515e0f38f5e9&quot;\r\n  }\r\n}</component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/Main.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/database/DBController.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/database/competition_style_DB/StyleDB.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/domain_model/Controller.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/domain_model/Processors/MemberProcessor.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/domain_model/Processors/SuperUserProcessor.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/domain_model/Processors/TreasurerProcessor.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/CompetitiveMember.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/Member.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/SuperUser.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/Trainer.java\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/User.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/competition/Competition.java\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/user_domain/competition/Style.java\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2gP4mbDgwo4EpaHgs20Pyo1fxOI\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Main.executor\": \"Run\",\r\n    \"Downloaded.Files.Path.Enabled\": \"false\",\r\n    \"JUnit.TreasurerProcessorTest.executor\": \"Run\",\r\n    \"Repository.Attach.Annotations\": \"false\",\r\n    \"Repository.Attach.JavaDocs\": \"false\",\r\n    \"Repository.Attach.Sources\": \"false\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/noah8/Desktop/Ny mappe (2)\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Project\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"settings.editor.selected.configurable\": \"reference.settings.ide.settings.notifications\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main\" />\r\n      <module name=\"TeamCanvasDelfin\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-17.0.10-corretto-17.0.10-4caba194b151-53826d6a\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"05948840-9df0-4e86-a63a-cdd638f9b919\" name=\"Changes\" comment=\"\" />\r\n      <created>1715584043587</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1715584043587</updated>\r\n      <workItem from=\"1715584045905\" duration=\"1258000\" />\r\n      <workItem from=\"1715586044001\" duration=\"53000\" />\r\n      <workItem from=\"1715586108891\" duration=\"105000\" />\r\n      <workItem from=\"1715586217812\" duration=\"4355000\" />\r\n      <workItem from=\"1715590600760\" duration=\"3344000\" />\r\n      <workItem from=\"1715684073502\" duration=\"837000\" />\r\n      <workItem from=\"1715684926726\" duration=\"3471000\" />\r\n      <workItem from=\"1715688416486\" duration=\"1519000\" />\r\n      <workItem from=\"1715689959430\" duration=\"34000\" />\r\n      <workItem from=\"1715689995916\" duration=\"97000\" />\r\n      <workItem from=\"1715690332459\" duration=\"97000\" />\r\n      <workItem from=\"1715690513763\" duration=\"400000\" />\r\n      <workItem from=\"1715690932989\" duration=\"94000\" />\r\n      <workItem from=\"1715691029267\" duration=\"100000\" />\r\n      <workItem from=\"1715691143350\" duration=\"156000\" />\r\n      <workItem from=\"1715756623396\" duration=\"519000\" />\r\n      <workItem from=\"1715843646030\" duration=\"24000\" />\r\n      <workItem from=\"1715843671989\" duration=\"2000\" />\r\n      <workItem from=\"1715843713731\" duration=\"4262000\" />\r\n      <workItem from=\"1715895030965\" duration=\"8754000\" />\r\n      <workItem from=\"1715931138189\" duration=\"1815000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Removed Esra Userinterface\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715586491686</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715586491686</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"TODO's lavet i main. SuperUser edit er lavet.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715593941992</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715593941992</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Fixed bug with COmpetitionList conversion from String to Int. Implemented Yes/No Button in UI\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715687514944</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715687514944</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Editing menu now shows different edit options. Also password menu works\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715704320312</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715704320312</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Made interface for all classes. Finished superuser interface.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715718217221</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715718217221</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Competitive member merge\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715757470074</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715757470074</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"getTopFive() tilføjet til TrainerProcessor\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715762579018</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715762579018</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Pair-programming\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715764883866</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715764883866</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"REFACTOR TRAINER PROCESSOR + COMMENTED\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715887112216</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715887112216</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"10\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Merge of Unit Tests and Interface\" />\r\n    <MESSAGE value=\"Removed Esra Userinterface\" />\r\n    <MESSAGE value=\"TODO's lavet i main. SuperUser edit er lavet.\" />\r\n    <MESSAGE value=\"Fixed bug with COmpetitionList conversion from String to Int. Implemented Yes/No Button in UI\" />\r\n    <MESSAGE value=\"Editing menu now shows different edit options. Also password menu works\" />\r\n    <MESSAGE value=\"Made interface for all classes. Finished superuser interface.\" />\r\n    <MESSAGE value=\"OK\" />\r\n    <MESSAGE value=\"Competitive member merge\" />\r\n    <MESSAGE value=\"Jaa fed\" />\r\n    <MESSAGE value=\"getTopFive() tilføjet til TrainerProcessor\" />\r\n    <MESSAGE value=\"Pair-programming\" />\r\n    <MESSAGE value=\"lavet createCompetition() - den virker\" />\r\n    <MESSAGE value=\"REFACTOR TRAINER PROCESSOR + COMMENTED\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"REFACTOR TRAINER PROCESSOR + COMMENTED\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java</url>\r\n          <line>24</line>\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java</url>\r\n          <line>108</line>\r\n          <option name=\"timeStamp\" value=\"11\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/database/userDB/UserReturn.java</url>\r\n          <line>19</line>\r\n          <option name=\"timeStamp\" value=\"13\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n    <pin-to-top-manager>\r\n      <pinned-members>\r\n        <PinnedItemInfo parentTag=\"user_domain.competition.Competition\" memberName=\"styleList\" />\r\n      </pinned-members>\r\n    </pin-to-top-manager>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/.idea/workspace.xml	(date 1716361034703)
+@@ -4,8 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Refactor stuff">
++    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Removed redunant">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/CompetitionDB/CompetitionDB.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/CompetitiveMemberDB.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/TrainerDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/TrainerDB.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/databases/UserDB/UserDB.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/database/userDB/MemberDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/userDB/MemberDB.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -120,7 +126,7 @@
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+-        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-53826d6a" />
++        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+       </set>
+     </attachedChunks>
+   </component>
+@@ -153,6 +159,7 @@
+       <workItem from="1715843713731" duration="4262000" />
+       <workItem from="1715895030965" duration="8754000" />
+       <workItem from="1715931138189" duration="1815000" />
++      <workItem from="1716359591256" duration="1436000" />
+     </task>
+     <task id="LOCAL-00001" summary="Removed Esra Userinterface">
+       <option name="closed" value="true" />
+@@ -226,7 +233,39 @@
+       <option name="project" value="LOCAL" />
+       <updated>1715887112216</updated>
+     </task>
+-    <option name="localTasksCounter" value="10" />
++    <task id="LOCAL-00010" summary="Commit docs">
++      <option name="closed" value="true" />
++      <created>1716275885816</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1716275885816</updated>
++    </task>
++    <task id="LOCAL-00011" summary="Commit docs">
++      <option name="closed" value="true" />
++      <created>1716275926613</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1716275926613</updated>
++    </task>
++    <task id="LOCAL-00012" summary="Commit docs">
++      <option name="closed" value="true" />
++      <created>1716275942189</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1716275942189</updated>
++    </task>
++    <task id="LOCAL-00013" summary="Removed redunant">
++      <option name="closed" value="true" />
++      <created>1716359658206</created>
++      <option name="number" value="00013" />
++      <option name="presentableId" value="LOCAL-00013" />
++      <option name="project" value="LOCAL" />
++      <updated>1716359658206</updated>
++    </task>
++    <option name="localTasksCounter" value="14" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -257,7 +296,9 @@
+     <MESSAGE value="Pair-programming" />
+     <MESSAGE value="lavet createCompetition() - den virker" />
+     <MESSAGE value="REFACTOR TRAINER PROCESSOR + COMMENTED" />
+-    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR TRAINER PROCESSOR + COMMENTED" />
++    <MESSAGE value="Commit docs" />
++    <MESSAGE value="Removed redunant" />
++    <option name="LAST_COMMIT_MESSAGE" value="Removed redunant" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+@@ -266,16 +307,16 @@
+           <url>file://$PROJECT_DIR$/src/domain_model/Processors/TrainerProcessor.java</url>
+           <line>24</line>
+           <option name="timeStamp" value="1" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/database/userDB/CompetitiveMemberDB.java</url>
+-          <line>108</line>
+-          <option name="timeStamp" value="11" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/database/userDB/UserReturn.java</url>
+           <line>19</line>
+           <option name="timeStamp" value="13" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/database/userDB/MemberDB.java</url>
++          <line>91</line>
++          <option name="timeStamp" value="14" />
+         </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
+Index: src/user_domain/Trainer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user_domain;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Collections;\r\n\r\npublic class Trainer extends User {\r\n    private ArrayList<CompetitiveMember> competitiveMemberList;\r\n    private boolean isSeniorTrainer;\r\n    private ArrayList<SortExampleTest> sortingExample;\r\n\r\n\r\n    public Trainer(int userID, String firstName, String lastName, boolean isSeniorTrainer) {\r\n        super(userID, firstName, lastName);\r\n        this.isSeniorTrainer = isSeniorTrainer;\r\n    }\r\n\r\n\r\n    public boolean isSeniorTrainer() {\r\n        return isSeniorTrainer;\r\n    }\r\n\r\n    public void setSeniorTrainer(boolean seniorTrainer) {\r\n        isSeniorTrainer = seniorTrainer;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        String result = \"Kontotype: Træner\\n\" +\r\n                super.toString() + \"\\n\";\r\n        if (isSeniorTrainer = true) {\r\n            result += \"Senior træner. \" + \"\\n\";\r\n        }\r\n        if (competitiveMemberList != null) {\r\n            result += \"Liste over konkurrencesvømmere: \" + \"\\n\";\r\n        }\r\n        return result;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/user_domain/Trainer.java b/src/user_domain/Trainer.java
+--- a/src/user_domain/Trainer.java	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/src/user_domain/Trainer.java	(date 1716359633536)
+@@ -6,8 +6,6 @@
+ public class Trainer extends User {
+     private ArrayList<CompetitiveMember> competitiveMemberList;
+     private boolean isSeniorTrainer;
+-    private ArrayList<SortExampleTest> sortingExample;
+-
+ 
+     public Trainer(int userID, String firstName, String lastName, boolean isSeniorTrainer) {
+         super(userID, firstName, lastName);
+Index: .idea/TeamCanvasDelfin.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/Test\" isTestSource=\"true\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/resources\" type=\"java-resource\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/out\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module-library\" scope=\"TEST\">\r\n      <library name=\"JUnit4\">\r\n        <CLASSES>\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/junit/junit/4.13.1/junit-4.13.1.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"module-library\" scope=\"TEST\">\r\n      <library name=\"JUnit5.8.1\">\r\n        <CLASSES>\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar!/\" />\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/TeamCanvasDelfin.iml b/.idea/TeamCanvasDelfin.iml
+--- a/.idea/TeamCanvasDelfin.iml	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/.idea/TeamCanvasDelfin.iml	(date 1716275717836)
+@@ -36,5 +36,15 @@
+         <SOURCES />
+       </library>
+     </orderEntry>
++    <orderEntry type="module-library" scope="TEST">
++      <library name="JUnit4">
++        <CLASSES>
++          <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.13.1/junit-4.13.1.jar!/" />
++          <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar!/" />
++        </CLASSES>
++        <JAVADOC />
++        <SOURCES />
++      </library>
++    </orderEntry>
+   </component>
+ </module>
+\ No newline at end of file
+Index: Test/domain_model/Processors/TreasurerProcessorTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package domain_model.Processors;\r\n\r\nimport database.DBController;\r\nimport database.userDB.UserDB;\r\nimport org.junit.jupiter.api.Assertions;\r\nimport org.junit.jupiter.api.Test;\r\nimport user_domain.Member;\r\nimport user_domain.User;\r\n\r\nimport java.util.ArrayList;\r\n\r\nimport static org.junit.jupiter.api.Assertions.*;\r\n\r\nclass TreasurerProcessorTest {\r\n\r\n    @org.junit.jupiter.api.Test\r\n    void getExpectedIncomeOfFiveMembers() {\r\n        ArrayList<Member> dbController = new ArrayList<>();\r\n\r\n\r\n        //ARRANGE\r\n        Member user1 = new Member(1, \"Malthe\", \"Tiufk?r\", true, true, \"29/09/1990\", false);\r\n        Member user2 = new Member(2, \"Oscars\", \"B?fsandwich\", true, true, \"29/09/1990\", false);\r\n        Member user3 = new Member(3, \"Qui\", \"Noah\", true, true, \"29/09/1990\", false);\r\n        Member user4 = new Member(4, \"Steen\", \"Secher\", true, true, \"29/09/1990\", false);\r\n        Member user5 = new Member(5, \"Max\", \"Mustermann\", true, true, \"29/09/1990\", false);\r\n\r\n        dbController.add(user1);\r\n        dbController.add(user2);\r\n        dbController.add(user3);\r\n        dbController.add(user4);\r\n        dbController.add(user5);\r\n\r\n\r\n        //ACT\r\n        double expectedResults = 8000;\r\n        double actualResults = 0;\r\n        for (Member m : dbController) {\r\n            actualResults += m.getYearlyMembershipFee();\r\n        }\r\n\r\n        //ASSERT\r\n        Assertions.assertEquals(expectedResults, actualResults);\r\n    }\r\n\r\n    @org.junit.jupiter.api.Test\r\n    void geMembersInArrears() {\r\n        //ARRANGE\r\n        boolean isRunning = true;\r\n        ArrayList<Member> dbController = new ArrayList<>();\r\n        ArrayList<String> membersInArrears = new ArrayList<>();\r\n\r\n        Member user1 = new Member(1, \"Malthe\", \"Tiufk?r\", true, true, \"29/09/1990\", true);\r\n        Member user2 = new Member(2, \"Oscars\", \"B?fsandwich\", true, true, \"29/09/1990\", false);\r\n        Member user3 = new Member(3, \"Qui\", \"Noah\", true, true, \"29/09/1990\", true);\r\n        Member user4 = new Member(4, \"Steen\", \"Secher\", true, true, \"29/09/1990\", true);\r\n        Member user5 = new Member(5, \"Max\", \"Mustermann\", true, true, \"29/09/1990\", false);\r\n\r\n        dbController.add(user1);\r\n        dbController.add(user2);\r\n        dbController.add(user3);\r\n        dbController.add(user4);\r\n        dbController.add(user5);\r\n\r\n        for (Member m : dbController) {\r\n            if (m.isArrears()) {\r\n                membersInArrears.add(m.toString());\r\n            }\r\n        }\r\n            //ACT\r\n            double expectedResults = 3;\r\n            double actualResults = membersInArrears.size();\r\n\r\n            //ASSERT\r\n            Assertions.assertEquals(expectedResults, actualResults);\r\n        }\r\n    }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/Test/domain_model/Processors/TreasurerProcessorTest.java b/Test/domain_model/Processors/TreasurerProcessorTest.java
+--- a/Test/domain_model/Processors/TreasurerProcessorTest.java	(revision dc14a6beb759ff44d02d9ec47b507b89b796e732)
++++ b/Test/domain_model/Processors/TreasurerProcessorTest.java	(date 1716275816894)
+@@ -1,19 +1,13 @@
+ package domain_model.Processors;
+-
+-import database.DBController;
+-import database.userDB.UserDB;
+-import org.junit.jupiter.api.Assertions;
+-import org.junit.jupiter.api.Test;
++import org.junit.Assert;
++import org.junit.Test;
+ import user_domain.Member;
+ import user_domain.User;
+-
+ import java.util.ArrayList;
+ 
+-import static org.junit.jupiter.api.Assertions.*;
+-
+ class TreasurerProcessorTest {
+ 
+-    @org.junit.jupiter.api.Test
++    @Test
+     void getExpectedIncomeOfFiveMembers() {
+         ArrayList<Member> dbController = new ArrayList<>();
+ 
+@@ -40,11 +34,11 @@
+         }
+ 
+         //ASSERT
+-        Assertions.assertEquals(expectedResults, actualResults);
++        Assert.assertEquals(expectedResults, actualResults);
+     }
+ 
+-    @org.junit.jupiter.api.Test
+-    void geMembersInArrears() {
++    @Test
++    void getMembersInArrears() {
+         //ARRANGE
+         boolean isRunning = true;
+         ArrayList<Member> dbController = new ArrayList<>();
+@@ -72,6 +66,6 @@
+             double actualResults = membersInArrears.size();
+ 
+             //ASSERT
+-            Assertions.assertEquals(expectedResults, actualResults);
++            Assert.assertEquals(expectedResults, actualResults);
+         }
+     }

@@ -1,4 +1,5 @@
 package user_domain;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -36,7 +37,7 @@ public class CompetitiveMember extends Member {
         return competitionList;
     }
 
-    public void addCompetition(Competition competition){
+    public void addCompetition(Competition competition) {
         competitionList.add(competition);
     }
 
@@ -44,8 +45,31 @@ public class CompetitiveMember extends Member {
     public String toString() {
         String result =
                 "Kontotype: Konkurrencesvømmer\n" +
-                super.toString() + "\n";
+                        super.toString() + "\n";
         return result;
     }
+
+    public String getCompetitiveResults() {
+        StringBuilder result = new StringBuilder();
+        boolean firstCount = false;
+        for (Competition competition : competitionList) {
+            if(!firstCount) {
+                firstCount = true;
+            } else {
+                result.append("\n");
+            }
+            result.append("#####################\n");
+            result.append(competition.toString());
+            result.append("RESULTATER:\n");
+            for (Style style : competition.getStyleList()) {
+                result.append("---------------------\n");
+                result.append(style.toString());
+            }
+
+        }
+        return result.toString();
+
+    }
+
 
 }
