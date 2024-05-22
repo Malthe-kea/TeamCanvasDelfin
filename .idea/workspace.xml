@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Refactor stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_05_2024,_12_54_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/domain_model/Processors/TreasurerProcessorTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="05948840-9df0-4e86-a63a-cdd638f9b919" name="Changes" comment="Commit docs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -228,7 +224,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715887112216</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Commit docs">
+      <option name="closed" value="true" />
+      <created>1716275885816</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1716275885816</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Commit docs">
+      <option name="closed" value="true" />
+      <created>1716275926613</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716275926613</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Commit docs">
+      <option name="closed" value="true" />
+      <created>1716275942189</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716275942189</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +279,8 @@
     <MESSAGE value="Pair-programming" />
     <MESSAGE value="lavet createCompetition() - den virker" />
     <MESSAGE value="REFACTOR TRAINER PROCESSOR + COMMENTED" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR TRAINER PROCESSOR + COMMENTED" />
+    <MESSAGE value="Commit docs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit docs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
